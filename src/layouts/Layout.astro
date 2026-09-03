@@ -7,15 +7,18 @@ interface Props {
   title?: string;
   description?: string;
   robots?: string;
+  ogImage?: string;
 }
 
 const {
   title = "Digital Souverän | Digitale Souveränität für Unternehmen",
   description = "Beratung und Umsetzung europäischer, souveräner Alternativen zu US-Software – E-Mail, Dokumentenmanagement und Cloud-Systeme. Ein Angebot von DigiPub.",
   robots = "index, follow",
+  ogImage = "/og-image.png",
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL(ogImage, Astro.site);
 ---
 
 <!doctype html>
@@ -32,6 +35,14 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content="Digital Souverän" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <title>{title}</title>
   </head>
   <body>
