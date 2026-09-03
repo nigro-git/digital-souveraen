@@ -1,0 +1,47 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import { news } from "../../lib/news-data";
+import { buildBreadcrumbSchema } from "../../lib/schemaOrg";
+
+const pageUrl = new URL("/news", Astro.site).href;
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "News", url: pageUrl },
+]);
+---
+
+<Layout
+  title="News | Digital Souverän"
+  description="Aktuelles zu digitaler Souveränität: Regulatorik, Marktbewegung und europäische Alternativen zu US-Software."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <Section id="news">
+    <Breadcrumb items={[{ label: "Digital Souverän", href: "/" }, { label: "News" }]} />
+
+    <h1 class="font-bold text-foreground" style="font-size: var(--text-section); line-height: 1.08; letter-spacing: -0.02em;">
+      Aktuelles zum Thema
+    </h1>
+    <p class="mt-6 max-w-2xl border-l-2 border-primary pl-5 leading-relaxed text-foreground/75" style="font-size: var(--text-body);">
+      Regulatorik, Marktbewegung und konkrete Produkt-Updates rund um digitale Souveränität – kompakt eingeordnet, mit Quelle.
+    </p>
+
+    <div class="mt-14 space-y-14">
+      {news.map((item) => (
+        <article id={item.slug} class="scroll-mt-24 border-t border-border pt-10">
+          <p class="mb-2 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">{item.date}</p>
+          <h2 class="mb-2 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{item.title}</h2>
+          <p class="mb-4 italic text-muted-foreground" style="font-size: var(--text-body);">{item.kicker}</p>
+          <div class="max-w-3xl space-y-4">
+            {item.body.split("\n\n").map((paragraph) => (
+              <p class="leading-relaxed text-foreground/85" style="font-size: var(--text-body);">{paragraph}</p>
+            ))}
+          </div>
+          <p class="mt-4 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">Quelle: {item.source}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+</Layout>

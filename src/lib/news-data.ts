@@ -1,0 +1,43 @@
+export interface NewsItem {
+  slug: string;
+  title: string;
+  kicker: string;
+  date: string;
+  body: string;
+  source: string;
+}
+
+export const news: NewsItem[] = [
+  {
+    slug: "exchange-server-ungepatcht-sicherheitsluecken-dauerthema",
+    title: "Zehntausende ungepatchte Exchange-Server: Microsoft-Sicherheitslücken werden zum Dauerthema",
+    kicker: "Fast 22.000 Exchange-Server weltweit sind aktuell ungeschützt – kein Einzelfall, sondern Muster.",
+    date: "September 2026",
+    body: "Aktuell sind laut der Shadowserver Foundation weltweit rund 21.900 Microsoft-Exchange-Server ungepatcht über das Internet erreichbar und damit für die Schwachstelle CVE-2026-62911 angreifbar – ein deutlicher Teil davon in Deutschland. Das ist kein isoliertes Ereignis: Allein der August-2026-Patchday behob rund 400 Sicherheitslücken, darunter 42 kritische und drei bereits aktiv ausgenutzte Zero-Days. Im Juli waren es sogar über 1.100 Schwachstellen inklusive Chromium/Edge. Auch neuere Produkte sind betroffen – im August wurde mit „CoSnitch“ eine kritische 0-Click-Schwachstelle in Microsoft 365 Copilot bekannt, über die sich Unternehmensdaten unbemerkt abgreifen ließen, sowie eine mit dem Höchstwert 10,0 bewertete Lücke in Entra ID.\n\nFür Unternehmen bedeutet das: Sicherheitslücken bei zentraler Infrastruktur wie E-Mail-Servern, Identitätsmanagement oder KI-Assistenten sind kein Randthema, sondern ein wiederkehrender, planbarer Kostenfaktor – kontinuierliches Patch-Management, Monitoring und im Zweifel eine kritische Prüfung der eigenen Abhängigkeit von einem einzelnen, sehr großen Angriffsziel.",
+    source: "Shadowserver Foundation / BornCity, September 2026; Microsoft Patch Tuesday Reports, Juli/August 2026",
+  },
+  {
+    slug: "opendesk-1-18-geteilte-postfaecher",
+    title: "openDesk erreicht Version 1.18 — geteilte E-Mail- und Kalender-Konten",
+    kicker: "openDesk 1.18 bringt eines der umfangreichsten Updates seit Langem.",
+    date: "August 2026",
+    body: "Mit Version 1.18 hat ZenDiS eines der umfangreichsten openDesk-Updates der letzten Zeit veröffentlicht. Neu ist unter anderem die Möglichkeit, E-Mail- und Kalenderkonten im Team gemeinsam zu nutzen – ein Feature, das bislang eine der häufigsten Lücken gegenüber klassischen Microsoft-Umgebungen war. Für Unternehmen, die eine Migration auf europäische Alternativen prüfen, ist das ein relevantes Signal: Die Funktionslücke zwischen souveränen Suiten und etablierten US-Anbietern wird kontinuierlich kleiner. Gerade bei Team-Postfächern (z. B. info@- oder support@-Adressen) war das bisher ein häufiger Show-Stopper in Migrationsgesprächen.",
+    source: "openDesk-Blog, August 2026",
+  },
+  {
+    slug: "zendis-vertriebspartnerprogramm-onboarding-herbst-2026",
+    title: "ZenDiS-Vertriebspartnerprogramm: Onboarding startet im Herbst 2026",
+    kicker: "Private IT-Dienstleister können ab Herbst 2026 offiziell openDesk vertreiben.",
+    date: "Juli 2026",
+    body: "Das im Frühjahr 2026 angekündigte ZenDiS-Vertriebspartnerprogramm nimmt konkrete Form an: Das Onboarding privater IT-Dienstleister ist für Herbst 2026 terminiert. Das neue Modell ist zweistufig aufgebaut – Distributoren übernehmen Partnerbetreuung und Marktentwicklung, IT-Dienstleister bauen darauf eigene Angebote als SaaS oder On-Premises-Lösung auf. Damit wird openDesk erstmals systematisch auch außerhalb der öffentlichen Verwaltung vertreibbar. Für den Mittelstand bedeutet das: Der Zugang zu souveränen Arbeitsplatzlösungen wird spürbar einfacher, weil sich mehr spezialisierte Anbieter etablieren.",
+    source: "nevercodealone.de / ZenDiS, Juli 2026",
+  },
+  {
+    slug: "luenendonk-studie-2026-kill-switch-risiko",
+    title: "Lünendonk-Studie 2026: 83 % sehen „Kill-Switch“-Risiko, nur 14 % haben eine Exit-Strategie",
+    kicker: "Neue Studie zeigt große Lücke zwischen Risikobewusstsein und tatsächlicher Vorbereitung.",
+    date: "2026",
+    body: "Die Lünendonk-Studie 2026 („Digitale Souveränität – Vom Risiko zur Resilienz“) liefert eine der deutlichsten Zahlen zum Thema: 83 % der befragten Unternehmen in der DACH-Region halten die einseitige Abschaltung von Cloud-Diensten durch geopolitische Konflikte oder außereuropäische Sanktionen für ein reales Risiko. Gleichzeitig verfügen aktuell nur 14 % über eine dokumentierte, belastbare Exit-Strategie. Diese Lücke zwischen Risikobewusstsein und tatsächlicher Vorbereitung dürfte in den kommenden Monaten zum zentralen Argument für Unternehmen werden, ihre Abhängigkeit von einzelnen (meist außereuropäischen) Anbietern aktiv zu reduzieren – unabhängig davon, ob regulatorischer Druck von außen kommt oder nicht.",
+    source: "Lünendonk & Hossenfelder, 2026",
+  },
+];

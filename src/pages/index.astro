@@ -1,0 +1,105 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Section from "../components/ui/Section.astro";
+import Hero from "../components/blocks/Hero.astro";
+import Momentum from "../components/blocks/Momentum.astro";
+import ProductGrid from "../components/blocks/ProductGrid.astro";
+import NewsTeaser from "../components/blocks/NewsTeaser.astro";
+import Faq from "../components/blocks/Faq.astro";
+import CtaBar from "../components/blocks/CtaBar.astro";
+import { leistungen } from "../lib/leistungen-data";
+import { news } from "../lib/news-data";
+import { buildFaqPageSchema } from "../lib/schemaOrg";
+
+const faq = [
+  { frage: "Was bedeutet digitale Souveränität für ein Unternehmen konkret?", antwort: "Digitale Souveränität bedeutet, dass ein Unternehmen die Kontrolle über seine Daten, Software und Infrastruktur behält – unabhängig von einseitigen Entscheidungen einzelner (meist außereuropäischer) Anbieter. Das betrifft E-Mail, Dokumentenablage, Cloud-Speicher und zunehmend auch KI-Systeme." },
+  { frage: "Für welche Unternehmen ist das Thema relevant?", antwort: "Grundsätzlich für alle Unternehmen mit Abhängigkeit von US-Cloud-Diensten – besonders relevant wird es durch regulatorischen Druck (NIS2) und wachsende Kostensensibilität im Mittelstand." },
+  { frage: "Muss ich mich für Beratung oder Umsetzung entscheiden?", antwort: "Nein. Beides ist einzeln buchbar. Viele Unternehmen starten mit einer Beratung zur Einordnung der eigenen Situation und entscheiden erst danach, ob und wie eine Umsetzung folgt." },
+  { frage: "Bedeutet digitale Souveränität, komplett auf US-Software zu verzichten?", antwort: "Nicht zwingend. Es geht um bewusste Entscheidungen und reduzierte Abhängigkeit dort, wo es wirtschaftlich und praktisch sinnvoll ist – nicht um einen dogmatischen Komplett-Umstieg." },
+  { frage: "Wie hängt das mit ZenDiS/openDesk zusammen?", antwort: "ZenDiS und openDesk sind ein sichtbares Beispiel für die staatliche Förderung digitaler Souveränität in Deutschland. Unser Angebot ist davon unabhängig – es geht um europäische Alternativen generell, nicht um ein einzelnes Produkt oder Programm." },
+];
+
+const faqSchema = buildFaqPageSchema(faq);
+---
+
+<Layout>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <Section id="hero">
+    <Hero
+      eyebrow="Die Zukunft ist unabhängig."
+      title="Digitale Souveränität für Unternehmen – beratend begleitet, praktisch umgesetzt."
+      answerFirst="Digitale Souveränität ist eines der zentralen Zukunftsthemen für Unternehmen – getrieben durch Regulatorik, steigende Abhängigkeit von US-Anbietern und wachsenden Kostendruck. Wir begleiten Unternehmen dabei beratend: von der strategischen Einordnung, was Souveränität für Ihr Unternehmen konkret bedeutet, bis zur praktischen Umsetzung europäischer Alternativen."
+    />
+
+    <div class="mt-16">
+      <Momentum
+        title="Warum digitale Souveränität gerade jetzt an Bedeutung gewinnt"
+        treiber={[
+          {
+            label: "Regulatorik",
+            text: "Mit NIS2 und dem von der EU-Kommission im Juni 2026 vorgeschlagenen Cloud and AI Development Act (CADA) rückt die Frage, wo und wie Unternehmensdaten verarbeitet werden, aus der Nische in die Pflicht.",
+            highlight: true,
+          },
+          {
+            label: "Marktbewegung",
+            text: "Mit der Öffnung von openDesk/ZenDiS für private Unternehmen zeigt sich, dass digitale Souveränität kein reines Verwaltungsthema mehr ist, sondern zunehmend auch für den Mittelstand relevant wird.",
+          },
+          {
+            label: "Wirtschaftlicher Druck",
+            text: "Steigende Lizenzkosten und wachsende Sorge um einseitige Abhängigkeit von US-Anbietern (Kill-Switch-Risiko) machen Souveränität zunehmend zu einer betriebswirtschaftlichen statt einer rein politischen Frage.",
+          },
+        ]}
+        hinweis="Hinweis: CADA ist ein EU-Kommissionsvorschlag (Stand Juni 2026), noch kein geltendes Recht."
+      />
+    </div>
+
+    <div class="mt-16">
+      <ProductGrid
+        title="Wie wir Sie begleiten"
+        cards={[
+          ...leistungen.map((l) => ({ tag: l.tag, title: l.title, quote: l.leitfrage, href: `/leistungen/${l.slug}`, cta: "Zur Leistung" })),
+          {
+            tag: "Individuell",
+            title: "Ihr Thema ist nicht dabei?",
+            quote: "Welches Tool möchten Sie sich zu eigen machen – oder wo fehlt Ihnen noch die Souveränität?",
+            href: "/kontakt",
+            cta: "Gespräch anfragen",
+            highlight: true,
+          },
+        ]}
+        note="Jede Leistung ist einzeln buchbar – als reine Beratung oder als vollständige Umsetzung."
+      />
+      <p class="mt-4">
+        <a href="/leistungen" class="font-mono text-sm text-muted-foreground transition-colors hover:text-foreground">Alle Leistungen im Überblick →</a>
+      </p>
+    </div>
+
+    <div class="mt-16 max-w-3xl">
+      <h2 class="mb-4 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">Beratung, die auch umsetzen kann – muss aber nicht.</h2>
+      <p class="leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">
+        Wir begleiten Unternehmen auf dem Weg zur digitalen Souveränität – wahlweise als strategischer Sparringspartner, der Orientierung schafft, oder als Umsetzungspartner, der europäische Alternativen konkret einrichtet. Beides folgt derselben Überzeugung: Digitale Souveränität ist kein ideologisches Projekt, sondern eine wirtschaftliche und regulatorische Notwendigkeit, die sich pragmatisch lösen lässt.
+      </p>
+    </div>
+
+    <div class="mt-16">
+      <NewsTeaser
+        title="Aktuelles zum Thema"
+        items={news.slice(0, 3).map((n) => ({ title: n.title, date: n.date, kicker: n.kicker, href: `/news#${n.slug}` }))}
+        moreHref="/news"
+      />
+    </div>
+
+    <div class="mt-16">
+      <Faq items={faq} title="Häufige Fragen" />
+    </div>
+
+    <div class="mt-16">
+      <CtaBar
+        title="Wie ist Ihre Ausgangslage?"
+        subtitle="Kostenfreies Erstgespräch"
+        ctaLabel="Gespräch vereinbaren"
+      />
+    </div>
+  </Section>
+</Layout>

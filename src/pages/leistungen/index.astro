@@ -1,0 +1,134 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import Hero from "../../components/blocks/Hero.astro";
+import ProductDetails from "../../components/blocks/ProductDetails.astro";
+import Contrast from "../../components/blocks/Contrast.astro";
+import ProductGrid from "../../components/blocks/ProductGrid.astro";
+import AudienceFit from "../../components/blocks/AudienceFit.astro";
+import CaseStudy from "../../components/blocks/CaseStudy.astro";
+import Faq from "../../components/blocks/Faq.astro";
+import CtaBar from "../../components/blocks/CtaBar.astro";
+import { leistungen } from "../../lib/leistungen-data";
+import { buildBreadcrumbSchema, buildFaqPageSchema } from "../../lib/schemaOrg";
+
+const pageUrl = new URL("/leistungen", Astro.site).href;
+
+const faq = [
+  { frage: "Müssen wir alle Systeme auf einmal umstellen?", antwort: "Nein. Die Umstellung erfolgt schrittweise, meist beginnend mit dem System mit dem höchsten Abhängigkeitsrisiko oder dem größten Kosteneffekt. Ein Parallelbetrieb während der Übergangsphase ist Standard, kein Sonderfall." },
+  { frage: "Funktioniert das auch für kleine Unternehmen?", antwort: "Ja. Die Leistungen sind so ausgelegt, dass sie sich an der tatsächlichen Unternehmensgröße orientieren – vom kleinen Team bis zum Mittelstand mit mehreren hundert Mitarbeitenden." },
+  { frage: "Was passiert mit bestehenden Daten und E-Mails bei der Migration?", antwort: "Alle bestehenden Daten werden vollständig übernommen. Der Migrationsprozess ist so geplant, dass nichts verloren geht – inklusive E-Mail-Historie, Ordnerstrukturen und Berechtigungen." },
+  { frage: "Ist der Betrieb danach aufwändiger als vorher?", antwort: "In der Regel nicht – oft ist er schlanker, weil europäische Alternativen häufig gezielter auf den tatsächlichen Bedarf zugeschnitten sind statt auf eine überdimensionierte Enterprise-Suite." },
+  { frage: "Wie unterscheidet sich das von einer klassischen IT-Beratung?", antwort: "Der Fokus liegt ausschließlich auf digitaler Souveränität – nicht als Randthema einer allgemeinen IT-Beratung, sondern als eigenständige Spezialisierung mit entsprechender Tiefe." },
+];
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "Leistungen", url: pageUrl },
+]);
+const faqSchema = buildFaqPageSchema(faq);
+---
+
+<Layout
+  title="Leistungen | Digital Souverän"
+  description="Europäische, souveräne Alternativen zu Microsoft, Google und anderen US-Anbietern: E-Mail-Server, Dokumentenmanagement und Cloud-Systeme – einzeln buchbar als Beratung oder Umsetzung."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <Section id="leistungen-einstieg">
+    <Breadcrumb items={[{ label: "Digital Souverän", href: "/" }, { label: "Leistungen" }]} />
+
+    <Hero
+      title="Ihre IT hängt an amerikanischen Anbietern – das lässt sich ändern, ohne Ihren Betrieb zu gefährden."
+      answerFirst="Wir richten europäische, souveräne Alternativen zu Microsoft, Google und anderen US-Anbietern für Unternehmen ein – von der E-Mail-Infrastruktur über das Dokumentenmanagement bis zur Cloud-Umgebung. Nicht aus Prinzip, sondern weil Kontrolle über Daten, Kosten und Betriebssicherheit heute ein wirtschaftlicher Vorteil ist."
+    />
+
+    <div class="mt-14">
+      <p class="mb-3 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">⚠ Platzhalter-Metriken – vor Launch mit echten Projektzahlen unterlegen</p>
+      <ProductDetails
+        cols={4}
+        cells={[
+          { label: "Kosteneinsparung", value: "50%+", sub: "gegenüber proprietären Lizenzmodellen (M365, Google Workspace)" },
+          { label: "Datenkontrolle", value: "100%", sub: "Betrieb und Speicherung ausschließlich in der EU" },
+          { label: "Kill-Switch-Risiko", value: "0", sub: "Abhängigkeit von einseitiger Abschaltung durch US-Anbieter" },
+          { label: "Bedienbarkeit", value: "Volle", sub: "ohne Feature-Ballast überdimensionierter Enterprise-Suiten" },
+        ]}
+      />
+    </div>
+
+    <div class="mt-14">
+      <Contrast
+        title="Was wir tun – und was nicht."
+        nicht={[
+          "Open-Source-Dogma ohne Rücksicht auf Ihren Betrieb",
+          "Migration um der Migration willen",
+          "Generische IT-Beratung, die \"auch Souveränität mitmacht\"",
+        ]}
+        sondern={[
+          "Pragmatische Umsetzung konkreter, europäischer Alternativen",
+          "Betrieb, der zu Ihrer Unternehmensgröße passt – kein Overkill",
+          "Spezialisierung auf digitale Souveränität als eigenständiges Thema, nicht als Zusatzleistung",
+        ]}
+      />
+    </div>
+
+    <div class="mt-14">
+      <ProductGrid
+        title="Was wir anbieten"
+        cards={[
+          ...leistungen.map((l) => ({ tag: l.tag, title: l.title, quote: l.leitfrage, href: `/leistungen/${l.slug}`, cta: "Zur Leistung" })),
+          {
+            tag: "Individuell",
+            title: "Ihr Thema ist nicht dabei?",
+            quote: "Welches Tool möchten Sie sich zu eigen machen – oder wo fehlt Ihnen noch die Souveränität?",
+            href: "/kontakt",
+            cta: "Gespräch anfragen",
+            highlight: true,
+          },
+        ]}
+        note="Weitere Leistungen folgen – das Angebot ist erweiterbar angelegt."
+      />
+    </div>
+
+    <div class="mt-14">
+      <AudienceFit
+        title="Für wen das passt – und für wen nicht."
+        geeignet={[
+          "KMU und Mittelstand im DACH-Raum, die bewusst weg von US-Cloud-Diensten wollen",
+          "Unternehmen mit Compliance-/Datenschutzdruck (NIS2, DSGVO)",
+          "Unternehmen, die echte Kontrolle über ihre Infrastruktur wollen, nicht nur eine 1:1-Migration",
+        ]}
+        nichtGeeignet={[
+          "Unternehmen ohne echten Veränderungswillen (\"nur mal unverbindlich anschauen\")",
+          "Reine Suche nach dem günstigsten Anbieter ohne strategischen Hintergrund",
+          "Konzerne mit tief integrierter M365-Landschaft ohne Bereitschaft zu einem Parallelbetrieb in der Übergangsphase",
+        ]}
+      />
+    </div>
+
+    <div class="mt-14">
+      <p class="mb-3 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">⚠ Muster/Platzhalter – vor Launch durch echte Projektdaten ersetzen</p>
+      <CaseStudy
+        title="Case Studies"
+        cases={leistungen.map((l) => ({
+          name: l.caseStudy.kunde,
+          headline: l.caseStudy.headline,
+          ausgangslage: l.caseStudy.ausgangslage,
+          vorgehen: l.caseStudy.vorgehen,
+          ergebnis: l.caseStudy.ergebnis,
+          meta: l.caseStudy.meta,
+        }))}
+      />
+    </div>
+
+    <div class="mt-14">
+      <Faq items={faq} title="Häufige Fragen" />
+    </div>
+
+    <div class="mt-16">
+      <CtaBar title="Souveränitäts-Analyse anfragen" subtitle="Kostenloses Erstgespräch. Keine generische Demo – eine Einschätzung Ihrer konkreten Ausgangslage." />
+    </div>
+  </Section>
+</Layout>

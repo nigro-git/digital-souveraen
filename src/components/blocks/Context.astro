@@ -1,0 +1,11 @@
+---
+interface Props { headline: string; }
+const { headline } = Astro.props;
+---
+
+<div class="max-w-3xl">
+  <h2 class="mb-4 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{headline}</h2>
+  <div class="leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">
+    <slot />
+  </div>
+</div>

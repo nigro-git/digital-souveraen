@@ -1,0 +1,121 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import Hero from "../../components/blocks/Hero.astro";
+import Context from "../../components/blocks/Context.astro";
+import ProductDetails from "../../components/blocks/ProductDetails.astro";
+import ComparisonTable from "../../components/blocks/ComparisonTable.astro";
+import Steps from "../../components/blocks/Steps.astro";
+import CaseStudy from "../../components/blocks/CaseStudy.astro";
+import Situations from "../../components/blocks/Situations.astro";
+import Faq from "../../components/blocks/Faq.astro";
+import Related from "../../components/blocks/Related.astro";
+import CtaBar from "../../components/blocks/CtaBar.astro";
+import { leistungen, type Leistung } from "../../lib/leistungen-data";
+import { buildBreadcrumbSchema, buildFaqPageSchema, buildHowToSchema, buildServiceSchema } from "../../lib/schemaOrg";
+
+export function getStaticPaths() {
+  return leistungen.map((l) => ({ params: { slug: l.slug }, props: { leistung: l } }));
+}
+
+interface Props { leistung: Leistung; }
+const { leistung: l } = Astro.props;
+
+const pageUrl = new URL(`/leistungen/${l.slug}`, Astro.site).href;
+
+const serviceSchema = buildServiceSchema({ name: l.title, description: l.answerFirst, url: pageUrl });
+const faqSchema = buildFaqPageSchema(l.faq);
+const howToSchema = buildHowToSchema(`So arbeiten wir: ${l.title}`, l.ablauf);
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "Leistungen", url: new URL("/leistungen", Astro.site).href },
+  { label: l.title, url: pageUrl },
+]);
+
+const andereLeistungen = leistungen.filter((e) => e.slug !== l.slug);
+---
+
+<Layout title={`${l.title} | Digital Souverän`} description={l.answerFirst.slice(0, 155)}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <Section id="leistung">
+    <Breadcrumb items={[
+      { label: "Digital Souverän", href: "/" },
+      { label: "Leistungen", href: "/leistungen" },
+      { label: l.title },
+    ]} />
+
+    <Hero title={l.h1} answerFirst={l.answerFirst} />
+
+    <div class="mt-14">
+      <Context headline={l.contextHeadline}>
+        <p>{l.contextText}</p>
+      </Context>
+    </div>
+
+    <div class="mt-14">
+      <h2 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">Produkt-Details</h2>
+      <ProductDetails cols={2} cells={l.details} />
+      <div class="grid gap-x-8 gap-y-4 border-b border-border py-6 sm:grid-cols-2">
+        <div>
+          <h3 class="mb-2 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">Geeignet für</h3>
+          <ul class="list-disc list-outside space-y-1 pl-5 marker:text-primary">
+            {l.geeignetFuer.map((e) => <li class="text-foreground" style="font-size: var(--text-body);">{e}</li>)}
+          </ul>
+        </div>
+        <div>
+          <h3 class="mb-2 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">Weniger geeignet für</h3>
+          <ul class="list-disc list-outside space-y-1 pl-5 marker:text-muted-foreground">
+            {l.nichtGeeignetFuer.map((e) => <li class="text-muted-foreground" style="font-size: var(--text-body);">{e}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-14">
+      <h2 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">Was sich verändert</h2>
+      <ComparisonTable rows={l.vergleich} caption={l.vergleichCaption} />
+    </div>
+
+    <div class="mt-14 max-w-3xl">
+      <Steps title="So arbeiten wir" steps={l.ablauf} />
+    </div>
+
+    <div class="mt-14">
+      {l.caseStudy.placeholder && (
+        <p class="mb-3 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">⚠ Muster/Platzhalter – vor Launch durch echten Fall ersetzen</p>
+      )}
+      <CaseStudy title="Case Study" cases={[{
+        name: l.caseStudy.kunde,
+        headline: l.caseStudy.headline,
+        ausgangslage: l.caseStudy.ausgangslage,
+        vorgehen: l.caseStudy.vorgehen,
+        ergebnis: l.caseStudy.ergebnis,
+        meta: l.caseStudy.meta,
+      }]} />
+    </div>
+
+    <div class="mt-14">
+      <Situations items={l.situationen} />
+    </div>
+
+    <div class="mt-14">
+      <Faq items={l.faq} title="Häufige Fragen" />
+    </div>
+
+    <div class="mt-14">
+      <Related
+        upHref="/leistungen"
+        links={andereLeistungen.map((e) => ({ label: e.title, href: `/leistungen/${e.slug}` }))}
+      />
+    </div>
+
+    <div class="mt-16">
+      <CtaBar title={l.ctaLabel} subtitle="Kostenloses Erstgespräch – eine Einschätzung Ihrer konkreten Ausgangslage, kein Verkaufsgespräch." ctaLabel={l.ctaLabel} />
+    </div>
+  </Section>
+</Layout>

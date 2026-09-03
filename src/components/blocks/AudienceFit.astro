@@ -1,0 +1,26 @@
+---
+interface Props { title: string; geeignet: string[]; nichtGeeignet: string[]; }
+const { title, geeignet, nichtGeeignet } = Astro.props;
+---
+
+<div>
+  <h2 class="mb-8 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{title}</h2>
+  <div class="grid gap-8 sm:grid-cols-2">
+    <div>
+      <p class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-primary">Gut geeignet</p>
+      <ul class="space-y-3">
+        {geeignet.map((item) => (
+          <li class="leading-relaxed text-foreground" style="font-size: var(--text-body);">{item}</li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <p class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">Weniger geeignet</p>
+      <ul class="space-y-3">
+        {nichtGeeignet.map((item) => (
+          <li class="leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">{item}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>

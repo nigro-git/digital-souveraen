@@ -1,0 +1,14 @@
+---
+interface Link { label: string; href: string; }
+interface Props { links: Link[]; upHref: string; upLabel?: string; }
+const { links, upHref, upLabel = "Alle Leistungen im Überblick" } = Astro.props;
+---
+
+<div class="flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
+  <a href={upHref} class="font-mono text-sm text-muted-foreground transition-colors hover:text-foreground">← {upLabel}</a>
+  <div class="flex flex-wrap gap-x-6 gap-y-2">
+    {links.map((link) => (
+      <a href={link.href} class="font-mono text-sm text-muted-foreground transition-colors hover:text-foreground">{link.label} →</a>
+    ))}
+  </div>
+</div>

@@ -1,0 +1,13 @@
+---
+interface Props { title?: string; items: string[]; }
+const { title = "Situationen, in denen das hilft", items } = Astro.props;
+---
+
+<div>
+  <h2 class="mb-6 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">{title}</h2>
+  <ul class="space-y-3 border-l-2 border-border pl-5">
+    {items.map((item) => (
+      <li class="leading-relaxed text-foreground" style="font-size: var(--text-body);">{item}</li>
+    ))}
+  </ul>
+</div>

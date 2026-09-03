@@ -1,0 +1,26 @@
+---
+interface Props { title: string; nicht: string[]; sondern: string[]; }
+const { title, nicht, sondern } = Astro.props;
+---
+
+<div>
+  <h2 class="mb-8 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{title}</h2>
+  <div class="grid gap-8 sm:grid-cols-2">
+    <div>
+      <p class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">Nicht</p>
+      <ul class="space-y-3">
+        {nicht.map((item) => (
+          <li class="leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">{item}</li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <p class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-primary">Sondern</p>
+      <ul class="space-y-3">
+        {sondern.map((item) => (
+          <li class="leading-relaxed text-foreground" style="font-size: var(--text-body);">{item}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>

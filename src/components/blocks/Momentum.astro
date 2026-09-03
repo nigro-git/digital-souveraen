@@ -1,0 +1,18 @@
+---
+interface Treiber { label: string; text: string; highlight?: boolean; }
+interface Props { title: string; treiber: Treiber[]; hinweis?: string; }
+const { title, treiber, hinweis } = Astro.props;
+---
+
+<div>
+  <h2 class="mb-8 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{title}</h2>
+  <div class="grid border-l border-t border-border sm:grid-cols-3">
+    {treiber.map((t) => (
+      <div class:list={["border-b border-r border-border p-6", t.highlight && "bg-primary/5"]}>
+        <p class="mb-3 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">{t.label}</p>
+        <p class="leading-relaxed text-foreground" style="font-size: var(--text-body);">{t.text}</p>
+      </div>
+    ))}
+  </div>
+  {hinweis && <p class="mt-4 text-sm text-muted-foreground">{hinweis}</p>}
+</div>
