@@ -1,7 +1,7 @@
 const ORGANISATION = {
   "@type": "ProfessionalService",
   name: "Digital Souverän",
-  url: "https://digital-souveraen.com",
+  url: "https://www.digital-souveraen.com",
   parentOrganization: { "@type": "Organization", name: "DigiPub", url: "https://www.digipub.de" },
   founder: { "@type": "Person", name: "Nicolas Grossman" },
 } as const;
