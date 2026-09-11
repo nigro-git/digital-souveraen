@@ -9,6 +9,14 @@ export interface NewsItem {
 
 export const news: NewsItem[] = [
   {
+    slug: "schweiz-bundeskanzlei-opendesk-3000-arbeitsplaetze",
+    title: "Schweizer Bundeskanzlei bringt 3.000 Arbeitsplätze auf openDesk",
+    kicker: "Die Schweiz macht ernst: 3.000 Behörden-Arbeitsplätze wechseln zu openDesk statt Microsoft 365.",
+    date: "September 2026",
+    body: "Die Schweizerische Bundeskanzlei hat am 2. September 2026 grünes Licht für ein eigenes Programm zum digital souveränen Arbeitsplatz gegeben: Ab Ende 2027 sollen rund 3.000 Beschäftigte die Open-Source-Suite openDesk statt Microsoft 365 nutzen. Grundlage der Entscheidung ist eine Machbarkeitsstudie mit 172 Testpersonen, die zeigt, wo der Umstieg funktioniert – und wo Microsoft-Produkte laut einer begleitenden Studie der Zürcher Fachhochschule und der Berner Fachhochschule aktuell noch technisch überlegen sind. openDesk kann Microsoft 365 demnach noch nicht vollständig ersetzen, wird aber als ernstzunehmende Alternative für einen Großteil der Arbeitsplätze eingestuft.\n\nFür Unternehmen ist das ein bemerkenswertes Signal: Ein ganzes Land testet den Umstieg nicht aus Kostengründen allein, sondern explizit mit Blick auf die Frage, wer im Ernstfall Zugriff auf staatliche Daten hat. Der differenzierte Studien-Befund – funktioniert teilweise, aber nicht überall – ist dabei realistischer und glaubwürdiger als eine reine Erfolgsmeldung.",
+    source: "Schweizerische Bundeskanzlei, Machbarkeitsstudie PoC BOSS, 2. September 2026; drweb.de, September 2026",
+  },
+  {
     slug: "exchange-server-ungepatcht-sicherheitsluecken-dauerthema",
     title: "Zehntausende ungepatchte Exchange-Server: Microsoft-Sicherheitslücken werden zum Dauerthema",
     kicker: "Fast 22.000 Exchange-Server weltweit sind aktuell ungeschützt – kein Einzelfall, sondern Muster.",
