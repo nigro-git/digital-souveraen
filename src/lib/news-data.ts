@@ -48,4 +48,12 @@ export const news: NewsItem[] = [
     body: "Die Lünendonk-Studie 2026 („Digitale Souveränität – Vom Risiko zur Resilienz“) liefert eine der deutlichsten Zahlen zum Thema: 83 % der befragten Unternehmen in der DACH-Region halten die einseitige Abschaltung von Cloud-Diensten durch geopolitische Konflikte oder außereuropäische Sanktionen für ein reales Risiko. Gleichzeitig verfügen aktuell nur 14 % über eine dokumentierte, belastbare Exit-Strategie. Diese Lücke zwischen Risikobewusstsein und tatsächlicher Vorbereitung dürfte in den kommenden Monaten zum zentralen Argument für Unternehmen werden, ihre Abhängigkeit von einzelnen (meist außereuropäischen) Anbietern aktiv zu reduzieren – unabhängig davon, ob regulatorischer Druck von außen kommt oder nicht.",
     source: "Lünendonk & Hossenfelder, 2026",
   },
+  {
+    slug: "bsi-c3a-kriterienkatalog-cloud-souveraenitaet",
+    title: "BSI definiert erstmals konkrete Kriterien für Cloud-Souveränität (C3A)",
+    kicker: "Mit dem C3A-Kriterienkatalog gibt es erstmals eine konkrete Messlatte für souveräne Cloud-Anbieter.",
+    date: "Anfang 2026",
+    body: "Das Bundesamt für Sicherheit in der Informationstechnik (BSI) hat Anfang 2026 mit dem Kriterienkatalog „Criteria Enabling Cloud Computing Autonomy“ (C3A) erstmals konkrete Anforderungen definiert, anhand derer sich die Souveränität eines Cloud-Anbieters bewerten lässt. Der Katalog macht deutlich: Souveränität bedeutet mehr als ein deutscher oder europäischer Firmensitz – entscheidend sind Jurisdiktion, tatsächlicher Betriebsort und nachweisbare, überprüfbare Kontrolle über die eigene Sicherheitsinfrastruktur. Der Digitalverband Bitkom hat die Kriterien in einem eigenen Positionspapier aufgegriffen und für einen risikobasierten, anwendungsfallbezogenen Bewertungsansatz plädiert statt für pauschale Ausschlusskriterien.\n\nFür Unternehmen, die einen Cloud-Anbieter auswählen oder ihren bestehenden Anbieter überprüfen wollen, liefert C3A damit erstmals eine handfeste, offizielle Grundlage – statt sich auf Marketingaussagen einzelner Anbieter verlassen zu müssen.",
+    source: "BSI, C3A-Kriterienkatalog, Anfang 2026; Bitkom, Positionspapier „Kriterien für Cloud-Souveränität in Europa“, 2026",
+  },
 ];
