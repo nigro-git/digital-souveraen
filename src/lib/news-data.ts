@@ -56,4 +56,12 @@ export const news: NewsItem[] = [
     body: "Das Bundesamt für Sicherheit in der Informationstechnik (BSI) hat Anfang 2026 mit dem Kriterienkatalog „Criteria Enabling Cloud Computing Autonomy“ (C3A) erstmals konkrete Anforderungen definiert, anhand derer sich die Souveränität eines Cloud-Anbieters bewerten lässt. Der Katalog macht deutlich: Souveränität bedeutet mehr als ein deutscher oder europäischer Firmensitz – entscheidend sind Jurisdiktion, tatsächlicher Betriebsort und nachweisbare, überprüfbare Kontrolle über die eigene Sicherheitsinfrastruktur. Der Digitalverband Bitkom hat die Kriterien in einem eigenen Positionspapier aufgegriffen und für einen risikobasierten, anwendungsfallbezogenen Bewertungsansatz plädiert statt für pauschale Ausschlusskriterien.\n\nFür Unternehmen, die einen Cloud-Anbieter auswählen oder ihren bestehenden Anbieter überprüfen wollen, liefert C3A damit erstmals eine handfeste, offizielle Grundlage – statt sich auf Marketingaussagen einzelner Anbieter verlassen zu müssen.",
     source: "BSI, C3A-Kriterienkatalog, Anfang 2026; Bitkom, Positionspapier „Kriterien für Cloud-Souveränität in Europa“, 2026",
   },
+  {
+    slug: "bitkom-leitfaden-cloud-souveraenitaet-risikobasiert",
+    title: "Bitkom-Leitfaden: Cloud-Souveränität ist keine Alles-oder-Nichts-Frage",
+    kicker: "Neuer Bitkom-Leitfaden setzt auf risikobasierte Cloud-Souveränität statt vollständiger Unabhängigkeit.",
+    date: "Juli 2026",
+    body: "Mit dem Leitfaden „Cloud-Souveränität praktisch umsetzen“ liefert der Digitalverband Bitkom eine differenzierte Handlungsanleitung für Unternehmen: Im Mittelpunkt steht nicht das abstrakte Ideal vollständiger technologischer Unabhängigkeit, sondern ein risikobasierter Ansatz. Unternehmen sollen ihre kritischen Systeme, Daten und Prozesse kennen, Abhängigkeiten bewusst bewerten und daraus passende Maßnahmen ableiten – etwa offene Standards, Multi-Cloud-Strategien, belastbare Exit-Szenarien und den gezielten Aufbau interner Kompetenzen. Der Leitfaden ist bewusst als „lebendes Dokument“ angelegt, das mit der technischen und regulatorischen Entwicklung mitwächst.\n\nDieser risikobasierte Ansatz deckt sich mit einer Position, die in der Debatte oft zu kurz kommt: Digitale Souveränität muss kein Komplett-Umstieg sein, sondern eine Frage bewusster, informierter Entscheidungen an den Stellen, wo Abhängigkeit tatsächlich ein Risiko darstellt.",
+    source: "Bitkom e. V., Leitfaden „Cloud Souveränität praktisch umsetzen“, Juli 2026",
+  },
 ];
