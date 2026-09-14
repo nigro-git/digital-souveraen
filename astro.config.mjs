@@ -5,6 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://www.digital-souveraen.com",
+  trailingSlash: "never",
   integrations: [react(), sitemap()],
   vite: { plugins: [tailwindcss()] },
   output: "static",
