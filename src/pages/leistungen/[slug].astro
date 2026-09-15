@@ -36,7 +36,7 @@ const breadcrumbSchema = buildBreadcrumbSchema([
 const andereLeistungen = leistungen.filter((e) => e.slug !== l.slug);
 ---
 
-<Layout title={`${l.title} | Digital Souverän`} description={l.answerFirst.slice(0, 155)}>
+<Layout seoKey={`leistungen-${l.slug}`} title={`${l.title} | Digital Souverän`} description={l.answerFirst.slice(0, 155)}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(howToSchema)} />

@@ -22,7 +22,7 @@ const faq = [
 const faqSchema = buildFaqPageSchema(faq);
 ---
 
-<Layout>
+<Layout seoKey="home">
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <Section id="hero">
