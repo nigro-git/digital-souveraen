@@ -65,6 +65,15 @@ const rawNews: NewsItem[] = [
     body: "Die Lünendonk-Studie 2026 („Digitale Souveränität – Vom Risiko zur Resilienz“) liefert eine der deutlichsten Zahlen zum Thema: 83 % der befragten Unternehmen in der DACH-Region halten die einseitige Abschaltung von Cloud-Diensten durch geopolitische Konflikte oder außereuropäische Sanktionen für ein reales Risiko. Gleichzeitig verfügen aktuell nur 14 % über eine dokumentierte, belastbare Exit-Strategie. Diese Lücke zwischen Risikobewusstsein und tatsächlicher Vorbereitung dürfte in den kommenden Monaten zum zentralen Argument für Unternehmen werden, ihre Abhängigkeit von einzelnen (meist außereuropäischen) Anbietern aktiv zu reduzieren – unabhängig davon, ob regulatorischer Druck von außen kommt oder nicht.",
     source: "Lünendonk & Hossenfelder, 2026",
   },
+  {
+    slug: "bitkom-leitfaden-cloud-souveraenitaet-risikobasiert",
+    title: "Bitkom-Leitfaden: Cloud-Souveränität ist keine Alles-oder-Nichts-Frage",
+    kicker: "Neuer Bitkom-Leitfaden setzt auf risikobasierte Cloud-Souveränität statt vollständiger Unabhängigkeit.",
+    date: "Juli 2026",
+    publishDate: "2026-09-15",
+    body: "Mit dem Leitfaden „Cloud-Souveränität praktisch umsetzen“ liefert der Digitalverband Bitkom eine differenzierte Handlungsanleitung für Unternehmen: Im Mittelpunkt steht nicht das abstrakte Ideal vollständiger technologischer Unabhängigkeit, sondern ein risikobasierter Ansatz. Unternehmen sollen ihre kritischen Systeme, Daten und Prozesse kennen, Abhängigkeiten bewusst bewerten und daraus passende Maßnahmen ableiten – etwa offene Standards, Multi-Cloud-Strategien, belastbare Exit-Szenarien und den gezielten Aufbau interner Kompetenzen. Der Leitfaden ist bewusst als „lebendes Dokument“ angelegt, das mit der technischen und regulatorischen Entwicklung mitwächst.\n\nDieser risikobasierte Ansatz deckt sich mit einer Position, die in der Debatte oft zu kurz kommt: Digitale Souveränität muss kein Komplett-Umstieg sein, sondern eine Frage bewusster, informierter Entscheidungen an den Stellen, wo Abhängigkeit tatsächlich ein Risiko darstellt.",
+    source: "Bitkom e. V., Leitfaden „Cloud Souveränität praktisch umsetzen“, Juli 2026",
+  },
 ];
 
 /** Immer nach publishDate absteigend sortiert – der neueste Artikel steht automatisch oben, unabhängig von der Reihenfolge oben im Array. */
