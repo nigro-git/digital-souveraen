@@ -12,6 +12,15 @@ export interface NewsItem {
 
 const rawNews: NewsItem[] = [
   {
+    slug: "deutschland-digital-commons-edic-zendis",
+    title: "Deutschland offiziell im europäischen Digital-Commons-Konsortium – mit ZenDiS-Beteiligung",
+    kicker: "Deutschland ist jetzt offiziell Teil des europäischen Digital Commons EDIC – mit Unterstützung von ZenDiS.",
+    date: "September 2026",
+    publishDate: "2026-09-21",
+    body: "Das Bundesministerium für Digitales und Staatsmodernisierung (BMDS) hat am 16. September 2026 bekräftigt, dass Deutschland gemeinsam mit Frankreich, den Niederlanden und Italien Gründungsmitglied des \"Digital Commons European Digital Infrastructure Consortium\" (Digital Commons EDIC) ist. Das Konsortium selbst geht auf den Souveränitätsgipfel vom November 2025 zurück und wurde von der EU-Kommission Ende Oktober 2025 formal genehmigt – die aktuelle Mitteilung ist daher keine Neugründung, sondern die offizielle Bekräftigung von Deutschlands Rolle und der praktischen Umsetzung.\n\nBemerkenswert für unseren Kontext: Laut BMDS werden die Sovereign Tech Agency und das Zentrum für Digitale Souveränität der öffentlichen Verwaltung (ZenDiS) das Konsortium mit ihrer Expertise unterstützen. Ziel des mit Sitz in Paris angesiedelten Konsortiums ist es, offene, interoperable digitale Infrastruktur europaweit zu bündeln – als Reaktion darauf, dass laut Digital-Strategy-Angaben der EU-Kommission über 80 % der in Europa verwendeten digitalen Technologien weiterhin von außereuropäischen Anbietern stammen. Luxemburg, Slowenien und Polen nehmen als Beobachter/Kandidaten teil.",
+    source: "BMDS, Pressemitteilung 55/2026, 16. September 2026; Europäische Kommission, Digital Strategy, digital-strategy.ec.europa.eu",
+  },
+  {
     slug: "bsi-c3a-kriterienkatalog-cloud-souveraenitaet",
     title: "BSI definiert erstmals konkrete Kriterien für Cloud-Souveränität (C3A)",
     kicker: "Mit dem C3A-Kriterienkatalog gibt es erstmals eine konkrete Messlatte für souveräne Cloud-Anbieter.",
