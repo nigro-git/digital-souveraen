@@ -1,0 +1,93 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import Hero from "../../components/blocks/Hero.astro";
+import ClusterFilterBar from "../../components/blocks/ClusterFilterBar.astro";
+import FeaturedArticleTeaser from "../../components/blocks/FeaturedArticleTeaser.astro";
+import ArticleGridTeaser from "../../components/blocks/ArticleGridTeaser.astro";
+import LoadMore from "../../components/blocks/LoadMore.astro";
+import { blogPosts, BLOG_CLUSTERS } from "../../lib/blog-data";
+import { buildBreadcrumbSchema } from "../../lib/schemaOrg";
+
+const pageUrl = new URL("/blog", Astro.site).href;
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "Blog", url: pageUrl },
+]);
+
+const [featured, ...rest] = blogPosts;
+const clusterCounts: Record<string, number> = Object.fromEntries(BLOG_CLUSTERS.map((c) => [c, blogPosts.filter((p) => p.clusters.includes(c)).length]));
+---
+
+<Layout
+  seoKey="blog"
+  title="Blog | Digital Souverän"
+  description="Einordnungen, Vergleiche und Praxisberichte zur digitalen Souveränität für Unternehmen – recherchiert, mit echten Quellen belegt."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <Section id="blog">
+    <Breadcrumb items={[{ label: "Digital Souverän", href: "/" }, { label: "Blog" }]} />
+
+    <Hero
+      eyebrow="Wissen, das Sie weiterbringt"
+      title="Der Weg zur digitalen Souveränität — verständlich begleitet"
+      answerFirst="Digitale Souveränität ist kein Zustand, den man von heute auf morgen erreicht, sondern ein Weg mit vielen einzelnen Entscheidungen – von der ersten Einordnung bis zum konkreten Werkzeugvergleich. Hier sammeln wir Einordnungen, Vergleiche und Praxisberichte, die genau diesen Weg begleiten – recherchiert, mit echten Quellen belegt, ohne die Nachteile zu verschweigen, die dazugehören."
+    />
+
+    {blogPosts.length === 0 ? (
+      <div class="mt-14 border-t border-border pt-14 text-center">
+        <p class="mx-auto max-w-md leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">
+          Noch keine Beiträge veröffentlicht – die ersten Artikel folgen in Kürze.
+        </p>
+      </div>
+    ) : (
+      <Fragment>
+        {blogPosts.some((p) => p.placeholder) && (
+          <p class="mt-14 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">⚠ Muster/Platzhalter – vor Launch durch echte, recherchierte Artikel ersetzen</p>
+        )}
+
+        <div class:list={["mt-14", blogPosts.some((p) => p.placeholder) && "!mt-6"]}>
+          <ClusterFilterBar clusters={BLOG_CLUSTERS.filter((c) => clusterCounts[c] > 0)} counts={clusterCounts} />
+        </div>
+
+        {featured && (
+          <div class="mt-10">
+            <FeaturedArticleTeaser
+              title={featured.title}
+              kicker={featured.kicker}
+              format={featured.format}
+              clusters={featured.clusters}
+              image={featured.heroImage ?? featured.image}
+              meta={`${featured.dateLabel} · ${featured.lifecycle}${featured.reviewNote ? ", " + featured.reviewNote : ""}`}
+              href={featured.placeholder ? "#" : `/blog/${featured.slug}`}
+            />
+          </div>
+        )}
+
+        {rest.length > 0 && (
+          <div class="mt-10">
+            <ArticleGridTeaser
+              posts={rest.map((p) => ({
+                title: p.title,
+                kicker: p.kicker,
+                format: p.format,
+                clusters: p.clusters,
+                image: p.image,
+                meta: `${p.dateLabel} · ${p.lifecycle}${p.reviewNote ? ", " + p.reviewNote : ""}`,
+                href: p.placeholder ? "#" : `/blog/${p.slug}`,
+              }))}
+            />
+          </div>
+        )}
+
+        {rest.length > 3 && (
+          <div class="mt-10">
+            <LoadMore />
+          </div>
+        )}
+      </Fragment>
+    )}
+  </Section>
+</Layout>

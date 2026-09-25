@@ -1,0 +1,57 @@
+---
+interface Row { label: string; frage: string; href?: string | null; linkLabel?: string | null; }
+interface Props {
+  rows: Row[];
+  labelHeader?: string;
+  frageHeader?: string;
+  linkHeader?: string;
+}
+const { rows, labelHeader = "Bereich", frageHeader = "Frage", linkHeader = "Vertiefung" } = Astro.props;
+---
+
+<figure class="m-0">
+  <!-- Ab sm: echte Tabelle -->
+  <div class="hidden overflow-x-auto sm:block">
+    <table class="w-full border-collapse text-left">
+      <thead>
+        <tr>
+          <th scope="col" class="border-b border-border px-4 py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">{labelHeader}</th>
+          <th scope="col" class="border-b border-border px-4 py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">{frageHeader}</th>
+          <th scope="col" class="border-b border-border px-4 py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">{linkHeader}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr>
+            <th scope="row" class="border-b border-border px-4 py-4 text-sm font-normal text-muted-foreground">{row.label}</th>
+            <td class="border-b border-border px-4 py-4 text-sm text-foreground">{row.frage}</td>
+            <td class="border-b border-border px-4 py-4 text-sm">
+              {row.href ? (
+                <a href={row.href} class="font-semibold text-primary hover:underline">{row.linkLabel} →</a>
+              ) : (
+                <span class="italic text-muted-foreground">in Vorbereitung</span>
+              )}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Unter sm: gestapelte Karten statt horizontalem Scroll -->
+  <div class="flex flex-col gap-3 sm:hidden">
+    {rows.map((row) => (
+      <div class="rounded-lg border border-border p-4">
+        <p class="mb-2 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">{row.label}</p>
+        <p class="text-sm text-foreground">{row.frage}</p>
+        <p class="mt-2 border-t border-dashed border-border pt-2 text-sm">
+          {row.href ? (
+            <a href={row.href} class="font-semibold text-primary hover:underline">{row.linkLabel} →</a>
+          ) : (
+            <span class="italic text-muted-foreground">in Vorbereitung</span>
+          )}
+        </p>
+      </div>
+    ))}
+  </div>
+</figure>

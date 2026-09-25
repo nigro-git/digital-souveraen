@@ -1,7 +1,12 @@
 ---
-interface Step { titel: string; text: string; deliverable?: string; }
-interface Props { title: string; steps: Step[]; }
-const { title, steps } = Astro.props;
+interface Step { titel: string; text: string | string[]; deliverable?: string; warnung?: string; }
+interface Props {
+  title: string;
+  steps: Step[];
+  /** z.B. "Ebene" → "Ebene 1" statt "01" (wenn der Text selbst von Ebenen/Phasen spricht). */
+  numberPrefix?: string;
+}
+const { title, steps, numberPrefix } = Astro.props;
 ---
 
 <div>
@@ -9,12 +14,21 @@ const { title, steps } = Astro.props;
   <ol class="space-y-8">
     {steps.map((step, i) => (
       <li class="flex gap-5">
-        <span class="font-mono text-sm text-muted-foreground tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-        <div>
-          <p class="mb-1 font-bold text-foreground" style="font-size: var(--text-body);">{step.titel}</p>
-          <p class="leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">{step.text}</p>
+        <span class:list={["shrink-0 font-mono text-sm tabular-nums text-muted-foreground", numberPrefix ? "w-16" : "w-6"]}>
+          {numberPrefix ? `${numberPrefix} ${i + 1}` : String(i + 1).padStart(2, "0")}
+        </span>
+        <div class="min-w-0">
+          <p class="mb-2 font-bold text-foreground" style="font-size: var(--text-body);">{step.titel}</p>
+          <div class="space-y-3 leading-relaxed text-foreground/90" style="font-size: var(--text-body);">
+            {(Array.isArray(step.text) ? step.text : [step.text]).map((t) => <p>{t}</p>)}
+          </div>
+          {step.warnung && (
+            <p class="mt-3 border-l-2 border-[#c8860a] bg-[#c8860a]/5 py-2 pl-4 pr-3 text-sm leading-relaxed text-foreground"><strong>Achtung:</strong> {step.warnung}</p>
+          )}
           {step.deliverable && (
-            <p class="mt-2 font-mono text-xs uppercase tracking-[0.1em] text-primary">Deliverable: {step.deliverable}</p>
+            <p class="mt-3 text-sm leading-relaxed text-foreground">
+              <span class="mr-2 font-mono text-xs uppercase tracking-[0.1em] text-primary">✓ Zwischenresultat</span>{step.deliverable}
+            </p>
           )}
         </div>
       </li>

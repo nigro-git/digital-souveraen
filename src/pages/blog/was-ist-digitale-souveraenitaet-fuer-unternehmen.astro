@@ -1,0 +1,192 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import Hero from "../../components/blocks/Hero.astro";
+import MediaSlot from "../../components/blocks/MediaSlot.astro";
+import TableOfContents from "../../components/blocks/TableOfContents.astro";
+import Context from "../../components/blocks/Context.astro";
+import Momentum from "../../components/blocks/Momentum.astro";
+import Situations from "../../components/blocks/Situations.astro";
+import ProductGrid from "../../components/blocks/ProductGrid.astro";
+import LinkTable from "../../components/blocks/LinkTable.astro";
+import AudienceFit from "../../components/blocks/AudienceFit.astro";
+import NewsTeaser from "../../components/blocks/NewsTeaser.astro";
+import Faq from "../../components/blocks/Faq.astro";
+import Related from "../../components/blocks/Related.astro";
+import NextReads from "../../components/blocks/NextReads.astro";
+import { readTime } from "../../lib/readTime";
+import CtaBar from "../../components/blocks/CtaBar.astro";
+import { articleImage } from "../../lib/articleImages";
+import { buildBreadcrumbSchema, buildFaqPageSchema } from "../../lib/schemaOrg";
+import * as article from "../../lib/blog-articles/was-ist-digitale-souveraenitaet";
+
+const pageUrl = new URL("/blog/was-ist-digitale-souveraenitaet-fuer-unternehmen", Astro.site).href;
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "Blog", url: new URL("/blog", Astro.site).href },
+  { label: article.meta.title, url: pageUrl },
+]);
+const faqSchema = buildFaqPageSchema(article.faq);
+
+const tocItems = [
+  { id: "warum-relevant", label: "Warum das relevant wird" },
+  { id: "abgrenzung", label: article.abgrenzung.heading },
+  { id: "dimensionen", label: article.dimensionen.heading },
+  { id: "wo-entsteht", label: article.woEntsteht.heading },
+  { id: "diagnose", label: article.diagnose.heading },
+  { id: "beispiele", label: article.beispiele.heading },
+  { id: "negativabgrenzung", label: article.negativabgrenzung.heading },
+  { id: "nutzen-grenzen", label: article.nutzenGrenzen.heading },
+  { id: "prozess", label: article.prozess.heading },
+  { id: "naechste-fragen", label: article.naechsteFragen.heading, highlight: true },
+  { id: "updates", label: article.updates.heading },
+  { id: "faq", label: "Häufige Fragen" },
+];
+---
+
+<Layout
+  seoKey="blog-was-ist-digitale-souveraenitaet"
+  title={`${article.meta.title} | Digital Souverän`}
+  description={article.meta.answerFirst.slice(0, 155)}
+  ogImage={articleImage("was-ist-digitale-souveraenitaet-fuer-unternehmen", "og")}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <Section id="artikel">
+    <Breadcrumb items={[
+      { label: "Digital Souverän", href: "/" },
+      { label: "Blog", href: "/blog" },
+      { label: article.meta.title },
+    ]} />
+
+    <Hero title={article.meta.title} answerFirst={article.meta.answerFirst} tags={article.meta.tags} />
+
+    <div class="mt-10">
+      <MediaSlot src={articleImage("was-ist-digitale-souveraenitaet-fuer-unternehmen", "hero")} alt={article.meta.title} />
+    </div>
+
+    <div class="mt-10">
+      <TableOfContents items={tocItems} readTime={readTime(article)} highlightLabel="Weiterführend" />
+    </div>
+
+    <div id="warum-relevant" class="mt-14 scroll-mt-24">
+      <Momentum title={article.warumRelevant.heading} treiber={article.warumRelevant.treiber} cols={3} />
+    </div>
+
+    <div id="abgrenzung" class="mt-14 scroll-mt-24">
+      <Context tone="article" headline={article.abgrenzung.heading}>
+        <div class="space-y-3">
+          {article.abgrenzung.items.map((item) => (
+            <p><strong class="text-foreground">{item.label}</strong> {item.text}</p>
+          ))}
+        </div>
+      </Context>
+    </div>
+
+    <div id="dimensionen" class="mt-14 scroll-mt-24">
+      <p class="mb-6 leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">{article.dimensionen.intro}</p>
+      <Momentum title={article.dimensionen.heading} treiber={article.dimensionen.treiber.slice(0, 3)} cols={3} />
+      <div class="mt-4 border-l border-r border-b border-border p-6">
+        <p class="mb-3 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">{article.dimensionen.treiber[3].label}</p>
+        <p class="leading-relaxed text-foreground" style="font-size: var(--text-body);">{article.dimensionen.treiber[3].text}</p>
+      </div>
+      <p class="mt-4 text-sm text-muted-foreground">{article.dimensionen.hinweis}</p>
+    </div>
+
+    <div id="wo-entsteht" class="mt-14 scroll-mt-24">
+      <h2 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">{article.woEntsteht.heading}</h2>
+      <LinkTable
+        labelHeader="Bereich"
+        frageHeader="Souveränitätsfrage"
+        rows={article.woEntsteht.rows.map((row) => ({ label: row.bereich, frage: row.frage, href: row.href, linkLabel: row.label }))}
+      />
+    </div>
+
+    <div id="diagnose" class="mt-14 scroll-mt-24">
+      <p class="mb-6 leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">{article.diagnose.intro}</p>
+      <Situations title={article.diagnose.heading} items={article.diagnose.fragen} />
+      <p class="mt-6">
+        <span class="font-mono text-sm text-muted-foreground">→ {article.diagnose.toolTeaser}</span>
+      </p>
+    </div>
+
+    <div id="beispiele" class="mt-14 scroll-mt-24">
+      <Momentum
+        title={article.beispiele.heading}
+        treiber={article.beispiele.cards.map((c) => ({ label: c.tag, text: c.quote }))}
+        cols={3}
+      />
+      <div class="mt-8">
+        <Context tone="article" headline={article.beispiele.realBeispielHeading}>
+          <p>{article.beispiele.realBeispielText}</p>
+        </Context>
+      </div>
+    </div>
+
+    <div id="negativabgrenzung" class="mt-14 scroll-mt-24">
+      <h2 class="mb-6 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{article.negativabgrenzung.heading}</h2>
+      <ul class="space-y-3 border-l-2 border-border pl-5">
+        {article.negativabgrenzung.items.map((item) => (
+          <li class="leading-relaxed text-foreground" style="font-size: var(--text-body);"><strong class="text-foreground">Nicht:</strong> {item}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div id="nutzen-grenzen" class="mt-14 scroll-mt-24">
+      <AudienceFit
+        title={article.nutzenGrenzen.heading}
+        geeignet={article.nutzenGrenzen.nutzen}
+        nichtGeeignet={article.nutzenGrenzen.grenzen}
+        geeignetLabel="Nutzen"
+        nichtGeeignetLabel="Grenzen"
+      />
+    </div>
+
+    <div id="prozess" class="mt-14 scroll-mt-24">
+      <h2 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">{article.prozess.heading}</h2>
+      <p class="mb-5 max-w-3xl leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">{article.prozess.intro}</p>
+      <div class="flex flex-wrap items-center gap-2">
+        {article.prozess.schritte.map((schritt, i) => (
+          <>
+            <span class="rounded-full border border-border px-4 py-2 text-sm font-semibold text-foreground">{schritt}</span>
+            {i < article.prozess.schritte.length - 1 && <span class="text-muted-foreground" aria-hidden="true">→</span>}
+          </>
+        ))}
+      </div>
+      <p class="mt-4 max-w-3xl text-sm text-muted-foreground">{article.prozess.schrittHinweis}</p>
+    </div>
+
+    <div id="naechste-fragen" class="mt-14 scroll-mt-24">
+      <ProductGrid
+        title={article.naechsteFragen.heading}
+        cards={article.naechsteFragen.cards.map((c) => ({ tag: c.tag, title: c.title, quote: c.quote, href: c.href, cta: c.cta }))}
+      />
+    </div>
+
+    <div id="updates" class="mt-14 scroll-mt-24">
+      <NewsTeaser
+        title={article.updates.heading}
+        items={article.updates.items.map((n) => ({ title: n.title, date: n.date, kicker: n.kicker, href: n.href }))}
+        moreHref="/news"
+      />
+    </div>
+
+    <div id="faq" class="mt-14 scroll-mt-24">
+      <Faq items={article.faq} title="Häufige Fragen" />
+    </div>
+
+    <div class="mt-14">
+      <NextReads slugs={["opendesk-vs-microsoft-365","was-passiert-wenn-unternehmen-nichts-tun"]} />
+    </div>
+
+    <div class="mt-10">
+      <Related links={article.related.links} upHref={article.related.upHref} upLabel={article.related.upLabel} />
+    </div>
+
+    <div class="mt-16">
+      <CtaBar title={article.cta.title} ctaLabel={article.cta.ctaLabel} eyebrow={article.cta.eyebrow} />
+    </div>
+  </Section>
+</Layout>

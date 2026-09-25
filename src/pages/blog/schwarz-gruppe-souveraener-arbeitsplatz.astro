@@ -1,0 +1,127 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import Hero from "../../components/blocks/Hero.astro";
+import CaseTimeline from "../../components/blocks/CaseTimeline.astro";
+import MediaSlot from "../../components/blocks/MediaSlot.astro";
+import TableOfContents from "../../components/blocks/TableOfContents.astro";
+import Context from "../../components/blocks/Context.astro";
+import Situations from "../../components/blocks/Situations.astro";
+import AudienceFit from "../../components/blocks/AudienceFit.astro";
+import Related from "../../components/blocks/Related.astro";
+import NextReads from "../../components/blocks/NextReads.astro";
+import { readTime } from "../../lib/readTime";
+import CtaBar from "../../components/blocks/CtaBar.astro";
+import { articleImage } from "../../lib/articleImages";
+import { buildBreadcrumbSchema } from "../../lib/schemaOrg";
+import * as article from "../../lib/blog-articles/schwarz-gruppe-souveraener-arbeitsplatz";
+
+const pageUrl = new URL("/blog/schwarz-gruppe-souveraener-arbeitsplatz", Astro.site).href;
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "Blog", url: new URL("/blog", Astro.site).href },
+  { label: article.meta.title, url: pageUrl },
+]);
+
+const tocItems = [
+  { id: "ausgangslage", label: article.ausgangslage.heading },
+  { id: "entscheidung", label: article.entscheidung.heading },
+  { id: "umsetzung", label: article.umsetzung.heading },
+  { id: "ergebnis", label: article.ergebnis.heading },
+  { id: "grenzen", label: article.grenzen.heading },
+  { id: "transfer", label: article.transfer.heading },
+];
+---
+
+<Layout
+  seoKey="blog-schwarz-gruppe-souveraener-arbeitsplatz"
+  title={`${article.meta.title} | Digital Souverän`}
+  description={article.meta.answerFirst.slice(0, 155)}
+  ogImage={articleImage("schwarz-gruppe-souveraener-arbeitsplatz", "og")}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <Section id="artikel">
+    <Breadcrumb items={[
+      { label: "Digital Souverän", href: "/" },
+      { label: "Blog", href: "/blog" },
+      { label: article.meta.title },
+    ]} />
+
+    <Hero title={article.meta.title} answerFirst={article.meta.answerFirst} tags={article.meta.tags} />
+
+    <p class="mt-4 max-w-4xl border-l-2 border-[#c8860a] bg-[#c8860a]/5 py-2 pl-4 pr-3 text-sm leading-relaxed text-foreground"><strong>Wichtige Einschränkung:</strong> {article.meta.einschraenkung}</p>
+
+    <div class="mt-10">
+      <CaseTimeline stages={article.status.stages} active={article.status.active} caseName={article.status.caseName} />
+    </div>
+
+    <div class="mt-10">
+      <MediaSlot src={articleImage("schwarz-gruppe-souveraener-arbeitsplatz", "hero")} alt={article.meta.title} />
+    </div>
+
+    <div class="mt-10">
+      <TableOfContents items={tocItems} readTime={readTime(article)} />
+    </div>
+
+    <div id="ausgangslage" class="mt-14 scroll-mt-24">
+      <Context tone="article" headline={article.ausgangslage.heading} hinweis={article.ausgangslage.hinweis}>
+        <p>{article.ausgangslage.text}</p>
+      </Context>
+    </div>
+
+    <div id="entscheidung" class="mt-14 scroll-mt-24">
+      <Context tone="article" headline={article.entscheidung.heading}>
+        <div class="space-y-4">
+          <p>{article.entscheidung.text}</p>
+          <p><strong class="text-foreground">{article.entscheidung.einordnungLabel}</strong> {article.entscheidung.einordnung}</p>
+        </div>
+      </Context>
+    </div>
+
+    <div id="umsetzung" class="mt-14 scroll-mt-24">
+      <Context tone="article" headline={article.umsetzung.heading} hinweis={article.umsetzung.hinweis}>
+        <div class="space-y-4">
+          {article.umsetzung.absaetze.map((a) => <p>{a}</p>)}
+        </div>
+      </Context>
+    </div>
+
+    <div id="ergebnis" class="mt-14 scroll-mt-24">
+      <Context tone="article" headline={article.ergebnis.heading}>
+        <div class="space-y-4">
+          <p>{article.ergebnis.text}</p>
+          <p><strong class="text-foreground">{article.ergebnis.einordnungLabel}</strong> {article.ergebnis.einordnung}</p>
+        </div>
+      </Context>
+    </div>
+
+    <div id="grenzen" class="mt-14 scroll-mt-24">
+      <Situations title={article.grenzen.heading} items={article.grenzen.items} numbered />
+    </div>
+
+    <div id="transfer" class="mt-14 scroll-mt-24">
+      <AudienceFit
+        title={article.transfer.heading}
+        geeignet={article.transfer.uebertragbar}
+        nichtGeeignet={article.transfer.nicht}
+        geeignetLabel={article.transfer.uebertragbarLabel}
+        nichtGeeignetLabel={article.transfer.nichtLabel}
+        emphasizeSecond
+      />
+    </div>
+
+    <div class="mt-14">
+      <NextReads slugs={["sana-kliniken-souveraene-cloud","welche-unternehmen-sind-bereits-digital-souveraen"]} />
+    </div>
+
+    <div class="mt-10">
+      <Related links={article.related.links} upHref={article.related.upHref} upLabel={article.related.upLabel} />
+    </div>
+
+    <div class="mt-16">
+      <CtaBar title={article.cta.title} subtitle={article.cta.subtitle} ctaLabel={article.cta.ctaLabel} eyebrow={article.cta.eyebrow} />
+    </div>
+  </Section>
+</Layout>

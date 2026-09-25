@@ -1,10 +1,12 @@
 ---
+interface Tags { cluster: string; format: string; entities?: string[]; }
 interface Props {
   eyebrow?: string;
   title: string;
   answerFirst: string;
+  tags?: Tags;
 }
-const { eyebrow, title, answerFirst } = Astro.props;
+const { eyebrow, title, answerFirst, tags } = Astro.props;
 ---
 
 <div class="max-w-4xl">
@@ -14,6 +16,15 @@ const { eyebrow, title, answerFirst } = Astro.props;
   <h1 class="font-bold text-foreground" style="font-size: var(--text-section); line-height: 1.08; letter-spacing: -0.02em;">
     {title}
   </h1>
+  {tags && (
+    <div class="mt-5 flex flex-wrap gap-2">
+      <span class="rounded-full bg-foreground px-3 py-1 font-mono text-[11px] uppercase tracking-[0.06em] text-background">{tags.cluster}</span>
+      <span class="rounded-full border border-foreground px-3 py-1 font-mono text-[11px] uppercase tracking-[0.06em] text-foreground">{tags.format}</span>
+      {tags.entities?.map((entity) => (
+        <span class="rounded-full border border-border px-3 py-1 font-mono text-[11px] text-muted-foreground">{entity}</span>
+      ))}
+    </div>
+  )}
   <p class="mt-6 max-w-2xl border-l-2 border-primary pl-5 leading-relaxed text-foreground/75" style="font-size: var(--text-body);">
     {answerFirst}
   </p>

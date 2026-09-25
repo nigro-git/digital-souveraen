@@ -1,17 +1,45 @@
 ---
 interface Row { kriterium: string; ohne: string; mit: string; }
-interface Props { rows: Row[]; ohneLabel?: string; mitLabel?: string; caption?: string; }
-const { rows, ohneLabel = "Ohne Umstellung", mitLabel = "Mit uns", caption } = Astro.props;
+interface Props {
+  rows: Row[];
+  ohneLabel?: string;
+  mitLabel?: string;
+  caption?: string;
+  /** Überschreibt die erste Spaltenüberschrift ("Kriterium"). */
+  kriteriumLabel?: string;
+  /** true = "mit"-Spalte wird ausgeblendet (z.B. Ausgangslage/Konsequenz statt X-vs-Y-Vergleich). */
+  twoColumn?: boolean;
+  /** Kennzeichnet die Bedeutung der Tabelle visuell (farbiger Rand + Label), damit gleich aussehende Tabellen mit unterschiedlicher Funktion unterscheidbar bleiben. */
+  type?: "vergleich" | "voraussetzung" | "empfehlung";
+}
+const { rows, ohneLabel = "Ohne Umstellung", mitLabel = "Mit uns", caption, kriteriumLabel = "Kriterium", twoColumn = false, type } = Astro.props;
+
+const typeConfig = {
+  vergleich: { label: "Vergleich", border: "#3b5fe0", bg: "#eef1fd", fg: "#3b5fe0" },
+  voraussetzung: { label: "Vorher prüfen", border: "#c8860a", bg: "#fff5e0", fg: "#8a5a00" },
+  empfehlung: { label: "Empfehlung", border: "#1a6e3a", bg: "#e8f5ee", fg: "#1a6e3a" },
+} as const;
+const t = type ? typeConfig[type] : null;
 ---
 
 <figure class="m-0">
-  <div class="overflow-x-auto">
+  {t && (
+    <span
+      class="mb-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.06em]"
+      style={`background:${t.bg};color:${t.fg};`}
+    >
+      {t.label}
+    </span>
+  )}
+
+  <!-- Ab sm: echte Tabelle -->
+  <div class="hidden overflow-x-auto sm:block" style={t ? `border-left:3px solid ${t.border};` : undefined}>
     <table class="w-full border-collapse text-left">
       <thead>
         <tr>
-          <th scope="col" class="border-b border-border px-4 py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">Kriterium</th>
+          <th scope="col" class="border-b border-border px-4 py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">{kriteriumLabel}</th>
           <th scope="col" class="border-b border-border px-4 py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">{ohneLabel}</th>
-          <th scope="col" class="border-b border-border px-4 py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">{mitLabel}</th>
+          {!twoColumn && <th scope="col" class="border-b border-border px-4 py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">{mitLabel}</th>}
         </tr>
       </thead>
       <tbody>
@@ -19,11 +47,31 @@ const { rows, ohneLabel = "Ohne Umstellung", mitLabel = "Mit uns", caption } = A
           <tr>
             <th scope="row" class="border-b border-border px-4 py-4 text-sm font-normal text-muted-foreground">{row.kriterium}</th>
             <td class="border-b border-border px-4 py-4 text-sm text-foreground">{row.ohne}</td>
-            <td class="border-b border-border px-4 py-4 text-sm font-semibold text-primary">{row.mit}</td>
+            {!twoColumn && <td class="border-b border-border px-4 py-4 text-sm font-semibold text-primary">{row.mit}</td>}
           </tr>
         ))}
       </tbody>
     </table>
   </div>
+
+  <!-- Unter sm: gestapelte Karten statt horizontalem Scroll -->
+  <div class="flex flex-col gap-3 sm:hidden" style={t ? `border-left:3px solid ${t.border};padding-left:14px;` : undefined}>
+    {rows.map((row) => (
+      <div class="rounded-lg border border-border p-4">
+        <p class="mb-3 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">{row.kriterium}</p>
+        <div class:list={["flex items-baseline justify-between gap-3 py-1", !twoColumn && "border-b border-dashed border-border"]}>
+          <span class="shrink-0 text-sm font-bold text-foreground">{ohneLabel}</span>
+          <span class="text-right text-sm text-foreground">{row.ohne}</span>
+        </div>
+        {!twoColumn && (
+          <div class="flex items-baseline justify-between gap-3 py-1">
+            <span class="shrink-0 text-sm font-bold text-primary">{mitLabel}</span>
+            <span class="text-right text-sm font-semibold text-primary">{row.mit}</span>
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+
   {caption && <figcaption class="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground">{caption}</figcaption>}
 </figure>

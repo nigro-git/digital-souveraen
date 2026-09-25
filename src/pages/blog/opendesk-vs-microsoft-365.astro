@@ -1,0 +1,159 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import Hero from "../../components/blocks/Hero.astro";
+import MediaSlot from "../../components/blocks/MediaSlot.astro";
+import TableOfContents from "../../components/blocks/TableOfContents.astro";
+import ComparisonTable from "../../components/blocks/ComparisonTable.astro";
+import PhasenVergleich from "../../components/blocks/PhasenVergleich.astro";
+import Steps from "../../components/blocks/Steps.astro";
+import Momentum from "../../components/blocks/Momentum.astro";
+import EvidenceBlock from "../../components/blocks/EvidenceBlock.astro";
+import Faq from "../../components/blocks/Faq.astro";
+import CtaBar from "../../components/blocks/CtaBar.astro";
+import Related from "../../components/blocks/Related.astro";
+import NextReads from "../../components/blocks/NextReads.astro";
+import { readTime } from "../../lib/readTime";
+import { articleImage } from "../../lib/articleImages";
+import { buildBreadcrumbSchema, buildFaqPageSchema } from "../../lib/schemaOrg";
+import * as article from "../../lib/blog-articles/opendesk-vs-microsoft-365";
+
+const pageUrl = new URL("/blog/opendesk-vs-microsoft-365", Astro.site).href;
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "Blog", url: new URL("/blog", Astro.site).href },
+  { label: article.meta.title, url: pageUrl },
+]);
+const faqSchema = buildFaqPageSchema(article.faq);
+
+const tocItems = [
+  { id: "kurzvergleich", label: article.kurzVergleich.heading },
+  { id: "voraussetzungen", label: "Voraussetzungen" },
+  { id: "journey", label: "Einführung, Migration, Funktionen, Betrieb" },
+  { id: "kosten", label: article.kosten.heading },
+  { id: "souveraenitaet", label: article.souveraenitaet.heading },
+  { id: "decision-fit", label: article.decisionFit.heading, highlight: true },
+  { id: "evidenz", label: article.evidenz.heading },
+  { id: "faq", label: "Häufige Fragen" },
+];
+---
+
+<Layout
+  seoKey="blog-opendesk-vs-microsoft-365"
+  title={`${article.meta.title} | Digital Souverän`}
+  description={article.meta.answerFirst.slice(0, 155)}
+  ogImage={articleImage("opendesk-vs-microsoft-365", "og")}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <Section id="artikel">
+    <Breadcrumb items={[
+      { label: "Digital Souverän", href: "/" },
+      { label: "Blog", href: "/blog" },
+      { label: article.meta.title },
+    ]} />
+
+    <Hero title={article.meta.title} answerFirst={article.meta.answerFirst} tags={article.meta.tags} />
+
+    <div class="mt-10">
+      <MediaSlot src={articleImage("opendesk-vs-microsoft-365", "hero")} alt={article.meta.title} />
+    </div>
+
+    <div class="mt-10">
+      <TableOfContents items={tocItems} readTime={readTime(article)} />
+    </div>
+
+    <div class="mt-10 max-w-3xl">
+      {article.produktkontext.map((p) => (
+        <p class="leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">
+          <strong class="text-foreground">{p.label}</strong> {p.text}
+        </p>
+      ))}
+    </div>
+
+    <div id="kurzvergleich" class="mt-14 scroll-mt-24">
+      <h2 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">{article.kurzVergleich.heading}</h2>
+      <ComparisonTable rows={article.kurzVergleich.rows} ohneLabel="openDesk" mitLabel="Microsoft 365" caption={article.kurzVergleich.caption} type="vergleich" />
+    </div>
+
+    <div id="voraussetzungen" class="mt-14 scroll-mt-24">
+      <h2 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">{article.voraussetzungen.heading}</h2>
+      <ComparisonTable rows={article.voraussetzungen.rows} kriteriumLabel="Ausgangslage" ohneLabel="Konsequenz" twoColumn type="voraussetzung" />
+    </div>
+
+    <div id="journey" class="mt-14 scroll-mt-24">
+      <h2 class="mb-8 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{article.journeyHeading}</h2>
+      <div class="ml-1 space-y-6 border-l-2 border-border pl-8">
+        {article.journeyPhases.map((phase, i) => (
+          <div class="relative">
+            <span class="absolute -left-[37px] top-5 h-3 w-3 rounded-full border-2 border-background bg-foreground"></span>
+            <PhasenVergleich heading={phase.heading} takeaway={phase.takeaway} intro={phase.intro} columns={phase.columns} note={phase.note} />
+            {i === 1 && (
+              <div class="mt-6 overflow-x-auto">
+                <table class="w-full border-collapse text-left">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="border-b border-border px-4 py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">Objekt</th>
+                      <th scope="col" class="border-b border-border px-4 py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">Einstufung</th>
+                      <th scope="col" class="border-b border-border px-4 py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">Anmerkung</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {article.migrationTable.rows.map((row) => (
+                      <tr>
+                        <th scope="row" class="border-b border-border px-4 py-4 text-sm font-normal text-muted-foreground">{row.objekt}</th>
+                        <td class="border-b border-border px-4 py-4 text-sm font-semibold text-primary">{row.einstufung}</td>
+                        <td class="border-b border-border px-4 py-4 text-sm text-foreground">{row.anmerkung}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div id="kosten" class="mt-14 scroll-mt-24">
+      <h2 class="mb-8 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{article.kosten.heading}</h2>
+      <Steps title={article.kosten.stepsTitle} steps={article.kosten.steps} />
+      <div class="mt-8">
+        <h3 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">{article.kosten.tcoTitle}</h3>
+        <ComparisonTable rows={article.kosten.tcoRows} kriteriumLabel="Kostenposition" ohneLabel="openDesk" mitLabel="Microsoft 365" type="vergleich" />
+      </div>
+    </div>
+
+    <div id="souveraenitaet" class="mt-14 scroll-mt-24">
+      <Momentum title={article.souveraenitaet.heading} treiber={article.souveraenitaet.treiber} />
+    </div>
+
+    <div id="decision-fit" class="mt-14 scroll-mt-24">
+      <h2 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">{article.decisionFit.heading}</h2>
+      <ComparisonTable rows={article.decisionFit.rows} kriteriumLabel="Situation + Priorität" ohneLabel="Passende Option" mitLabel="Begründung" type="empfehlung" />
+    </div>
+
+    <div id="evidenz" class="mt-14 scroll-mt-24">
+      <h2 class="mb-8 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{article.evidenz.heading}</h2>
+      <EvidenceBlock dataGapNote={article.evidenz.dataGapNote} groups={article.evidenz.groups} />
+    </div>
+
+    <div id="faq" class="mt-14 scroll-mt-24">
+      <Faq items={article.faq} title="Häufige Fragen" />
+    </div>
+
+    <div class="mt-14">
+      <NextReads slugs={["was-kostet-digitale-souveraenitaet","europaeische-cloud-anbieter"]} />
+    </div>
+
+    <div class="mt-10">
+      <Related links={article.related.links} upHref={article.related.upHref} upLabel={article.related.upLabel} />
+    </div>
+
+    <div class="mt-16">
+      <CtaBar title={article.cta.title} subtitle={article.cta.subtitle} ctaLabel={article.cta.ctaLabel} eyebrow={article.cta.eyebrow} />
+    </div>
+  </Section>
+</Layout>

@@ -1,0 +1,128 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import Hero from "../../components/blocks/Hero.astro";
+import MediaSlot from "../../components/blocks/MediaSlot.astro";
+import TableOfContents from "../../components/blocks/TableOfContents.astro";
+import DataTable from "../../components/blocks/DataTable.astro";
+import ProfilList from "../../components/blocks/ProfilList.astro";
+import Related from "../../components/blocks/Related.astro";
+import NextReads from "../../components/blocks/NextReads.astro";
+import CtaBar from "../../components/blocks/CtaBar.astro";
+import { readTime } from "../../lib/readTime";
+import { articleImage } from "../../lib/articleImages";
+import { buildBreadcrumbSchema } from "../../lib/schemaOrg";
+import * as article from "../../lib/blog-articles/europaeische-cloud-anbieter";
+
+const pageUrl = new URL("/blog/europaeische-cloud-anbieter", Astro.site).href;
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "Blog", url: new URL("/blog", Astro.site).href },
+  { label: article.meta.title, url: pageUrl },
+]);
+
+const anbieter = article.profile.entries.map((e) => e.name);
+const sichtbar = article.scope.absaetze.slice(0, 2);
+const methodik = article.scope.absaetze.slice(2);
+
+// Reihenfolge nach Nutzerabsicht: erst Entscheidungshilfe, dann Überblick, dann Auswahlkriterien, dann Details.
+const tocItems = [
+  { id: "auswahl", label: article.auswahl.heading, highlight: true },
+  { id: "scan", label: article.scan.heading },
+  { id: "scope", label: article.scope.heading },
+  { id: "profile", label: article.profile.heading },
+];
+---
+
+<Layout
+  seoKey="blog-europaeische-cloud-anbieter"
+  title={`${article.meta.title} | Digital Souverän`}
+  description={article.meta.answerFirst.slice(0, 155)}
+  ogImage={articleImage("europaeische-cloud-anbieter", "og")}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <Section id="artikel">
+    <Breadcrumb items={[
+      { label: "Digital Souverän", href: "/" },
+      { label: "Blog", href: "/blog" },
+      { label: article.meta.title },
+    ]} />
+
+    <Hero title={article.meta.title} answerFirst={article.meta.answerFirst} tags={article.meta.tags} />
+
+    <div class="mt-10">
+      <MediaSlot src={articleImage("europaeische-cloud-anbieter", "hero")} alt={article.meta.title} />
+    </div>
+
+    <div class="mt-10">
+      <TableOfContents items={tocItems} readTime={readTime(article)} />
+    </div>
+
+    <div id="auswahl" class="mt-14 scroll-mt-24">
+      <DataTable
+        title={article.auswahl.heading}
+        headers={article.auswahl.headers}
+        rows={article.auswahl.rows}
+        caption={article.auswahl.caption}
+        anchorCols={[1]}
+        anchorNames={anbieter}
+      />
+    </div>
+
+    <div id="scan" class="mt-14 scroll-mt-24">
+      <DataTable
+        title={article.scan.heading}
+        headers={article.scan.headers}
+        rows={article.scan.rows}
+        caption={article.scan.caption}
+        anchorCols={[0]}
+        anchorNames={anbieter}
+      />
+    </div>
+
+    <div id="scope" class="mt-14 scroll-mt-24">
+      <div class="max-w-3xl">
+        <h2 class="mb-4 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{article.scope.heading}</h2>
+        <div class="space-y-4 leading-relaxed text-foreground/90" style="font-size: var(--text-body);">
+          {sichtbar.map((a) => (
+            <p><strong class="text-foreground">{a.label}</strong> {a.text}</p>
+          ))}
+        </div>
+        <details class="group mt-5 border-t border-dashed border-border pt-3">
+          <summary class="cursor-pointer font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground transition-colors hover:text-foreground">
+            Methodik-Hinweise <span class="group-open:hidden">anzeigen ▾</span><span class="hidden group-open:inline">ausblenden ▴</span>
+          </summary>
+          <div class="mt-4 space-y-4 leading-relaxed text-foreground/90" style="font-size: var(--text-body);">
+            {methodik.map((a) => (
+              <p><strong class="text-foreground">{a.label}</strong> {a.text}</p>
+            ))}
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div id="profile" class="mt-14 scroll-mt-24">
+      <ProfilList
+        title={article.profile.heading}
+        entries={article.profile.entries}
+        primaryLabel="Geeignet für"
+        collapseLabel="Technisches & kommerzielles Profil"
+        backHref="#scan"
+      />
+    </div>
+
+    <div class="mt-14">
+      <NextReads slugs={["opendesk-vs-microsoft-365", "co-existenz-statt-big-bang"]} />
+    </div>
+
+    <div class="mt-10">
+      <Related links={article.related.links} upHref={article.related.upHref} upLabel={article.related.upLabel} />
+    </div>
+
+    <div class="mt-16">
+      <CtaBar title={article.cta.title} subtitle={article.cta.subtitle} ctaLabel={article.cta.ctaLabel} eyebrow={article.cta.eyebrow} />
+    </div>
+  </Section>
+</Layout>

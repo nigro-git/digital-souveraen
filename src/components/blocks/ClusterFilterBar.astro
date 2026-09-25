@@ -1,0 +1,50 @@
+---
+interface Props { clusters: readonly string[]; label?: string; counts?: Record<string, number>; }
+const { clusters, label = "Nach Cluster filtern", counts } = Astro.props;
+---
+
+<div class="cluster-filter flex flex-wrap items-center gap-2 border-b border-border pb-6">
+  <span class="mr-1 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">{label}</span>
+  {clusters.map((cluster) => (
+    <button
+      type="button"
+      class="filter-chip rounded-full border border-border px-4 py-1.5 text-sm text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
+      data-cluster={cluster}
+      aria-pressed="false"
+    >
+      {cluster}{counts && <span class="ml-1.5 font-mono text-xs opacity-60">{counts[cluster]}</span>}
+    </button>
+  ))}
+</div>
+
+<style>
+  .filter-chip[aria-pressed="true"] {
+    border-color: var(--color-foreground);
+    background: var(--color-foreground);
+    color: var(--color-background);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".cluster-filter").forEach((bar) => {
+    const chips = Array.from(bar.querySelectorAll<HTMLButtonElement>(".filter-chip"));
+
+    function applyFilter() {
+      const active = chips.filter((c) => c.getAttribute("aria-pressed") === "true").map((c) => c.dataset.cluster);
+      const cards = document.querySelectorAll<HTMLElement>("[data-clusters]");
+      cards.forEach((card) => {
+        const cardClusters = (card.dataset.clusters ?? "").split("|");
+        const visible = active.length === 0 || active.some((a) => cardClusters.includes(a!));
+        card.hidden = !visible;
+      });
+    }
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const pressed = chip.getAttribute("aria-pressed") === "true";
+        chip.setAttribute("aria-pressed", String(!pressed));
+        applyFilter();
+      });
+    });
+  });
+</script>

@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  kicker: string;
+  format: string;
+  clusters: string[];
+  image?: string;
+  meta: string;
+  href: string;
+}
+const { title, kicker, format, clusters, image, meta, href } = Astro.props;
+---
+
+<a href={href} class="group grid gap-8 md:grid-cols-2 md:items-center" data-clusters={clusters.join("|")}>
+  {image ? (
+    <img src={image} alt="" class="aspect-video w-full rounded-lg object-cover" loading="eager" />
+  ) : (
+    <div class="flex aspect-video w-full items-center justify-center rounded-lg border-2 border-dashed border-border">
+      <span class="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">Kein Bild</span>
+    </div>
+  )}
+  <div>
+    <div class="mb-3 flex flex-wrap gap-2">
+      <span class="rounded-full bg-foreground px-3 py-1 font-mono text-[10px] uppercase tracking-[0.06em] text-background">{clusters[0]}</span>
+      <span class="rounded-full border border-foreground px-3 py-1 font-mono text-[10px] uppercase tracking-[0.06em] text-foreground">{format}</span>
+    </div>
+    <h3 class="mb-2 font-bold text-foreground transition-colors group-hover:text-primary" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{title}</h3>
+    <p class="mb-3 leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">{kicker}</p>
+    <p class="font-mono text-xs text-muted-foreground">{meta}</p>
+  </div>
+</a>

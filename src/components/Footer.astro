@@ -9,7 +9,8 @@ const year = new Date().getFullYear();
 
     <!-- Top: Logo + Tagline -->
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12 pb-10">
-      <a href="/">
+      <a href="/" class="flex flex-col items-start gap-1.5">
+        <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground">Powered by</span>
         <img src="/logo.svg" alt="DigiPub" class="h-6 w-auto dark:brightness-0 dark:invert" loading="lazy" />
       </a>
       <p class="text-muted-foreground text-sm max-w-sm">
@@ -37,6 +38,7 @@ const year = new Date().getFullYear();
           <li><a href="/" class="text-muted-foreground text-sm hover:text-foreground transition-colors">Home</a></li>
           <li><a href="/leistungen" class="text-muted-foreground text-sm hover:text-foreground transition-colors">Leistungen</a></li>
           <li><a href="/news" class="text-muted-foreground text-sm hover:text-foreground transition-colors">News</a></li>
+          <li><a href="/blog" class="text-muted-foreground text-sm hover:text-foreground transition-colors">Blog</a></li>
           <li><a href="/kontakt" class="text-muted-foreground text-sm hover:text-foreground transition-colors">Kontakt</a></li>
         </ul>
       </div>

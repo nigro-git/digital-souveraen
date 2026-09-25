@@ -1,13 +1,27 @@
 ---
-interface Props { title?: string; items: string[]; }
-const { title = "Situationen, in denen das hilft", items } = Astro.props;
+type Item = string | { text: string; lead?: string; highlight?: boolean };
+interface Props { title?: string; items: Item[]; intro?: string; numbered?: boolean; }
+const { title = "Situationen, in denen das hilft", items, intro, numbered = false } = Astro.props;
+const norm = items.map((i) => (typeof i === "string" ? { text: i, lead: undefined, highlight: false } : { text: i.text, lead: i.lead, highlight: !!i.highlight }));
 ---
 
 <div>
   <h2 class="mb-6 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">{title}</h2>
-  <ul class="space-y-3 border-l-2 border-border pl-5">
-    {items.map((item) => (
-      <li class="leading-relaxed text-foreground" style="font-size: var(--text-body);">{item}</li>
-    ))}
-  </ul>
+  {intro && <p class="mb-4 max-w-3xl leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">{intro}</p>}
+  {numbered ? (
+    <ol class="space-y-3 border-l-2 border-border pl-5">
+      {norm.map((item, i) => (
+        <li class="flex gap-3 leading-relaxed text-foreground" style="font-size: var(--text-body);">
+          <span class="font-mono text-sm tabular-nums text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
+          <span>{item.lead && <strong class="text-foreground">{item.lead} </strong>}{item.text}</span>
+        </li>
+      ))}
+    </ol>
+  ) : (
+    <ul class="space-y-3 border-l-2 border-border pl-5">
+      {norm.map((item) => (
+        <li class:list={["leading-relaxed text-foreground", item.highlight && "-ml-5 border-l-2 border-[#c8860a] bg-[#c8860a]/5 py-2 pl-[18px]"]} style="font-size: var(--text-body);">{item.lead && <strong>{item.lead} </strong>}{item.text}</li>
+      ))}
+    </ul>
+  )}
 </div>

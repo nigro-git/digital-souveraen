@@ -1,13 +1,23 @@
 ---
-interface Props { title: string; geeignet: string[]; nichtGeeignet: string[]; }
-const { title, geeignet, nichtGeeignet } = Astro.props;
+interface Props {
+  title: string;
+  geeignet: string[];
+  nichtGeeignet: string[];
+  /** Überschreibt die Spaltenüberschrift "Gut geeignet" (z.B. "Nutzen"). */
+  geeignetLabel?: string;
+  /** Überschreibt die Spaltenüberschrift "Weniger geeignet" (z.B. "Grenzen"). */
+  nichtGeeignetLabel?: string;
+  /** true = zweite Spalte gleichrangig darstellen (z.B. Grenzen einer Fallstudie sind ebenso wichtig wie die Übertragbarkeit). */
+  emphasizeSecond?: boolean;
+}
+const { title, geeignet, nichtGeeignet, geeignetLabel = "Gut geeignet", nichtGeeignetLabel = "Weniger geeignet", emphasizeSecond = false } = Astro.props;
 ---
 
 <div>
   <h2 class="mb-8 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{title}</h2>
   <div class="grid gap-8 sm:grid-cols-2">
     <div>
-      <p class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-primary">Gut geeignet</p>
+      <p class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-primary">{geeignetLabel}</p>
       <ul class="space-y-3">
         {geeignet.map((item) => (
           <li class="leading-relaxed text-foreground" style="font-size: var(--text-body);">{item}</li>
@@ -15,10 +25,10 @@ const { title, geeignet, nichtGeeignet } = Astro.props;
       </ul>
     </div>
     <div>
-      <p class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">Weniger geeignet</p>
+      <p class:list={["mb-4 font-mono text-xs uppercase tracking-[0.15em]", emphasizeSecond ? "text-[#c8860a]" : "text-muted-foreground"]}>{nichtGeeignetLabel}</p>
       <ul class="space-y-3">
         {nichtGeeignet.map((item) => (
-          <li class="leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">{item}</li>
+          <li class:list={["leading-relaxed", emphasizeSecond ? "text-foreground" : "text-muted-foreground"]} style="font-size: var(--text-body);">{item}</li>
         ))}
       </ul>
     </div>

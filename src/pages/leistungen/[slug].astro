@@ -78,7 +78,7 @@ const andereLeistungen = leistungen.filter((e) => e.slug !== l.slug);
 
     <div class="mt-14">
       <h2 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">Was sich verändert</h2>
-      <ComparisonTable rows={l.vergleich} caption={l.vergleichCaption} />
+      <ComparisonTable rows={l.vergleich} caption={l.vergleichCaption} type="vergleich" />
     </div>
 
     <div class="mt-14 max-w-3xl">
@@ -115,7 +115,7 @@ const andereLeistungen = leistungen.filter((e) => e.slug !== l.slug);
     </div>
 
     <div class="mt-16">
-      <CtaBar title={l.ctaLabel} subtitle="Kostenloses Erstgespräch – eine Einschätzung Ihrer konkreten Ausgangslage, kein Verkaufsgespräch." ctaLabel={l.ctaLabel} />
+      <CtaBar title={l.ctaLabel} subtitle="Eine Einschätzung Ihrer konkreten Ausgangslage, kein Verkaufsgespräch." ctaLabel={l.ctaLabel} />
     </div>
   </Section>
 </Layout>

@@ -1,0 +1,111 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import Hero from "../../components/blocks/Hero.astro";
+import MediaSlot from "../../components/blocks/MediaSlot.astro";
+import TableOfContents from "../../components/blocks/TableOfContents.astro";
+import Context from "../../components/blocks/Context.astro";
+import DataTable from "../../components/blocks/DataTable.astro";
+import ProfilList from "../../components/blocks/ProfilList.astro";
+import Related from "../../components/blocks/Related.astro";
+import NextReads from "../../components/blocks/NextReads.astro";
+import CtaBar from "../../components/blocks/CtaBar.astro";
+import { readTime } from "../../lib/readTime";
+import { articleImage } from "../../lib/articleImages";
+import { buildBreadcrumbSchema } from "../../lib/schemaOrg";
+import * as article from "../../lib/blog-articles/unternehmen-digital-souveraen";
+
+const pageUrl = new URL("/blog/welche-unternehmen-sind-bereits-digital-souveraen", Astro.site).href;
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "Blog", url: new URL("/blog", Astro.site).href },
+  { label: article.meta.title, url: pageUrl },
+]);
+
+// Reihenfolge nach Nutzerabsicht (wie beim Cloud-Anbieter-Listicle): Entscheidungshilfe, Überblick, Auswahlkriterien, Details.
+const tocItems = [
+  { id: "auswahl", label: article.auswahl.heading, highlight: true },
+  { id: "scan", label: article.scan.heading },
+  { id: "scope", label: article.scope.heading },
+  { id: "faelle", label: article.faelle.heading },
+];
+---
+
+<Layout
+  seoKey="blog-welche-unternehmen-sind-bereits-digital-souveraen"
+  title={`${article.meta.title} | Digital Souverän`}
+  description={article.meta.answerFirst.slice(0, 155)}
+  ogImage={articleImage("welche-unternehmen-sind-bereits-digital-souveraen", "og")}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <Section id="artikel">
+    <Breadcrumb items={[
+      { label: "Digital Souverän", href: "/" },
+      { label: "Blog", href: "/blog" },
+      { label: article.meta.title },
+    ]} />
+
+    <Hero title={article.meta.title} answerFirst={article.meta.answerFirst} tags={article.meta.tags} />
+
+    <div class="mt-10">
+      <MediaSlot src={articleImage("welche-unternehmen-sind-bereits-digital-souveraen", "hero")} alt={article.meta.title} />
+    </div>
+
+    <div class="mt-10">
+      <TableOfContents items={tocItems} readTime={readTime(article)} />
+    </div>
+
+    <div id="auswahl" class="mt-14 scroll-mt-24">
+      <DataTable
+        title={article.auswahl.heading}
+        headers={article.auswahl.headers}
+        rows={article.auswahl.rows}
+        anchorCols={[1]}
+        anchorMap={article.anchorMap}
+      />
+    </div>
+
+    <div id="scan" class="mt-14 scroll-mt-24">
+      <DataTable
+        title={article.scan.heading}
+        headers={article.scan.headers}
+        rows={article.scan.rows}
+        anchorCols={[0]}
+        anchorMap={article.anchorMap}
+      />
+    </div>
+
+    <div id="scope" class="mt-14 scroll-mt-24">
+      <Context tone="article" headline={article.scope.heading}>
+        <div class="space-y-4">
+          {article.scope.absaetze.map((a) => (
+            <p><strong class="text-foreground">{a.label}</strong> {a.text}</p>
+          ))}
+        </div>
+      </Context>
+      <div class="mt-8">
+        <Context tone="article" headline={article.nichtZeigt.heading}>
+          <p>{article.nichtZeigt.text}</p>
+        </Context>
+      </div>
+    </div>
+
+    <div id="faelle" class="mt-14 scroll-mt-24">
+      <ProfilList title={article.faelle.heading} entries={article.faelle.entries} backHref="#scan" />
+    </div>
+
+    <div class="mt-14">
+      <NextReads slugs={["schwarz-gruppe-souveraener-arbeitsplatz", "sana-kliniken-souveraene-cloud"]} />
+    </div>
+
+    <div class="mt-10">
+      <Related links={article.related.links} upHref={article.related.upHref} upLabel={article.related.upLabel} />
+    </div>
+
+    <div class="mt-16">
+      <CtaBar title={article.cta.title} subtitle={article.cta.subtitle} ctaLabel={article.cta.ctaLabel} eyebrow={article.cta.eyebrow} />
+    </div>
+  </Section>
+</Layout>

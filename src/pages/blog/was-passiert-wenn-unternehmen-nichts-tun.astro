@@ -1,0 +1,101 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import Hero from "../../components/blocks/Hero.astro";
+import MediaSlot from "../../components/blocks/MediaSlot.astro";
+import TableOfContents from "../../components/blocks/TableOfContents.astro";
+import Situations from "../../components/blocks/Situations.astro";
+import Context from "../../components/blocks/Context.astro";
+import Momentum from "../../components/blocks/Momentum.astro";
+import Related from "../../components/blocks/Related.astro";
+import NextReads from "../../components/blocks/NextReads.astro";
+import { readTime } from "../../lib/readTime";
+import CtaBar from "../../components/blocks/CtaBar.astro";
+import { articleImage } from "../../lib/articleImages";
+import { buildBreadcrumbSchema } from "../../lib/schemaOrg";
+import * as article from "../../lib/blog-articles/was-passiert-wenn-unternehmen-nichts-tun";
+
+const pageUrl = new URL("/blog/was-passiert-wenn-unternehmen-nichts-tun", Astro.site).href;
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "Blog", url: new URL("/blog", Astro.site).href },
+  { label: article.meta.title, url: pageUrl },
+]);
+
+const tocItems = [
+  { id: "kernaussagen", label: article.kernaussagen.heading },
+  { id: "grundlage", label: "Grundlage dieser Einschätzung" },
+  { id: "risiken", label: "Wo der Druck tatsächlich wächst" },
+  { id: "gegenargumente", label: article.gegenargumente.heading },
+  { id: "konsequenz", label: "Der erste sinnvolle Schritt", highlight: true },
+];
+---
+
+<Layout
+  seoKey="blog-was-passiert-wenn-unternehmen-nichts-tun"
+  title={`${article.meta.title} | Digital Souverän`}
+  description={article.meta.answerFirst.slice(0, 155)}
+  ogImage={articleImage("was-passiert-wenn-unternehmen-nichts-tun", "og")}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <Section id="artikel">
+    <Breadcrumb items={[
+      { label: "Digital Souverän", href: "/" },
+      { label: "Blog", href: "/blog" },
+      { label: article.meta.title },
+    ]} />
+
+    <Hero title={article.meta.title} answerFirst={article.meta.answerFirst} tags={article.meta.tags} />
+
+    <div class="mt-10">
+      <MediaSlot src={articleImage("was-passiert-wenn-unternehmen-nichts-tun", "hero")} alt={article.meta.title} />
+    </div>
+
+    <div class="mt-10">
+      <TableOfContents items={tocItems} readTime={readTime(article)} />
+    </div>
+
+    <div id="kernaussagen" class="mt-14 scroll-mt-24">
+      <Situations title={article.kernaussagen.heading} items={article.kernaussagen.items} />
+    </div>
+
+    <div id="grundlage" class="mt-14 scroll-mt-24">
+      <Context tone="article" headline={article.grundlage.heading}>
+        <p>{article.grundlage.text}</p>
+      </Context>
+    </div>
+
+    <div id="risiken" class="mt-14 scroll-mt-24">
+      <Momentum title={article.risiken.heading} treiber={article.risiken.treiber} cols={2} hinweis={article.risiken.hinweis} />
+    </div>
+
+    <div id="gegenargumente" class="mt-14 scroll-mt-24">
+      <Context tone="article" headline={article.gegenargumente.heading}>
+        <div class="space-y-4">
+          {article.gegenargumente.absaetze.map((a) => <p>{a}</p>)}
+          <p><strong class="text-foreground">{article.gegenargumente.syntheseLabel}</strong> {article.gegenargumente.synthese}</p>
+        </div>
+      </Context>
+    </div>
+
+    <div id="konsequenz" class="mt-14 scroll-mt-24">
+      <Context tone="article" headline={article.konsequenz.heading}>
+        <p>{article.konsequenz.text}</p>
+      </Context>
+    </div>
+
+    <div class="mt-14">
+      <NextReads slugs={["was-ist-digitale-souveraenitaet-fuer-unternehmen","was-kostet-digitale-souveraenitaet"]} />
+    </div>
+
+    <div class="mt-10">
+      <Related links={article.related.links} upHref={article.related.upHref} upLabel={article.related.upLabel} />
+    </div>
+
+    <div class="mt-16">
+      <CtaBar title={article.cta.title} subtitle={article.cta.subtitle} ctaLabel={article.cta.ctaLabel} eyebrow={article.cta.eyebrow} />
+    </div>
+  </Section>
+</Layout>

@@ -1,0 +1,113 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import Hero from "../../components/blocks/Hero.astro";
+import MediaSlot from "../../components/blocks/MediaSlot.astro";
+import TableOfContents from "../../components/blocks/TableOfContents.astro";
+import ComparisonTable from "../../components/blocks/ComparisonTable.astro";
+import Situations from "../../components/blocks/Situations.astro";
+import Context from "../../components/blocks/Context.astro";
+import Steps from "../../components/blocks/Steps.astro";
+import Faq from "../../components/blocks/Faq.astro";
+import Related from "../../components/blocks/Related.astro";
+import NextReads from "../../components/blocks/NextReads.astro";
+import { readTime } from "../../lib/readTime";
+import CtaBar from "../../components/blocks/CtaBar.astro";
+import { articleImage } from "../../lib/articleImages";
+import { buildBreadcrumbSchema, buildFaqPageSchema } from "../../lib/schemaOrg";
+import * as article from "../../lib/blog-articles/co-existenz-statt-big-bang";
+
+const pageUrl = new URL("/blog/co-existenz-statt-big-bang", Astro.site).href;
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "Blog", url: new URL("/blog", Astro.site).href },
+  { label: article.meta.title, url: pageUrl },
+]);
+const faqSchema = buildFaqPageSchema(article.fehlerbehebung.items);
+
+const tocItems = [
+  { id: "voraussetzungen", label: article.voraussetzungen.heading },
+  { id: "uebersicht", label: article.uebersicht.heading },
+  { id: "schritte", label: article.schritte.heading, highlight: true },
+  { id: "fehlerbehebung", label: article.fehlerbehebung.heading },
+  { id: "abschluss", label: article.abschluss.heading },
+];
+---
+
+<Layout
+  seoKey="blog-co-existenz-statt-big-bang"
+  title={`${article.meta.title} | Digital Souverän`}
+  description={article.meta.answerFirst.slice(0, 155)}
+  ogImage={articleImage("co-existenz-statt-big-bang", "og")}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <Section id="artikel">
+    <Breadcrumb items={[
+      { label: "Digital Souverän", href: "/" },
+      { label: "Blog", href: "/blog" },
+      { label: article.meta.title },
+    ]} />
+
+    <Hero title={article.meta.title} answerFirst={article.meta.answerFirst} tags={article.meta.tags} />
+
+    <div class="mt-10">
+      <MediaSlot src={articleImage("co-existenz-statt-big-bang", "hero")} alt={article.meta.title} />
+    </div>
+
+    <div class="mt-10">
+      <TableOfContents items={tocItems} readTime={readTime(article)} highlightLabel="Kernteil" />
+    </div>
+
+    <div id="voraussetzungen" class="mt-14 scroll-mt-24">
+      <h2 class="mb-4 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{article.voraussetzungen.heading}</h2>
+      <p class="mb-8 max-w-3xl leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">{article.voraussetzungen.intro}</p>
+      <h3 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">{article.voraussetzungen.entscheidungHeading}</h3>
+      <ComparisonTable
+        rows={article.voraussetzungen.entscheidung}
+        twoColumn
+        type="empfehlung"
+        kriteriumLabel="Ausgangslage"
+        ohneLabel="Empfohlener Startpunkt"
+      />
+      <div class="mt-10">
+        <Situations title={article.voraussetzungen.benoetigtHeading} items={article.voraussetzungen.benoetigt} />
+      </div>
+      <div class="mt-10">
+        <Context tone="article" headline={article.voraussetzungen.risikoHeading}>
+          <p>{article.voraussetzungen.risiko}</p>
+        </Context>
+      </div>
+    </div>
+
+    <div id="uebersicht" class="mt-14 scroll-mt-24">
+      <Situations title={article.uebersicht.heading} items={article.uebersicht.items} numbered />
+    </div>
+
+    <div id="schritte" class="mt-14 scroll-mt-24">
+      <Steps title={article.schritte.heading} steps={article.schritte.steps} />
+    </div>
+
+    <div id="fehlerbehebung" class="mt-14 scroll-mt-24">
+      <Faq items={article.fehlerbehebung.items} title={article.fehlerbehebung.heading} />
+    </div>
+
+    <div id="abschluss" class="mt-14 scroll-mt-24">
+      <Situations title={article.abschluss.heading} intro={article.abschluss.intro} items={article.abschluss.items} />
+    </div>
+
+    <div class="mt-14">
+      <NextReads slugs={["opendesk-vs-microsoft-365","europaeische-cloud-anbieter"]} />
+    </div>
+
+    <div class="mt-10">
+      <Related links={article.related.links} upHref={article.related.upHref} upLabel={article.related.upLabel} />
+    </div>
+
+    <div class="mt-16">
+      <CtaBar title={article.cta.title} subtitle={article.cta.subtitle} ctaLabel={article.cta.ctaLabel} eyebrow={article.cta.eyebrow} />
+    </div>
+  </Section>
+</Layout>

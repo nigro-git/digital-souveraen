@@ -1,0 +1,77 @@
+---
+interface Props {
+  headers: string[];
+  rows: string[][];
+  caption?: string;
+  title?: string;
+  /** Spaltenindizes, deren (kommaseparierte) Namen aus `anchorNames` als Sprunglink auf `#<slug>` dargestellt werden. */
+  anchorCols?: number[];
+  anchorNames?: string[];
+  /** Abweichende Beschriftung → Anker-ID (z.B. Kurzname in der Tabelle, Langname im Eintrag). */
+  anchorMap?: Record<string, string>;
+}
+const { headers, rows, caption, title, anchorCols = [], anchorNames = [], anchorMap = {} } = Astro.props;
+const slug = (n: string) => n.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const known = new Set(anchorNames);
+const mdLink = /^\[(.+)\]\((.+)\)$/;
+const lookup = (name: string) => (anchorMap[name] ? `#${anchorMap[name]}` : known.has(name) ? `#${slug(name)}` : undefined);
+// Zellen im Format [Text](/pfad) werden zu Links; in anchorCols werden kommaseparierte Namen zu Sprunglinks.
+const segs = (cell: string, col: number): { text: string; href: string | undefined }[] => {
+  const m = cell.match(mdLink);
+  if (m) return [{ text: m[1], href: m[2] }];
+  if (anchorCols.includes(col)) return cell.split(", ").map((part) => ({ text: part, href: lookup(part) }));
+  return [{ text: cell, href: undefined }];
+};
+---
+
+<figure class="m-0">
+  {title && <h2 class="mb-6 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{title}</h2>}
+  <!-- Ab lg: echte Tabelle -->
+  <div class="hidden overflow-x-auto lg:block">
+    <table class="w-full border-collapse text-left">
+      <thead>
+        <tr>
+          {headers.map((h) => (
+            <th scope="col" class="border-b border-border px-3 py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">{h}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr>
+            {row.map((cell, c) => {
+              const inner = segs(cell, c).map((p, k) => (
+                <Fragment>{k > 0 && ", "}{p.href ? <a href={p.href} class="font-semibold text-primary hover:underline">{p.text}</a> : p.text}</Fragment>
+              ));
+              return c === 0
+                ? <th scope="row" class="border-b border-border px-3 py-4 align-top text-sm font-bold text-foreground">{inner}</th>
+                : <td class="border-b border-border px-3 py-4 align-top text-sm text-foreground">{inner}</td>;
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Unter lg: gestapelte Karten -->
+  <div class="flex flex-col gap-3 lg:hidden">
+    {rows.map((row) => (
+      <div class="rounded-lg border border-border p-4">
+        <p class="mb-3 font-bold text-foreground">
+          {segs(row[0], 0).map((p, k) => <Fragment>{k > 0 && ", "}{p.href ? <a href={p.href} class="text-primary hover:underline">{p.text}</a> : p.text}</Fragment>)}
+        </p>
+        <dl class="space-y-2">
+          {row.slice(1).map((cell, i) => (
+            <div>
+              <dt class="font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">{headers[i + 1]}</dt>
+              <dd class="text-sm text-foreground">
+                {segs(cell, i + 1).map((p, k) => <Fragment>{k > 0 && ", "}{p.href ? <a href={p.href} class="font-semibold text-primary hover:underline">{p.text}</a> : p.text}</Fragment>)}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    ))}
+  </div>
+  {caption && <figcaption class="mt-3 max-w-3xl text-sm text-muted-foreground">{caption}</figcaption>}
+</figure>

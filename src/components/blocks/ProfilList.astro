@@ -1,0 +1,107 @@
+---
+/**
+ * Eintragsliste für Listicles. Ein Eintrag kann zwei Formen haben (beide im selben Block):
+ *  - Profil: `fields` (Label/Text-Raster, z.B. 5-Felder-Profil je Anbieter)
+ *  - Kompakt: `text` (Absätze) + optionale Hinweise, Offenlegung und Verweis auf einen Vertiefungsartikel
+ */
+interface Field { label: string; text: string; }
+interface Entry {
+  name: string;
+  /** Eigene Anker-ID (sonst aus dem Namen erzeugt). */
+  id?: string;
+  /** Kleine Kennzeichnung neben dem Namen, z.B. Branche und Status. */
+  meta?: string[];
+  fields?: Field[];
+  text?: string[];
+  hinweis?: string;
+  offenlegung?: string;
+  link?: { href: string; label: string };
+}
+interface Props {
+  title: string;
+  intro?: string;
+  entries: Entry[];
+  /** Profil-Form: Feld, das zuerst und hervorgehoben erscheint (entscheidungsrelevant). */
+  primaryLabel?: string;
+  /** Profil-Form: Feld, das eingeklappt wird (Detailtiefe auf Abruf). */
+  collapseLabel?: string;
+  /** Rücksprung-Anker, z.B. "#scan". */
+  backHref?: string;
+  backLabel?: string;
+  /** Sprungleiste über der Liste (bei langen Listen sinnvoll). */
+  jumpNav?: boolean;
+}
+const { title, intro, entries, primaryLabel, collapseLabel, backHref, backLabel = "↑ Zur Übersicht", jumpNav = true } = Astro.props;
+const slug = (n: string) => n.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const idOf = (e: Entry) => e.id ?? slug(e.name);
+---
+
+<div>
+  <h2 class="mb-4 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{title}</h2>
+  {intro && <p class="mb-6 max-w-3xl leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">{intro}</p>}
+  {jumpNav && (
+    <nav aria-label="Einträge" class="mb-6 flex flex-wrap gap-2">
+      {entries.map((e) => (
+        <a href={`#${idOf(e)}`} class="rounded-full border border-border px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:border-foreground hover:text-foreground">{e.name}</a>
+      ))}
+    </nav>
+  )}
+  <div class="grid border-l border-t border-border">
+    {entries.map((e) => {
+      const primary = e.fields?.find((f) => f.label === primaryLabel);
+      const collapsed = e.fields?.find((f) => f.label === collapseLabel);
+      const rest = (e.fields ?? []).filter((f) => f !== primary && f !== collapsed);
+      return (
+        <article id={idOf(e)} class="scroll-mt-24 border-b border-r border-border p-6">
+          <div class="mb-4 flex items-baseline justify-between gap-4">
+            <h3 class="font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{e.name}</h3>
+            {backHref && <a href={backHref} class="shrink-0 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground">{backLabel}</a>}
+          </div>
+          {e.meta && e.meta.length > 0 && (
+            <p class="-mt-2 mb-4 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
+              {e.meta.map((m) => <span>{m}</span>)}
+            </p>
+          )}
+          {primary && (
+            <div class="mb-5 border-l-2 border-primary bg-primary/5 py-3 pl-4 pr-3">
+              <p class="mb-1 font-mono text-xs uppercase tracking-[0.1em] text-primary">{primary.label}</p>
+              <p class="leading-relaxed text-foreground" style="font-size: var(--text-body);">{primary.text}</p>
+            </div>
+          )}
+          {rest.length > 0 && (
+            <dl class="grid gap-x-8 gap-y-4 md:grid-cols-[11rem_1fr]">
+              {rest.map((f) => (
+                <>
+                  <dt class="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground md:pt-1">{f.label}</dt>
+                  <dd class="leading-relaxed text-foreground" style="font-size: var(--text-body);">{f.text}</dd>
+                </>
+              ))}
+            </dl>
+          )}
+          {collapsed && (
+            <details class="group mt-4 border-t border-dashed border-border pt-3">
+              <summary class="cursor-pointer font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground transition-colors hover:text-foreground">
+                {collapsed.label} <span class="group-open:hidden">anzeigen ▾</span><span class="hidden group-open:inline">ausblenden ▴</span>
+              </summary>
+              <p class="mt-3 leading-relaxed text-foreground" style="font-size: var(--text-body);">{collapsed.text}</p>
+            </details>
+          )}
+          {e.text && e.text.length > 0 && (
+            <div class="max-w-3xl space-y-3 leading-relaxed text-foreground/90" style="font-size: var(--text-body);">
+              {e.text.map((t) => <p>{t}</p>)}
+            </div>
+          )}
+          {e.hinweis && <p class="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground">{e.hinweis}</p>}
+          {e.offenlegung && (
+            <p class="mt-4 max-w-3xl border-l-2 border-[#c8860a] bg-[#c8860a]/5 py-2 pl-4 pr-3 text-sm leading-relaxed text-foreground"><strong>Offenlegung:</strong> {e.offenlegung}</p>
+          )}
+          {e.link && (
+            <p class="mt-4">
+              <a href={e.link.href} class="inline-flex items-center gap-2 rounded-lg border border-foreground px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-foreground hover:text-background">→ {e.link.label}</a>
+            </p>
+          )}
+        </article>
+      );
+    })}
+  </div>
+</div>

@@ -1,11 +1,20 @@
 ---
-interface Props { headline: string; }
-const { headline } = Astro.props;
+interface Props {
+  headline: string;
+  /** Offenlegungs-/Quellenhinweis unter dem Text (z.B. "Diese Einordnung stammt aus einem Anbieter-Interview"). */
+  hinweis?: string;
+  /** "article" = Fließtext in voller Textfarbe statt gedämpftem Grau (lange Lesetexte). */
+  tone?: "article";
+}
+const { headline, hinweis, tone } = Astro.props;
 ---
 
 <div class="max-w-3xl">
   <h2 class="mb-4 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{headline}</h2>
-  <div class="leading-relaxed text-muted-foreground" style="font-size: var(--text-body);">
+  <div class:list={["leading-relaxed", tone === "article" ? "text-foreground/90" : "text-muted-foreground"]} style="font-size: var(--text-body);">
     <slot />
   </div>
+  {hinweis && (
+    <p class="mt-4 border-l-2 border-[#c8860a] bg-[#c8860a]/5 py-2 pl-4 pr-3 text-sm leading-relaxed text-foreground"><strong>Offenlegung:</strong> {hinweis}</p>
+  )}
 </div>

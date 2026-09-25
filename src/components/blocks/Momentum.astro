@@ -1,12 +1,13 @@
 ---
 interface Treiber { label: string; text: string; highlight?: boolean; }
-interface Props { title: string; treiber: Treiber[]; hinweis?: string; }
-const { title, treiber, hinweis } = Astro.props;
+interface Props { title: string; treiber: Treiber[]; hinweis?: string; cols?: 2 | 3 | 4; }
+const { title, treiber, hinweis, cols = 3 } = Astro.props;
+const colsClass = { 2: "sm:grid-cols-2", 3: "sm:grid-cols-3", 4: "sm:grid-cols-2 lg:grid-cols-4" }[cols];
 ---
 
 <div>
   <h2 class="mb-8 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{title}</h2>
-  <div class="grid border-l border-t border-border sm:grid-cols-3">
+  <div class:list={["grid border-l border-t border-border", colsClass]}>
     {treiber.map((t) => (
       <div class:list={["border-b border-r border-border p-6", t.highlight && "bg-primary/5"]}>
         <p class="mb-3 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">{t.label}</p>

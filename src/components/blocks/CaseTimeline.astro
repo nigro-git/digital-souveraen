@@ -1,0 +1,25 @@
+---
+interface Props {
+  /** Stufen von früh nach spät. */
+  stages: string[];
+  /** Index der Stufe, auf der sich der Fall befindet. */
+  active: number;
+  caseName: string;
+  title?: string;
+}
+const { stages, active, caseName, title = "Projektstatus zum Zeitpunkt dieser Fallstudie" } = Astro.props;
+---
+
+<div>
+  <p class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">{title}</p>
+  <ol class="grid grid-cols-2 gap-y-6 sm:grid-cols-4">
+    {stages.map((stage, i) => (
+      <li class="relative pt-5">
+        <span class:list={["absolute left-0 right-0 top-[5px] h-px", i <= active ? "bg-foreground" : "bg-border"]} aria-hidden="true"></span>
+        <span class:list={["absolute left-0 top-0 h-[11px] w-[11px] rounded-full border-2", i === active ? "border-primary bg-primary" : i < active ? "border-foreground bg-foreground" : "border-border bg-background"]} aria-hidden="true"></span>
+        <span class:list={["block pr-3 text-sm", i === active ? "font-bold text-foreground" : "text-muted-foreground"]} aria-current={i === active ? "step" : undefined}>{stage}</span>
+        {i === active && <span class="mt-1 block font-mono text-[11px] uppercase tracking-[0.1em] text-primary">{caseName}</span>}
+      </li>
+    ))}
+  </ol>
+</div>
