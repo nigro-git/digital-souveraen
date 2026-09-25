@@ -16,7 +16,7 @@ const rawNews: NewsItem[] = [
     title: "Bitkom fordert klare Souveränitäts-Kriterien bei EU-Vergaberechtsreform",
     kicker: "Bitkom: Digitale Souveränität entscheidet sich auch beim größten Kunden Europas – dem Staat.",
     date: "September 2026",
-    publishDate: "2026-09-24",
+    publishDate: "2026-09-25",
     body: "Der Digitalverband Bitkom hat die von der EU-Kommission vorgeschlagene Reform des digitalen Vergaberechts grundsätzlich begrüßt, fordert aber europaweit einheitliche Kriterien für digitale Souveränität bei öffentlichen Ausschreibungen. Bitkom-Präsident Ralf Wintergerst wird mit der Aussage zitiert, ob Europa digital souveräner werde, entscheide sich auch am Beschaffungsverhalten der öffentlichen Hand als Großkunde. Der Verband mahnt, die Reform müsse genutzt werden, um praxistaugliche Standards für die Resilienz staatlicher Institutionen zu verankern – uneinheitliche nationale Kriterien würden sonst Rechtsunsicherheit schaffen und eine sinnvolle Abwägung von Aufwand und Nutzen erschweren.\n\nFür Unternehmen, die öffentliche Aufträge anstreben oder mit der öffentlichen Hand zusammenarbeiten, ist das ein Hinweis darauf, dass sich die Kriterienlandschaft für \"digitale Souveränität als Vergabekriterium\" in den kommenden Monaten weiter ausdifferenzieren dürfte – mit noch nicht absehbarem Ausgang der Verhandlungen.",
     source: "Bitkom e. V., Pressemitteilung, ca. 8.–12. September 2026",
   },
