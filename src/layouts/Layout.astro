@@ -57,6 +57,23 @@ const ogImageUrl = ogImage.startsWith("http") ? new URL(ogImage) : new URL(ogIma
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
     <title>{title}</title>
+    <script is:inline>
+      // Matomo (selbst gehostet, ohne Cookies) – nur auf der Live-Domain, nicht auf Staging oder lokal
+      if (location.hostname === "www.digital-souveraen.com") {
+        var _paq = (window._paq = window._paq || []);
+        _paq.push(["disableCookies"]);
+        _paq.push(["setDoNotTrack", true]);
+        _paq.push(["trackPageView"]);
+        _paq.push(["enableLinkTracking"]);
+        (function () {
+          var u = "https://analytics.digital-souveraen.com/";
+          _paq.push(["setTrackerUrl", u + "matomo.php"]);
+          _paq.push(["setSiteId", "1"]);
+          var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0];
+          g.async = true; g.src = u + "matomo.js"; s.parentNode.insertBefore(g, s);
+        })();
+      }
+    </script>
   </head>
   <body>
     <Header />
