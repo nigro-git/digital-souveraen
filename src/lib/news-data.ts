@@ -12,6 +12,15 @@ export interface NewsItem {
 
 const rawNews: NewsItem[] = [
   {
+    slug: "bmds-foerderung-digital-tech-to-product-kmu",
+    title: "Bis zu 5 Millionen Euro: BMDS fördert souveräne Digitalprodukte von KMU",
+    kicker: "Mit „Digital-Tech-to-Product“ fördert das Bundesdigitalministerium marktnahe Entwicklungen in KI, Daten, Cybersicherheit und Cloud – Projektskizzen bis 11. Oktober 2026.",
+    date: "28. September 2026",
+    publishDate: "2026-09-28",
+    body: "KMU und Start-ups können beim Bundesministerium für Digitales und Staatsmodernisierung (BMDS) bis zu 5 Millionen Euro pro Projekt für die Entwicklung souveräner digitaler Produkte beantragen. Das Förderprogramm „Digital-Tech-to-Product“ startete am 17. September 2026. Projektskizzen für den ersten Förderaufruf müssen bis zum 11. Oktober 2026 eingereicht werden.\n\nGefördert werden vier Technologiefelder: Künstliche Intelligenz, Datenökosysteme, Cybersicherheit und Kryptografie sowie Cloud- und Edge-Computing. Im Cloud-Bereich nennt das BMDS unter anderem interoperable Cloud-Stacks, europäische Lieferketten und Confidential Computing. Die Technologien sollen bis zur Marktreife (Technology Readiness Level 8) entwickelt werden. Laut dem Start-up-Portal Startbase ist die geringere Abhängigkeit von außereuropäischen Anbietern ein zentrales Auswahlkriterium.\n\nDas Verfahren ist zweistufig und läuft über das Portal easy-Online, Projektträger ist TÜV Rheinland. Die Projekte dauern höchstens 24 Monate und starten frühestens am 1. Januar 2027. Die Förderquote hängt von Projektart und Antragsteller ab.\n\nFür Mittelständler, die eigene Software oder Cloud-Dienste entwickeln, ist das Programm eine Chance, Souveränität als Produktmerkmal zu finanzieren. Die knappe Frist spricht dafür, jetzt zu prüfen, ob ein Vorhaben passt.",
+    source: "BMDS, September 2026",
+  },
+  {
     slug: "bitkom-souveraenitaets-kriterien-eu-vergaberecht",
     title: "Bitkom fordert klare Souveränitäts-Kriterien bei EU-Vergaberechtsreform",
     kicker: "Bitkom: Digitale Souveränität entscheidet sich auch beim größten Kunden Europas – dem Staat.",
