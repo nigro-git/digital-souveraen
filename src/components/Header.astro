@@ -5,8 +5,12 @@ const nav = [
   {
     label: "Leistungen",
     href: "/leistungen",
-    teaser: "Europäische Alternativen, einzeln buchbar",
-    children: leistungen.map((l) => ({ label: l.title, href: `/leistungen/${l.slug}` })),
+    teaser: "Souveräne europäische Alternativen",
+    // Dropdown-Label kuerzer als der volle Seitentitel: "-Implementierung"/"-Einrichtung" weglassen.
+    children: [
+      ...leistungen.map((l) => ({ label: l.title.replace(/-(Implementierung|Einrichtung)$/, ""), href: `/leistungen/${l.slug}` })),
+      { label: "All-in-One-Lösung (coming soon)", href: null },
+    ],
   },
   { label: "News", href: "/news" },
   { label: "Blog", href: "/blog" },
@@ -43,13 +47,17 @@ const currentPath = Astro.url.pathname;
                   <p class="border-b border-gray-100 px-3 pb-2 pt-1.5 font-mono text-[11px] leading-snug text-gray-400">{item.teaser}</p>
                 )}
                 {item.children.map((child) => (
-                  <a
-                    href={child.href}
-                    class={`block px-3 py-2 text-sm rounded transition-colors
-                      ${currentPath === child.href ? "text-[#1a1a1a] bg-gray-100 font-medium" : "text-gray-500 hover:text-[#1a1a1a] hover:bg-gray-100"}`}
-                  >
-                    {child.label}
-                  </a>
+                  child.href ? (
+                    <a
+                      href={child.href}
+                      class={`block px-3 py-2 text-sm rounded transition-colors
+                        ${currentPath === child.href ? "text-[#1a1a1a] bg-gray-100 font-medium" : "text-gray-500 hover:text-[#1a1a1a] hover:bg-gray-100"}`}
+                    >
+                      {child.label}
+                    </a>
+                  ) : (
+                    <span class="block cursor-default px-3 py-2 text-sm text-gray-300" aria-disabled="true">{child.label}</span>
+                  )
                 ))}
               </div>
             </div>
@@ -96,12 +104,16 @@ const currentPath = Astro.url.pathname;
           {item.children && (
             <div class="mt-2 flex flex-col gap-1 pl-1">
               {item.children.map((child) => (
-                <a
-                  href={child.href}
-                  class={`py-1.5 text-sm transition-colors ${currentPath === child.href ? "font-medium text-[#1a1a1a]" : "text-gray-500"}`}
-                >
-                  {child.label}
-                </a>
+                child.href ? (
+                  <a
+                    href={child.href}
+                    class={`py-1.5 text-sm transition-colors ${currentPath === child.href ? "font-medium text-[#1a1a1a]" : "text-gray-500"}`}
+                  >
+                    {child.label}
+                  </a>
+                ) : (
+                  <span class="py-1.5 text-sm text-gray-300" aria-disabled="true">{child.label}</span>
+                )
               ))}
             </div>
           )}

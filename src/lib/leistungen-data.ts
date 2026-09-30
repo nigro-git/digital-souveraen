@@ -9,12 +9,14 @@ export interface Leistung {
   contextHeadline: string;
   contextText: string;
   details: { label: string; value: string; sub?: string }[];
-  geeignetFuer: string[];
-  nichtGeeignetFuer: string[];
+  /** Weggelassen = Block "Geeignet für / Weniger geeignet für" wird nicht gerendert (noch keine Textgrundlage). */
+  geeignetFuer?: string[];
+  nichtGeeignetFuer?: string[];
   vergleich: { kriterium: string; ohne: string; mit: string }[];
   vergleichCaption: string;
   ablauf: { titel: string; text: string; deliverable?: string }[];
-  caseStudy: {
+  /** Weggelassen = Case-Study-Block wird nicht gerendert (noch kein echter oder Muster-Fall vorhanden). */
+  caseStudy?: {
     kunde: string;
     headline: string;
     ausgangslage: string;
@@ -29,6 +31,100 @@ export interface Leistung {
 }
 
 export const leistungen: Leistung[] = [
+  {
+    slug: "beratung",
+    tag: "Beratung",
+    title: "Beratung",
+    leitfrage: "Wir wissen, dass digitale Souveränität wichtig ist – aber nicht, wo wir anfangen sollen.",
+    format: "Projekt · Beratung",
+    h1: "Sie wissen, dass digitale Souveränität relevant ist – aber nicht, wo Sie anfangen sollen.",
+    answerFirst:
+      "Wir erfassen Ihre bestehenden Abhängigkeiten, bewerten sie nach tatsächlicher Kritikalität und geben Ihnen eine priorisierte Roadmap – bevor irgendeine Tool-Entscheidung fällt. Beratung ist bei uns eigenständig buchbar, nicht nur als Vorstufe zu einer Umsetzung.",
+    contextHeadline: "Nicht jede Abhängigkeit ist gleich dringend",
+    contextText:
+      "Die meisten Unternehmen kennen ihre Abhängigkeit von US-Anbietern in etwa – aber nicht, welche davon wirklich geschäftskritisch ist und welche keine Priorität hat. Ohne diese Einordnung passiert häufig eines von zwei Dingen: gar nichts, weil das Thema zu groß wirkt, oder ein vorschneller Komplettwechsel, der neue Risiken schafft, ohne die eigentlichen zu lösen. Beratung schafft die fehlende Grundlage dafür, überhaupt eine sinnvolle Entscheidung zu treffen.",
+    details: [
+      { label: "Format", value: "Projekt – Bestandsaufnahme und Roadmap, unabhängig von einer späteren Umsetzung" },
+      { label: "Preisrahmen", value: "Auf Anfrage", sub: "abhängig von Unternehmensgröße und Anzahl der zu bewertenden Systeme" },
+      { label: "Deliverables", value: "Abhängigkeits-Inventar, Kritikalitätsbewertung, priorisierte Roadmap" },
+      { label: "Einstieg", value: "Ab sofort", sub: "auch ohne, dass bereits eine Tool-Entscheidung ansteht" },
+    ],
+    vergleich: [
+      { kriterium: "Entscheidungsgrundlage", ohne: "Bauchgefühl oder einzelne Anlässe (z. B. eine Preiserhöhung)", mit: "Systematische Bewertung aller relevanten Abhängigkeiten" },
+      { kriterium: "Priorisierung", ohne: "Alles wirkt gleich dringend oder gar nicht dringend", mit: "Klare Rangfolge nach tatsächlicher Kritikalität" },
+      { kriterium: "Risiko", ohne: "Vorschneller Komplettwechsel oder dauerhaftes Aufschieben", mit: "Bewusste, begründete Entscheidung über das weitere Vorgehen" },
+      { kriterium: "Umsetzungsbindung", ohne: "—", mit: "Roadmap ist unabhängig nutzbar, auch ohne uns als Umsetzungspartner" },
+    ],
+    vergleichCaption:
+      "Die Tabelle vergleicht eine Tool-Entscheidung ohne vorgelagerte Bewertung mit einer Entscheidung auf Basis einer systematischen Bestandsaufnahme. Der zentrale Unterschied liegt nicht im Ergebnis einer einzelnen Migration, sondern in der Qualität der Entscheidung selbst.",
+    ablauf: [
+      { titel: "Abhängigkeiten erfassen", text: "Welche Systeme, Anbieter, Verträge und Schnittstellen bestehen aktuell.", deliverable: "Abhängigkeits-Inventar" },
+      { titel: "Kritikalität bewerten", text: "Was passiert bei Preiserhöhung, Ausfall oder Kündigung je System.", deliverable: "Kritikalitätsbewertung" },
+      { titel: "Lock-ins identifizieren", text: "Proprietäre Formate, APIs, Identity-Bindungen, die einen späteren Wechsel erschweren.", deliverable: "Lock-in-Übersicht" },
+      { titel: "Priorisierte Roadmap erstellen", text: "Reihenfolge, in der sich eine Umstellung tatsächlich lohnt.", deliverable: "Priorisierte Roadmap" },
+      { titel: "Ergebnis besprechen", text: "Gemeinsame Durchsprache, mit oder ohne anschließende Umsetzung durch uns.", deliverable: "Abschlussgespräch, dokumentiertes Ergebnis" },
+    ],
+    situationen: [
+      "Wir wissen, dass wir von US-Anbietern abhängig sind, aber nicht, wo wir anfangen sollen.",
+      "Wir haben schon einmal versucht umzustellen, sind aber nicht weit gekommen.",
+      "Die Geschäftsführung will eine Entscheidungsgrundlage, bevor Budget für eine Umsetzung freigegeben wird.",
+      "NIS2 verlangt von uns ein dokumentiertes Risikomanagement, das wir aktuell nicht haben.",
+    ],
+    faq: [
+      { frage: "Müssen wir nach der Beratung bei Ihnen umsetzen lassen?", antwort: "Nein. Beratung und Umsetzung sind einzeln buchbar – die Roadmap gehört Ihnen, unabhängig davon, wer sie umsetzt." },
+      { frage: "Brauchen wir schon eine Tool-Vorauswahl?", antwort: "Nein, im Gegenteil – die Beratung liefert die Grundlage dafür, dass die spätere Tool-Entscheidung überhaupt sinnvoll getroffen werden kann." },
+      { frage: "Wie lange dauert eine Beratung?", antwort: "Abhängig von Anzahl der Systeme und Unternehmensgröße – wir nennen einen realistischen Zeitrahmen nach einem ersten Gespräch." },
+      { frage: "Ist das nur für Unternehmen, die schon konkret umstellen wollen?", antwort: "Nein – auch für Unternehmen, die sich noch orientieren, ist die Kritikalitätsbewertung sinnvoll, um überhaupt zu wissen, ob und wo Handlungsbedarf besteht." },
+    ],
+    ctaLabel: "Beratungsgespräch anfragen",
+  },
+  {
+    slug: "opendesk-implementierung",
+    tag: "openDesk",
+    title: "openDesk-Implementierung",
+    leitfrage: "Unsere Bürosoftware kommt von Microsoft oder Google – wie kommen wir auf eine europäische Alternative?",
+    format: "Projekt · Umsetzung",
+    h1: "Ihre Bürosoftware kommt von Microsoft oder Google – dabei gibt es die europäische Alternative längst.",
+    answerFirst:
+      "Wir richten openDesk für Ihr Unternehmen ein – die vom Zentrum für Digitale Souveränität (ZenDiS) entwickelte, quelloffene Bürosoftware-Suite. Wahlweise als Self-Hosting, über einen qualifizierten Partner oder als SaaS. Kein Big-Bang-Wechsel nötig: openDesk lässt sich modular einführen, Komponente für Komponente.",
+    contextHeadline: "openDesk ist kein Experiment mehr, aber auch kein 1:1-Ersatz",
+    contextText:
+      "openDesk wurde ursprünglich für die öffentliche Verwaltung entwickelt und steht seit 2025 auch privaten Unternehmen offen. Die Suite besteht aus mehreren eigenständigen Komponenten (Nextcloud, Collabora Online, Open-Xchange, Element, OpenProject u. a.), die gemeinsam betrieben werden. Das bedeutet: mehr Kontrolle und keine Bindung an einen einzelnen US-Anbieter – aber auch mehr Eigenverantwortung für Betrieb und Integration, als eine fertige Suite aus einer Hand mitbringt. Wir übernehmen genau diesen Teil für Sie.",
+    details: [
+      { label: "Format", value: "Projekt – Umsetzung in klar abgegrenztem Scope, wahlweise einzelne Komponente oder Gesamtpaket" },
+      { label: "Preisrahmen", value: "Auf Anfrage", sub: "abhängig von Komponentenanzahl, Nutzerzahl und Betriebsmodell" },
+      { label: "Deliverables", value: "Architekturentscheidung, eingerichtete Komponenten, Migrationskonzept, Übergabe-Dokumentation" },
+      { label: "Einstieg", value: "Ab sofort", sub: "auch als einzelne Komponente neben bestehender Microsoft-/Google-Infrastruktur" },
+    ],
+    vergleich: [
+      { kriterium: "Anbieterbindung", ohne: "Abhängig von Microsoft/Google, einseitige Preis- und Produktentscheidungen", mit: "Quelloffene Software, freie Betreiberwahl" },
+      { kriterium: "Betriebsmodell", ohne: "Vorgegeben durch den Anbieter", mit: "Self-Hosting, Partnerbetrieb oder SaaS – Sie entscheiden" },
+      { kriterium: "Einstieg", ohne: "Alles-oder-nichts durch bestehende Lizenzverträge", mit: "Modular, Komponente für Komponente" },
+      { kriterium: "Datenstandort", ohne: "Abhängig vom Anbieter", mit: "Vollständig in der EU, selbst kontrolliert" },
+    ],
+    vergleichCaption:
+      "Die Tabelle vergleicht den Betrieb über eine proprietäre US-Suite mit einer openDesk-Einführung durch uns. Der zentrale Unterschied liegt in Betreiberwahl und Einstiegstempo: kein erzwungener Komplettwechsel, sondern ein Weg, den Sie selbst takten.",
+    ablauf: [
+      { titel: "Bestandsaufnahme & Architekturentscheidung", text: "Erfassung der genutzten Microsoft-/Google-Dienste, Entscheidung für Self-Hosting, Partnerbetrieb oder SaaS.", deliverable: "Architekturkonzept" },
+      { titel: "Auswahl der Einstiegskomponente", text: "Welche Komponente zuerst (z. B. Nextcloud für Dateien), abhängig von Nutzen und Migrationsaufwand.", deliverable: "Priorisierte Komponenten-Roadmap" },
+      { titel: "Einrichtung der ersten Komponente", text: "Installation, Konfiguration, Identitäts-Anbindung (SAML/OIDC).", deliverable: "Produktivsystem, dokumentiert" },
+      { titel: "Pilotbetrieb", text: "Test mit einer ausgewählten Abteilung im Parallelbetrieb zur bestehenden Lösung.", deliverable: "Geprüftes Pilotergebnis" },
+      { titel: "Schulung & Übergabe", text: "Einweisung der Mitarbeitenden, Übergabe für den laufenden Betrieb.", deliverable: "Übergabe-Dokumentation, Kurzschulung" },
+    ],
+    situationen: [
+      "Unsere Microsoft-Lizenzkosten steigen jedes Jahr, ohne dass sich am Funktionsumfang etwas ändert.",
+      "Wir wollen weg von US-Abhängigkeit, aber nicht alles auf einmal umstellen.",
+      "Wir haben keine eigene IT-Kapazität für Self-Hosting, wollen aber trotzdem mehr Kontrolle.",
+      "Compliance/NIS2 verlangt von uns eine dokumentierte Exit-Strategie von unserer aktuellen Suite.",
+    ],
+    faq: [
+      { frage: "Ersetzt openDesk Microsoft 365 vollständig?", antwort: "Aktuell nicht in jedem Bereich – bei komplexen VBA-Makros oder Power-Automate-Workflows bestehen Lücken. Wir prüfen das für Ihre konkrete Nutzung vorab." },
+      { frage: "Brauchen wir eigene IT-Kapazität?", antwort: "Nicht zwingend – Partnerbetrieb oder SaaS reduzieren den Eigenaufwand erheblich. Self-Hosting braucht Kubernetes-Kenntnisse." },
+      { frage: "Können wir openDesk und Microsoft 365 parallel nutzen?", antwort: "Ja, das ist sogar der Regelfall während der Umstellung, nicht die Ausnahme." },
+      { frage: "Wie lange dauert die Einführung einer einzelnen Komponente?", antwort: "Hängt von Nutzerzahl und Komplexität ab – wir nennen einen realistischen Zeitrahmen nach der Bestandsaufnahme." },
+    ],
+    ctaLabel: "openDesk-Einführung anfragen",
+  },
   {
     slug: "e-mail-server",
     tag: "E-Mail",

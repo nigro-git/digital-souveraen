@@ -60,20 +60,22 @@ const andereLeistungen = leistungen.filter((e) => e.slug !== l.slug);
     <div class="mt-14">
       <h2 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">Produkt-Details</h2>
       <ProductDetails cols={2} cells={l.details} />
-      <div class="grid gap-x-8 gap-y-4 border-b border-border py-6 sm:grid-cols-2">
-        <div>
-          <h3 class="mb-2 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">Geeignet für</h3>
-          <ul class="list-disc list-outside space-y-1 pl-5 marker:text-primary">
-            {l.geeignetFuer.map((e) => <li class="text-foreground" style="font-size: var(--text-body);">{e}</li>)}
-          </ul>
+      {l.geeignetFuer && l.nichtGeeignetFuer && (
+        <div class="grid gap-x-8 gap-y-4 border-b border-border py-6 sm:grid-cols-2">
+          <div>
+            <h3 class="mb-2 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">Geeignet für</h3>
+            <ul class="list-disc list-outside space-y-1 pl-5 marker:text-primary">
+              {l.geeignetFuer.map((e) => <li class="text-foreground" style="font-size: var(--text-body);">{e}</li>)}
+            </ul>
+          </div>
+          <div>
+            <h3 class="mb-2 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">Weniger geeignet für</h3>
+            <ul class="list-disc list-outside space-y-1 pl-5 marker:text-muted-foreground">
+              {l.nichtGeeignetFuer.map((e) => <li class="text-muted-foreground" style="font-size: var(--text-body);">{e}</li>)}
+            </ul>
+          </div>
         </div>
-        <div>
-          <h3 class="mb-2 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">Weniger geeignet für</h3>
-          <ul class="list-disc list-outside space-y-1 pl-5 marker:text-muted-foreground">
-            {l.nichtGeeignetFuer.map((e) => <li class="text-muted-foreground" style="font-size: var(--text-body);">{e}</li>)}
-          </ul>
-        </div>
-      </div>
+      )}
     </div>
 
     <div class="mt-14">
@@ -85,19 +87,21 @@ const andereLeistungen = leistungen.filter((e) => e.slug !== l.slug);
       <Steps title="So arbeiten wir" steps={l.ablauf} />
     </div>
 
-    <div class="mt-14">
-      {l.caseStudy.placeholder && (
-        <p class="mb-3 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">⚠ Muster/Platzhalter – vor Launch durch echten Fall ersetzen</p>
-      )}
-      <CaseStudy title="Case Study" cases={[{
-        name: l.caseStudy.kunde,
-        headline: l.caseStudy.headline,
-        ausgangslage: l.caseStudy.ausgangslage,
-        vorgehen: l.caseStudy.vorgehen,
-        ergebnis: l.caseStudy.ergebnis,
-        meta: l.caseStudy.meta,
-      }]} />
-    </div>
+    {l.caseStudy && (
+      <div class="mt-14">
+        {l.caseStudy.placeholder && (
+          <p class="mb-3 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">⚠ Muster/Platzhalter – vor Launch durch echten Fall ersetzen</p>
+        )}
+        <CaseStudy title="Case Study" cases={[{
+          name: l.caseStudy.kunde,
+          headline: l.caseStudy.headline,
+          ausgangslage: l.caseStudy.ausgangslage,
+          vorgehen: l.caseStudy.vorgehen,
+          ergebnis: l.caseStudy.ergebnis,
+          meta: l.caseStudy.meta,
+        }]} />
+      </div>
+    )}
 
     <div class="mt-14">
       <Situations items={l.situationen} />

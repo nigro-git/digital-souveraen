@@ -113,13 +113,13 @@ const faqSchema = buildFaqPageSchema(faq);
       <p class="mb-3 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">⚠ Muster/Platzhalter – vor Launch durch echte Projektdaten ersetzen</p>
       <CaseStudy
         title="Case Studies"
-        cases={leistungen.map((l) => ({
-          name: l.caseStudy.kunde,
-          headline: l.caseStudy.headline,
-          ausgangslage: l.caseStudy.ausgangslage,
-          vorgehen: l.caseStudy.vorgehen,
-          ergebnis: l.caseStudy.ergebnis,
-          meta: l.caseStudy.meta,
+        cases={leistungen.filter((l) => l.caseStudy).map((l) => ({
+          name: l.caseStudy!.kunde,
+          headline: l.caseStudy!.headline,
+          ausgangslage: l.caseStudy!.ausgangslage,
+          vorgehen: l.caseStudy!.vorgehen,
+          ergebnis: l.caseStudy!.ergebnis,
+          meta: l.caseStudy!.meta,
         }))}
       />
     </div>
