@@ -5,11 +5,23 @@ import Hero from "../components/blocks/Hero.astro";
 import Momentum from "../components/blocks/Momentum.astro";
 import ProductGrid from "../components/blocks/ProductGrid.astro";
 import NewsTeaser from "../components/blocks/NewsTeaser.astro";
+import ArticleGridTeaser from "../components/blocks/ArticleGridTeaser.astro";
 import Faq from "../components/blocks/Faq.astro";
 import CtaBar from "../components/blocks/CtaBar.astro";
 import { leistungen } from "../lib/leistungen-data";
 import { news } from "../lib/news-data";
+import { blogPosts } from "../lib/blog-data";
 import { buildFaqPageSchema } from "../lib/schemaOrg";
+
+// Vergleichsartikel bleibt fest dabei (Flaggschiff-Vergleich, auch auf /blog der Featured-Artikel),
+// dazu die 3 zuletzt veroeffentlichten anderen Artikel.
+const featuredSlug = "opendesk-vs-microsoft-365";
+const featuredPost = blogPosts.find((p) => p.slug === featuredSlug);
+const neuesteAndere = blogPosts
+  .filter((p) => p.slug !== featuredSlug)
+  .sort((a, b) => b.publishDate.localeCompare(a.publishDate))
+  .slice(0, 3);
+const neuesteBlogPosts = featuredPost ? [featuredPost, ...neuesteAndere] : neuesteAndere;
 
 const faq = [
   { frage: "Was bedeutet digitale Souveränität für ein Unternehmen konkret?", antwort: "Digitale Souveränität bedeutet, dass ein Unternehmen die Kontrolle über seine Daten, Software und Infrastruktur behält – unabhängig von einseitigen Entscheidungen einzelner (meist außereuropäischer) Anbieter. Das betrifft E-Mail, Dokumentenablage, Cloud-Speicher und zunehmend auch KI-Systeme." },
@@ -88,6 +100,24 @@ const faqSchema = buildFaqPageSchema(faq);
         items={news.slice(0, 3).map((n) => ({ title: n.title, date: n.date, kicker: n.kicker, href: `/news#${n.slug}` }))}
         moreHref="/news"
       />
+    </div>
+
+    <div class="mt-16">
+      <h2 class="mb-8 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">Aus dem Blog</h2>
+      <ArticleGridTeaser
+        posts={neuesteBlogPosts.map((p) => ({
+          title: p.title,
+          kicker: p.kicker,
+          format: p.format,
+          clusters: p.clusters,
+          image: p.image,
+          meta: `${p.dateLabel} · ${p.lifecycle}`,
+          href: `/blog/${p.slug}`,
+        }))}
+      />
+      <p class="mt-4">
+        <a href="/blog" class="font-mono text-sm text-muted-foreground transition-colors hover:text-foreground">Alle Beiträge im Überblick →</a>
+      </p>
     </div>
 
     <div class="mt-16">
