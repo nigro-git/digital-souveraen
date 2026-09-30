@@ -12,6 +12,15 @@ export interface NewsItem {
 
 const rawNews: NewsItem[] = [
   {
+    slug: "opendesk-signaturschluessel-update-1-19-0",
+    title: "Signaturschlüssel offengelegt: openDesk-Betreiber sollten auf Version 1.19.0 wechseln",
+    kicker: "Bei openDesk sind die Schlüssel zur Signatur von Container-Images und Helm-Charts versehentlich öffentlich geworden – die inzwischen erschienene Version 1.19.0 behebt das.",
+    date: "30. September 2026",
+    publishDate: "2026-09-30",
+    body: "Wer openDesk selbst betreibt, sollte zeitnah auf die inzwischen veröffentlichte Version 1.19.0 aktualisieren und Komponenten bis dahin nur aus offiziellen Quellen beziehen. Das empfiehlt das openDesk-Team in einem Sicherheitshinweis vom 23. September 2026. Bei der Modernisierung der CI/CD-Pipeline wurden die Schlüssel, mit denen Container-Images und Helm-Charts signiert werden, versehentlich offengelegt.\n\nBetroffen sind laut openDesk alle Versionen vor 1.19.0; die neue Version nutzt neu erzeugte Schlüssel. Hinweise auf eine tatsächliche Kompromittierung gibt es nach Angaben des Projekts bisher nicht. Das Risiko: Dritte könnten mit dem alten Schlüssel manipulierte Pakete so signieren, dass sie echt wirken.\n\nDer Vorfall fällt in einen Monat mit vielen Updates. Allein im September erschienen mit 1.18.1, 1.18.2 und 1.17.4 drei Wartungs- und Sicherheitsreleases, zwei davon wegen einer Nextcloud-Schwachstelle.\n\nFür Unternehmen zeigt der Fall, was souveräner Betrieb praktisch bedeutet: Open-Source-Software macht unabhängig von US-Anbietern, verlagert aber die Verantwortung für Patch-Management und Lieferkettensicherheit ins eigene Haus oder zum Dienstleister. Wer openDesk, Nextcloud oder vergleichbare Lösungen einsetzt, braucht einen festen Update-Prozess und sollte Signaturprüfungen nicht nur aktivieren, sondern auch überwachen.",
+    source: "openDesk, September 2026; openDesk-Blog (Release Notes 1.19.0, 26. September 2026)",
+  },
+  {
     slug: "bmds-foerderung-digital-tech-to-product-kmu",
     title: "Bis zu 5 Millionen Euro: BMDS fördert souveräne Digitalprodukte von KMU",
     kicker: "Mit „Digital-Tech-to-Product“ fördert das Bundesdigitalministerium marktnahe Entwicklungen in KI, Daten, Cybersicherheit und Cloud – Projektskizzen bis 11. Oktober 2026.",
