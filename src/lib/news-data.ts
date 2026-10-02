@@ -12,6 +12,15 @@ export interface NewsItem {
 
 const rawNews: NewsItem[] = [
   {
+    slug: "opendesk-partnerprogramm-private-dienstleister",
+    title: "openDesk öffnet Partnerprogramm für private Cloud- und IT-Dienstleister",
+    kicker: "Seit dem 23. September 2026 können erstmals auch privatwirtschaftliche Anbieter openDesk offiziell als Cloud-Service oder Integrationsleistung anbieten.",
+    date: "2. Oktober 2026",
+    publishDate: "2026-10-02",
+    body: "Unternehmen können openDesk künftig über akkreditierte private Dienstleister beziehen: Das Zentrum Digitale Souveränität (ZenDiS) hat am 23. September 2026 ein Partnerprogramm gestartet, das sich erstmals ausdrücklich an privatwirtschaftliche Cloud-Anbieter und IT-Dienstleister richtet. Bisher lief die souveräne Office- und Kollaborationssuite vor allem über öffentliche IT-Dienstleister.\n\nZum Start gibt es drei Kategorien. „Official Distributors“ beliefern Cloud-Provider und IT-Händler. „Approved Sovereign Service Provider“ bieten openDesk als SaaS an und müssen dafür laut ZenDiS ein BSI-C5-Testat und SEAL-Level 3 nachweisen. „Approved System Integrators“ übernehmen On-Premises-Installationen und brauchen belegbare Open-Source- und Kubernetes-Erfahrung. Eine Kategorie für Beratungspartner soll in den kommenden Wochen folgen. Für die „Approved“-Stufen gibt es ein offizielles Akkreditierungsverfahren, da ZenDiS vollständig in Bundesbesitz ist.\n\nZenDiS begründet den Schritt mit der anhaltend hohen Nachfrage aus Verwaltung und Privatwirtschaft seit dem Marktstart von openDesk im Oktober 2024. Damit ist das Programm, dessen Start ZenDiS im Sommer für den Herbst angekündigt hatte, jetzt tatsächlich offen für Bewerbungen.\n\nFür mittelständische Unternehmen heißt das: Wer eine Alternative zu Microsoft 365 sucht, kann openDesk nun über geprüfte Partner mit definierten Sicherheitsnachweisen betreiben lassen. Vor einer Entscheidung lohnt sich trotzdem der Blick darauf, welche Partnerkategorie ein Anbieter tatsächlich erfüllt.",
+    source: "ZenDiS / openDesk, September 2026",
+  },
+  {
     slug: "opendesk-signaturschluessel-update-1-19-0",
     title: "Signaturschlüssel offengelegt: openDesk-Betreiber sollten auf Version 1.19.0 wechseln",
     kicker: "Bei openDesk sind die Schlüssel zur Signatur von Container-Images und Helm-Charts versehentlich öffentlich geworden – die inzwischen erschienene Version 1.19.0 behebt das.",
