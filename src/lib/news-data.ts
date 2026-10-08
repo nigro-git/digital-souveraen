@@ -12,6 +12,15 @@ export interface NewsItem {
 
 const rawNews: NewsItem[] = [
   {
+    slug: "bitkom-umfrage-dsgvo-reform",
+    title: "Bitkom-Umfrage: 90 Prozent der Unternehmen fordern DSGVO-Reform",
+    kicker: "Neun von zehn Unternehmen halten eine Reform der DSGVO für nötig – die Hälfte sieht den Datenschutz als Bremse für KI-Projekte.",
+    date: "8. Oktober 2026",
+    publishDate: "2026-10-08",
+    body: "Neun von zehn Unternehmen in Deutschland wünschen sich eine Reform der Datenschutz-Grundverordnung. Das zeigt eine repräsentative Umfrage von Bitkom Research unter 605 Unternehmen ab 20 Beschäftigten, die der Digitalverband Bitkom Ende September 2026 veröffentlicht hat. 41 Prozent halten eine Reform für sehr notwendig, nur 5 Prozent sehen keinen Bedarf.\n\nAls größte Belastung nennen laut Bitkom 84 Prozent die Dokumentationspflichten. 92 Prozent beschreiben den Umsetzungsaufwand als hoch, 71 Prozent berichten von mehr Aufwand als im Vorjahr. Die Hälfte der Unternehmen sagt, dass Datenschutz den KI-Einsatz behindert. 89 Prozent wünschen sich weniger Dokumentation bei risikoarmer Datenverarbeitung, 85 Prozent eine Bündelung der zersplitterten deutschen Datenschutzaufsicht.\n\nAuf EU-Ebene liegt mit dem „Digital Omnibus“ seit November 2025 ein Vorschlag der EU-Kommission vor, der auch Änderungen an der DSGVO vorsieht. Beschlossen ist er nicht, er befindet sich im Gesetzgebungsverfahren.\n\nFür den Mittelstand heißt das: Die geltenden Pflichten bleiben vorerst unverändert. Wer Cloud- oder KI-Dienste auswählt, sollte auf Anbieter setzen, die Dokumentation und Auftragsverarbeitung sauber abbilden. Das spart genau den Aufwand, den die befragten Unternehmen kritisieren.\n\nRedaktioneller Hinweis: Dass der Digital Omnibus noch nicht verabschiedet ist, bestätigen Bitkom (September 2026) und netzpolitik.org. Den genauen aktuellen Verhandlungsstand (Positionen von Rat und Parlament, Trilog) konnten wir nicht aus zwei aktuellen Quellen bestätigen.",
+    source: "Bitkom, September 2026",
+  },
+  {
     slug: "opendesk-partnerprogramm-private-dienstleister",
     title: "openDesk öffnet Partnerprogramm für private Cloud- und IT-Dienstleister",
     kicker: "Seit dem 23. September 2026 können erstmals auch privatwirtschaftliche Anbieter openDesk offiziell als Cloud-Service oder Integrationsleistung anbieten.",
