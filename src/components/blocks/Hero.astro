@@ -5,17 +5,32 @@ interface Props {
   title: string;
   answerFirst: string;
   tags?: Tags;
+  /** Kurze Stichwort-Chips direkt unter der H1 (z.B. Startseite). */
+  chips?: string[];
+  /** true = helle Schrift für dunkle Hintergründe (z.B. Hero mit Bild). */
+  dark?: boolean;
 }
-const { eyebrow, title, answerFirst, tags } = Astro.props;
+const { eyebrow, title, answerFirst, tags, chips, dark = false } = Astro.props;
+// "\n" im Titel = bewusster Zeilenumbruch (Leerzeichen bleibt für Screenreader/Suchmaschinen erhalten)
+const titleLines = title.split("\n");
 ---
 
-<div class="max-w-4xl">
+<div class:list={["max-w-4xl", chips && "w-fit max-w-full"]}>
   {eyebrow && (
-    <p class="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-primary">{eyebrow}</p>
+    <p class:list={["mb-4 font-mono text-xs uppercase tracking-[0.2em]", dark ? "text-sky-300" : "text-primary"]}>{eyebrow}</p>
   )}
-  <h1 class="font-bold text-foreground" style="font-size: var(--text-section); line-height: 1.08; letter-spacing: -0.02em;">
-    {title}
+  <h1 class:list={["font-bold", dark ? "text-white" : "text-foreground"]} style="font-size: var(--text-section); line-height: 1.08; letter-spacing: -0.02em;">
+    {titleLines.map((line, i) => (
+      <Fragment>{i > 0 && <br />}{line}{i < titleLines.length - 1 && " "}</Fragment>
+    ))}
   </h1>
+  {chips && chips.length > 0 && (
+    <ul class="mt-5 flex flex-wrap gap-2" aria-label="Unser Ansatz">
+      {chips.map((chip) => (
+        <li class:list={["rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-[0.06em]", dark ? "border-white/40 bg-white/10 text-white" : "border-foreground text-foreground"]}>{chip}</li>
+      ))}
+    </ul>
+  )}
   {tags && (
     <div class="mt-5 flex flex-wrap gap-2">
       <span class="rounded-full bg-foreground px-3 py-1 font-mono text-[11px] uppercase tracking-[0.06em] text-background">{tags.cluster}</span>
@@ -25,7 +40,7 @@ const { eyebrow, title, answerFirst, tags } = Astro.props;
       ))}
     </div>
   )}
-  <p class="mt-6 max-w-2xl border-l-2 border-primary pl-5 leading-relaxed text-foreground/75" style="font-size: var(--text-body);">
+  <p class:list={["mt-6 border-l-2 pl-5 leading-relaxed", chips ? "w-0 min-w-full" : "max-w-2xl", dark ? "border-sky-300 text-white/85" : "border-primary text-foreground/75"]} style="font-size: var(--text-body);">
     {answerFirst}
   </p>
 </div>

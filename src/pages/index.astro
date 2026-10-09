@@ -37,14 +37,47 @@ const faqSchema = buildFaqPageSchema(faq);
 <Layout seoKey="home">
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
-  <Section id="hero">
-    <Hero
-      eyebrow="Die Zukunft ist unabhängig."
-      title="Digitale Souveränität für Unternehmen – beratend begleitet, praktisch umgesetzt."
-      answerFirst="Digitale Souveränität ist eines der zentralen Zukunftsthemen für Unternehmen – getrieben durch Regulatorik, steigende Abhängigkeit von US-Anbietern und wachsenden Kostendruck. Wir begleiten Unternehmen dabei beratend: von der strategischen Einordnung, was Souveränität für Ihr Unternehmen konkret bedeutet, bis zur praktischen Umsetzung europäischer Alternativen."
+  <!-- Vollbreites Hero-Band: dunkles Netzwerk-Bild, Text links auf dem ruhigen schwarzen Teil -->
+  <!-- Bild und Text liegen im selben Grid-Feld: die Bandhöhe richtet sich nach dem höheren von beiden,
+       ab Laptop-Breite ist das Bild dadurch in voller Breite sichtbar (nichts links abgeschnitten) -->
+  <section id="hero" class="relative isolate grid overflow-hidden bg-black lg:max-h-[760px]">
+    <img
+      src="/hero-startseite-2000.webp"
+      srcset="/hero-startseite-1000.webp 1000w, /hero-startseite-2000.webp 2000w"
+      sizes="100vw"
+      width="2000"
+      height="848"
+      alt=""
+      aria-hidden="true"
+      fetchpriority="high"
+      loading="eager"
+      decoding="async"
+      class="col-start-1 row-start-1 -z-10 h-full w-full self-stretch object-cover object-[72%_center] md:object-right"
     />
+    <!-- Lesbarkeit: mobil gleichmäßige Abdunklung, ab md leichter Verlauf von links (Text) nach rechts (Bild bleibt sichtbar) -->
+    <div class="absolute inset-0 -z-10 bg-black/60 md:hidden" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 hidden md:block" aria-hidden="true" style="background: linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 36%, rgba(0,0,0,0) 66%);"></div>
+    <div class="col-start-1 row-start-1 mx-auto w-full self-center" style="max-width: var(--container-max); padding-inline: var(--container-px); padding-block: clamp(2.5rem, 4.5vw, 4rem);">
+      <div class="relative isolate w-fit max-w-full">
+      <!-- Dezente Abdunklung nur hinter dem Textblock (scharf, kein Blur), läuft zu den Rändern weich aus -->
+      <div
+        class="pointer-events-none absolute -inset-x-6 -inset-y-8 -z-10 bg-black/40"
+        aria-hidden="true"
+        style="-webkit-mask-image: radial-gradient(ellipse 75% 72% at 50% 50%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 75% 72% at 50% 50%, #000 55%, transparent 100%);"
+      ></div>
+      <Hero
+        dark
+        eyebrow="Die Zukunft ist unabhängig."
+        title={"Digitale Souveränität\nfür Unternehmen"}
+        chips={["beratend", "begleitet", "praktisch umgesetzt"]}
+        answerFirst="Wir unterstützen Unternehmen dabei, digitale Abhängigkeiten zu reduzieren, selbstbestimmt zu handeln und ihre digitale Zukunft unabhängig zu gestalten."
+      />
+      </div>
+    </div>
+  </section>
 
-    <div class="mt-16">
+  <Section id="startseite">
+    <div>
       <Momentum
         title="Warum digitale Souveränität gerade jetzt an Bedeutung gewinnt"
         treiber={[
