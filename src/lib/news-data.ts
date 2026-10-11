@@ -12,6 +12,15 @@ export interface NewsItem {
 
 const rawNews: NewsItem[] = [
   {
+    slug: "opendesk-1-19-whiteboard-sicherheitsprofil",
+    title: "openDesk 1.19: Whiteboard und neues Sicherheitsprofil – Betreiber müssen manuell migrieren",
+    kicker: "openDesk 1.19 bringt ein Whiteboard und passt alle Komponenten an das Profil PSS-Restricted an – Betreiber müssen von Hand migrieren.",
+    date: "11. Oktober 2026",
+    publishDate: "2026-10-11",
+    body: "Die Büro- und Kollaborationssuite openDesk liegt seit dem 1. Oktober 2026 in Version 1.19 vor, am 6. Oktober folgte der Patch 1.19.1. Neu ist das Whiteboard „NeoBoard“ für gemeinsames Arbeiten in Echtzeit. Es ist nach der Installation zunächst abgeschaltet und muss bei Bedarf aktiviert werden. Schwerpunkt des Releases ist laut Projekt das Profil „PSS-Restricted“: Alle Komponenten wurden angepasst, um dessen Anforderungen innerhalb der openDesk-Architektur zu erfüllen.\n\nFür Betreiber ist das Update nicht trivial. Das Projekt verlangt eine manuelle Migration nach den Hinweisen im openCode-Repository. Außerdem wurden die Signaturschlüssel für Container-Images und Helm-Charts rotiert, die alten gelten nicht mehr, Prüfprozesse müssen umgestellt werden. Bei bestehenden OpenProject-Projekten lässt sich die neue Mehrfachzuordnung zu Versionen aktivieren, danach nicht mehr zurücknehmen. Der Patch 1.19.1 behebt einen Fehler im Chat, der Anmeldungen auf neuen Geräten blockieren konnte, und das Projekt empfiehlt, so früh wie möglich zu aktualisieren.\n\nFür Unternehmen gilt: Wer openDesk selbst oder über einen Dienstleister betreibt, sollte das Update samt Migration einplanen. Wer erst prüft, ob openDesk passt, sieht an den Releases, wie aktiv das Produkt gepflegt wird.",
+    source: "openDesk, Blogbeiträge zu 1.19 (1. Oktober 2026) und 1.19.1 (6. Oktober 2026)",
+  },
+  {
     slug: "bitkom-umfrage-dsgvo-reform",
     title: "Bitkom-Umfrage: 90 Prozent der Unternehmen fordern DSGVO-Reform",
     kicker: "Neun von zehn Unternehmen halten eine Reform der DSGVO für nötig – die Hälfte sieht den Datenschutz als Bremse für KI-Projekte.",
