@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import Section from "../../components/ui/Section.astro";
 import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
 import Hero from "../../components/blocks/Hero.astro";
+import HeroBand from "../../components/blocks/HeroBand.astro";
 import Context from "../../components/blocks/Context.astro";
 import ProductDetails from "../../components/blocks/ProductDetails.astro";
 import ComparisonTable from "../../components/blocks/ComparisonTable.astro";
@@ -42,6 +43,12 @@ const andereLeistungen = leistungen.filter((e) => e.slug !== l.slug);
   <script is:inline type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
+  {l.hero && (
+    <HeroBand image={l.hero.image} narrow>
+      <Hero dark eyebrow={l.hero.eyebrow} title={l.h1} chips={l.hero.chips} answerFirst={l.answerFirst} />
+    </HeroBand>
+  )}
+
   <Section id="leistung">
     <Breadcrumb items={[
       { label: "Digital Souverän", href: "/" },
@@ -49,7 +56,7 @@ const andereLeistungen = leistungen.filter((e) => e.slug !== l.slug);
       { label: l.title },
     ]} />
 
-    <Hero title={l.h1} answerFirst={l.answerFirst} />
+    {!l.hero && <Hero title={l.h1} answerFirst={l.answerFirst} />}
 
     <div class="mt-14">
       <Context headline={l.contextHeadline}>

@@ -6,6 +6,8 @@ export interface Leistung {
   format: string;
   h1: string;
   answerFirst: string;
+  /** Optional: Hero mit Vollbild-Hintergrund (Bild-Basisname in public/, Eyebrow, Chips). Weggelassen = Standard-Hero. */
+  hero?: { image: string; eyebrow: string; chips: string[] };
   contextHeadline: string;
   contextText: string;
   details: { label: string; value: string; sub?: string }[];
@@ -131,9 +133,14 @@ export const leistungen: Leistung[] = [
     title: "E-Mail-Server-Einrichtung",
     leitfrage: "Unsere Mails laufen über Google/Microsoft – wie werden wir unabhängig?",
     format: "Projekt · Umsetzung",
-    h1: "Ihre E-Mails laufen über Google oder Microsoft – dabei gehört Ihre Kommunikation Ihnen.",
+    h1: "Ihr E-Mail-Server.\nIhre Kontrolle.",
     answerFirst:
-      "Wir richten Ihren E-Mail-Server auf Basis einer europäischen, quelloffenen Mailserver-Lösung ein, die Sie vollständig selbst kontrollieren. Kein Datenabfluss an US-Anbieter, keine Lizenzkosten pro Postfach, keine Abhängigkeit von Entscheidungen, die andere für Sie treffen.",
+      "Wir richten Ihren unabhängigen E-Mail-Server mit europäischer Open-Source-Technologie ein. Für mehr Kontrolle über Ihre Kommunikation und weniger Abhängigkeit von großen Anbietern.",
+    hero: {
+      image: "hero-email",
+      eyebrow: "Unabhängige Unternehmenskommunikation",
+      chips: ["Datenhoheit", "Open Source", "Keine Postfachlizenzen"],
+    },
     contextHeadline: "Niemand hat sich bewusst für die Abhängigkeit entschieden.",
     contextText:
       "Als vor Jahren die E-Mail-Infrastruktur eingerichtet wurde, war Microsoft 365 oder Google Workspace schlicht die naheliegende, gut dokumentierte Wahl – schnell eingerichtet, von jedem IT-Dienstleister angeboten. Niemand hat damals über Datenstandort, Kill-Switch-Risiken oder langfristige Lizenzkosten nachgedacht, weil das damals kein Thema war. Heute ist es eines – durch NIS2, durch geopolitische Unsicherheit, durch steigende Lizenzpreise. Das ist keine frühere Fehlentscheidung, sondern der normale Lauf der Dinge, wenn ein Thema neu an Relevanz gewinnt.",
