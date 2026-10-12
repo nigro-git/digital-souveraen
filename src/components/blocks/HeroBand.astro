@@ -2,10 +2,12 @@
 interface Props {
   /** Bild-Basisname ohne Endung, erwartet public/<name>-1000.webp und public/<name>-2000.webp (2000x848). */
   image: string;
-  /** true = Text auf die linke Hälfte begrenzt (ab Laptop-Breite), z.B. für längere Überschriften. */
+  /** Alt-Text: erklärt das Motiv und nimmt die Aussage der H1 auf. Später eigenes CMS-Feld. */
+  alt: string;
+  /** true = Text auf die linke Hälfte begrenzt (ab Tablet-Breite), z.B. für längere Überschriften. */
   narrow?: boolean;
 }
-const { image, narrow = false } = Astro.props;
+const { image, alt, narrow = false } = Astro.props;
 ---
 
 <!-- Vollbreites Hero-Band: dunkles Netzwerk-Bild, Text links auf dem ruhigen schwarzen Teil -->
@@ -18,8 +20,7 @@ const { image, narrow = false } = Astro.props;
     sizes="100vw"
     width="2000"
     height="848"
-    alt=""
-    aria-hidden="true"
+    alt={alt}
     fetchpriority="high"
     loading="eager"
     decoding="async"
@@ -29,7 +30,7 @@ const { image, narrow = false } = Astro.props;
   <div class="absolute inset-0 -z-10 bg-black/60 md:hidden" aria-hidden="true"></div>
   <div class="absolute inset-0 -z-10 hidden md:block" aria-hidden="true" style="background: linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 36%, rgba(0,0,0,0) 66%);"></div>
   <div class="col-start-1 row-start-1 mx-auto w-full self-center" style="max-width: var(--container-max); padding-inline: var(--container-px); padding-block: clamp(2.5rem, 4.5vw, 4rem);">
-    <div class:list={["relative isolate w-fit max-w-full", narrow && "lg:max-w-[50%]"]}>
+    <div class:list={["relative isolate w-fit max-w-full", narrow && "md:max-w-[50%]"]}>
       <!-- Dezente Abdunklung nur hinter dem Textblock (scharf, kein Blur), läuft zu den Rändern weich aus -->
       <div
         class="pointer-events-none absolute -inset-x-6 -inset-y-8 -z-10 bg-black/40"

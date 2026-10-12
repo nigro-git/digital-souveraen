@@ -44,7 +44,7 @@ const andereLeistungen = leistungen.filter((e) => e.slug !== l.slug);
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   {l.hero && (
-    <HeroBand image={l.hero.image} narrow>
+    <HeroBand image={l.hero.image} alt={l.hero.alt} narrow>
       <Hero dark eyebrow={l.hero.eyebrow} title={l.h1} chips={l.hero.chips} answerFirst={l.answerFirst} />
     </HeroBand>
   )}

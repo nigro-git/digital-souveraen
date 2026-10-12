@@ -7,7 +7,7 @@ export interface Leistung {
   h1: string;
   answerFirst: string;
   /** Optional: Hero mit Vollbild-Hintergrund (Bild-Basisname in public/, Eyebrow, Chips). Weggelassen = Standard-Hero. */
-  hero?: { image: string; eyebrow: string; chips: string[] };
+  hero?: { image: string; alt: string; eyebrow?: string; chips: string[] };
   contextHeadline: string;
   contextText: string;
   details: { label: string; value: string; sub?: string }[];
@@ -39,9 +39,15 @@ export const leistungen: Leistung[] = [
     title: "Beratung",
     leitfrage: "Wir wissen, dass digitale Souveränität wichtig ist – aber nicht, wo wir anfangen sollen.",
     format: "Projekt · Beratung",
-    h1: "Sie wissen, dass digitale Souveränität relevant ist – aber nicht, wo Sie anfangen sollen.",
+    h1: "Beratung für digitale Souveränität",
     answerFirst:
-      "Wir erfassen Ihre bestehenden Abhängigkeiten, bewerten sie nach tatsächlicher Kritikalität und geben Ihnen eine priorisierte Roadmap – bevor irgendeine Tool-Entscheidung fällt. Beratung ist bei uns eigenständig buchbar, nicht nur als Vorstufe zu einer Umsetzung.",
+      "Wir analysieren Ihre digitalen Abhängigkeiten, bewerten Risiken und entwickeln einen klaren Fahrplan für mehr digitale Souveränität – unabhängig von Produkten und konkreten Umsetzungsvorhaben.",
+    hero: {
+      image: "beratung-digitale-souveraenitaet-hero",
+      alt: "Leuchtendes Netzwerk mit einer Glühbirne im Zentrum – Beratung für digitale Souveränität",
+      eyebrow: "Schritt für Schritt zur Unabhängigkeit",
+      chips: ["Bestandsaufnahme", "Risikobewertung", "Roadmap"],
+    },
     contextHeadline: "Nicht jede Abhängigkeit ist gleich dringend",
     contextText:
       "Die meisten Unternehmen kennen ihre Abhängigkeit von US-Anbietern in etwa – aber nicht, welche davon wirklich geschäftskritisch ist und welche keine Priorität hat. Ohne diese Einordnung passiert häufig eines von zwei Dingen: gar nichts, weil das Thema zu groß wirkt, oder ein vorschneller Komplettwechsel, der neue Risiken schafft, ohne die eigentlichen zu lösen. Beratung schafft die fehlende Grundlage dafür, überhaupt eine sinnvolle Entscheidung zu treffen.",
@@ -86,9 +92,15 @@ export const leistungen: Leistung[] = [
     title: "openDesk-Implementierung",
     leitfrage: "Unsere Bürosoftware kommt von Microsoft oder Google – wie kommen wir auf eine europäische Alternative?",
     format: "Projekt · Umsetzung",
-    h1: "Ihre Bürosoftware kommt von Microsoft oder Google – dabei gibt es die europäische Alternative längst.",
+    h1: "openDesk für Unternehmen",
     answerFirst:
-      "Wir richten openDesk für Ihr Unternehmen ein – die vom Zentrum für Digitale Souveränität (ZenDiS) entwickelte, quelloffene Bürosoftware-Suite. Wahlweise als Self-Hosting, über einen qualifizierten Partner oder als SaaS. Kein Big-Bang-Wechsel nötig: openDesk lässt sich modular einführen, Komponente für Komponente.",
+      "Wir implementieren openDesk als souveräne Alternative zu Microsoft 365 und Google Workspace. Ob selbst gehostet oder als SaaS – wir begleiten die schrittweise Einführung, abgestimmt auf Ihre bestehende IT und Ihre Anforderungen.",
+    hero: {
+      image: "opendesk-fuer-unternehmen-hero",
+      alt: "Leuchtendes Netzwerk mit einem Logo-Symbol im Zentrum – openDesk für Unternehmen",
+      eyebrow: "Europäisch. Offen. Unabhängig.",
+      chips: ["Open Source", "Modular", "Flexibler Betrieb"],
+    },
     contextHeadline: "openDesk ist kein Experiment mehr, aber auch kein 1:1-Ersatz",
     contextText:
       "openDesk wurde ursprünglich für die öffentliche Verwaltung entwickelt und steht seit 2025 auch privaten Unternehmen offen. Die Suite besteht aus mehreren eigenständigen Komponenten (Nextcloud, Collabora Online, Open-Xchange, Element, OpenProject u. a.), die gemeinsam betrieben werden. Das bedeutet: mehr Kontrolle und keine Bindung an einen einzelnen US-Anbieter – aber auch mehr Eigenverantwortung für Betrieb und Integration, als eine fertige Suite aus einer Hand mitbringt. Wir übernehmen genau diesen Teil für Sie.",
@@ -137,7 +149,8 @@ export const leistungen: Leistung[] = [
     answerFirst:
       "Wir richten Ihren unabhängigen E-Mail-Server mit europäischer Open-Source-Technologie ein. Für mehr Kontrolle über Ihre Kommunikation und weniger Abhängigkeit von großen Anbietern.",
     hero: {
-      image: "hero-email",
+      image: "email-server-souveraen-hero",
+      alt: "Leuchtendes Netzwerk mit einem Mail-Symbol im Zentrum – Ihr E-Mail-Server, Ihre Kontrolle",
       eyebrow: "Unabhängige Unternehmenskommunikation",
       chips: ["Datenhoheit", "Open Source", "Keine Postfachlizenzen"],
     },
@@ -205,9 +218,15 @@ export const leistungen: Leistung[] = [
     title: "Dokumentenmanagement (DMS)",
     leitfrage: "Unsere Dokumente liegen verstreut in SharePoint & privaten Drives – wie bringen wir das unter Kontrolle?",
     format: "Projekt · Umsetzung",
-    h1: "Ihre Dokumente liegen verstreut in SharePoint, Google Drive und privaten Ordnern – Struktur entsteht so nicht.",
+    h1: "Souveränes DMS für Unternehmen",
     answerFirst:
-      "Wir richten ein zentrales, souveränes Dokumentenmanagement ein – Dateien, Freigaben und Versionierung an einem Ort, betrieben in der EU, ohne dass Unternehmensdokumente über US-Cloud-Dienste laufen.",
+      "Wir implementieren ein unabhängiges Dokumentenmanagement-System (DMS), das Ihre Dateien zentral organisiert, Zugriffsrechte steuert und Versionen verwaltet – mit europäischem Hosting und voller Kontrolle über Ihre Unternehmensdokumente.",
+    hero: {
+      image: "dokumentenmanagement-dms-hero",
+      alt: "Leuchtendes Netzwerk mit einem Dokumenten-Symbol im Zentrum – Souveränes DMS für Unternehmen",
+      eyebrow: "Alle Dokumente. Ein System. Volle Kontrolle.",
+      chips: ["Zentrale Ablage", "Sichere Freigaben", "Versionierung"],
+    },
     contextHeadline: "Dokumenten-Chaos entsteht nicht durch Unachtsamkeit, sondern durch Wachstum.",
     contextText:
       "Jede Abteilung hat irgendwann die für sie naheliegendste Lösung gewählt: Vertrieb legt Angebote in Google Drive ab, die Buchhaltung nutzt einen Netzwerkordner, Marketing arbeitet in SharePoint. Jede Entscheidung war für sich genommen sinnvoll – in der Summe entsteht daraus aber ein System ohne einheitliche Struktur, ohne durchgängige Rechteverwaltung und mit Dokumenten, die über mehrere außereuropäische Cloud-Dienste verteilt sind.",
@@ -270,9 +289,15 @@ export const leistungen: Leistung[] = [
     title: "Cloud-Systeme",
     leitfrage: "Unsere Dateien liegen bei Microsoft/Google – wie holen wir sie in eine souveräne Umgebung zurück?",
     format: "Projekt · Umsetzung",
-    h1: "Ihre Dateien liegen bei Microsoft oder Google – dabei könnten sie genauso gut bei Ihnen liegen.",
+    h1: "Souveräner Cloud-Server für Unternehmen",
     answerFirst:
-      "Wir richten Ihre Cloud-Infrastruktur auf Basis einer europäischen, quelloffenen Lösung ein – Dateisynchronisation, Freigaben und Zusammenarbeit, betrieben auf europäischer Infrastruktur und vollständig unter Ihrer Kontrolle statt unter der eines US-Anbieters.",
+      "Wir implementieren Ihre unabhängige Cloud-Lösung für Dateien, Freigaben und Zusammenarbeit. Auf europäischer Infrastruktur, mit offener Technologie und voller Kontrolle über Ihre Unternehmensdaten.",
+    hero: {
+      image: "cloud-server-souveraen-hero",
+      alt: "Leuchtendes Netzwerk mit einem Wolken-Symbol im Zentrum – Souveräner Cloud-Server für Unternehmen",
+      eyebrow: "Ihre Daten. Ihre Cloud. Ihre Kontrolle.",
+      chips: ["Open Source", "EU-Hosting", "Datenhoheit"],
+    },
     contextHeadline: "Die Cloud-Wahl von damals war naheliegend – nicht falsch, nur nicht mehr zeitgemäß.",
     contextText:
       "Als die Cloud-Infrastruktur eingerichtet wurde, war OneDrive oder Google Drive die pragmatische Wahl: sofort verfügbar, gut dokumentiert, in bestehende Office-Umgebungen integriert. Dass damit sämtliche Unternehmensdaten dauerhaft bei einem US-Anbieter liegen, war zu dem Zeitpunkt kein Kriterium. Heute, mit wachsendem Bewusstsein für Datenstandort, Abhängigkeit und regulatorischen Druck, ist es eines – und das lässt sich nachträglich korrigieren, ohne den laufenden Betrieb zu gefährden.",
@@ -337,9 +362,15 @@ export const leistungen: Leistung[] = [
     title: "Videokonferenzen",
     leitfrage: "Unsere Meetings laufen über Zoom/Teams – wie bekommen wir eine souveräne Alternative?",
     format: "Projekt · Umsetzung",
-    h1: "Ihre Meetings laufen über Zoom, Teams oder Google Meet – dabei können Videokonferenzen genauso gut souverän laufen.",
+    h1: "Souveräne Videokonferenzen für Unternehmen",
     answerFirst:
-      "Wir richten eine europäische Videokonferenz-Lösung für Ihr Unternehmen ein – funktional gleichwertig zu Zoom, Microsoft Teams oder Google Meet, aber mit voller Kontrolle über Ihre Daten, europäischem Hosting und DSGVO-konformem Betrieb ohne Umwege über US-Anbieter.",
+      "Wir implementieren Ihre unabhängige Videokonferenz-Lösung als Alternative zu Zoom, Teams und Google Meet. Mit europäischem Hosting, datenschutzfreundlichem Betrieb und voller Kontrolle über Ihre Unternehmenskommunikation.",
+    hero: {
+      image: "videokonferenzen-souveraen-hero",
+      alt: "Leuchtendes Netzwerk mit einem Videokamera-Symbol im Zentrum – Souveräne Videokonferenzen für Unternehmen",
+      eyebrow: "Sicher verbunden. Unabhängig kommunizieren.",
+      chips: ["Datenschutz", "EU-Hosting", "Open Source"],
+    },
     contextHeadline: "Die Tool-Wahl von damals war praktisch – nicht falsch, nur nicht mehr zeitgemäß.",
     contextText:
       "Als Videokonferenzen zum Alltag wurden, war die Entscheidung für Zoom oder Teams naheliegend: sofort einsatzbereit, von Kunden und Partnern erwartet, gut in bestehende Office-Umgebungen integriert. Dass damit sämtliche Meeting-Inhalte, Aufzeichnungen und Metadaten bei einem US-Anbieter verarbeitet werden, war zu dem Zeitpunkt selten ein Kriterium. Heute rückt das durch DSGVO-Anforderungen, NIS2 und wachsendes Bewusstsein für Abhängigkeit in den Fokus – und lässt sich nachträglich korrigieren, ohne dass Meetings schlechter funktionieren.",
