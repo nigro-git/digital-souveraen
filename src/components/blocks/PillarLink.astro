@@ -1,0 +1,14 @@
+---
+interface Props {
+  /** Kurzer Einleitungssatz vor dem Link. */
+  intro?: string;
+  class?: string;
+}
+const { intro = "Die Grundlagen dazu:", class: className = "" } = Astro.props;
+---
+
+<p class={`max-w-3xl text-sm leading-relaxed text-muted-foreground ${className}`}>
+  {intro}
+  <a href="/blog/was-ist-digitale-souveraenitaet-fuer-unternehmen" class="font-semibold text-foreground underline underline-offset-4 hover:no-underline">Was ist digitale Souveränität für Unternehmen?</a>
+  Definition, vier Dimensionen und Diagnosefragen im Überblick.
+</p>

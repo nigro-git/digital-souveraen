@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import Section from "../../components/ui/Section.astro";
 import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
 import Hero from "../../components/blocks/Hero.astro";
+import ArticleByline from "../../components/blocks/ArticleByline.astro";
 import CaseTimeline from "../../components/blocks/CaseTimeline.astro";
 import MediaSlot from "../../components/blocks/MediaSlot.astro";
 import TableOfContents from "../../components/blocks/TableOfContents.astro";
@@ -35,9 +36,10 @@ const tocItems = [
 ---
 
 <Layout
+  ogType="article"
   seoKey="blog-schwarz-gruppe-souveraener-arbeitsplatz"
   title={`${article.meta.title}`}
-  description={article.meta.answerFirst.slice(0, 155)}
+  description={article.meta.answerFirst}
   ogImage={articleImage("schwarz-gruppe-souveraener-arbeitsplatz", "og")}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
@@ -50,6 +52,7 @@ const tocItems = [
     ]} />
 
     <Hero title={article.meta.title} answerFirst={article.meta.answerFirst} tags={article.meta.tags} />
+    <ArticleByline />
 
     <p class="mt-4 max-w-4xl border-l-2 border-[#c8860a] bg-[#c8860a]/5 py-2 pl-4 pr-3 text-sm leading-relaxed text-foreground"><strong>Wichtige Einschränkung:</strong> {article.meta.einschraenkung}</p>
 

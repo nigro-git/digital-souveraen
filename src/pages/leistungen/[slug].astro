@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import Section from "../../components/ui/Section.astro";
 import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
 import Hero from "../../components/blocks/Hero.astro";
+import PillarLink from "../../components/blocks/PillarLink.astro";
 import HeroBand from "../../components/blocks/HeroBand.astro";
 import Context from "../../components/blocks/Context.astro";
 import ProductDetails from "../../components/blocks/ProductDetails.astro";
@@ -37,7 +38,7 @@ const breadcrumbSchema = buildBreadcrumbSchema([
 const andereLeistungen = leistungen.filter((e) => e.slug !== l.slug);
 ---
 
-<Layout seoKey={`leistungen-${l.slug}`} title={`${l.title}`} description={l.answerFirst.slice(0, 155)}>
+<Layout seoKey={`leistungen-${l.slug}`} title={`${l.title}`} description={l.answerFirst}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
@@ -63,6 +64,8 @@ const andereLeistungen = leistungen.filter((e) => e.slug !== l.slug);
         <p>{l.contextText}</p>
       </Context>
     </div>
+
+    <PillarLink class="mt-6" />
 
     <div class="mt-14">
       <h2 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">Produkt-Details</h2>

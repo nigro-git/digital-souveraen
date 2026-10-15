@@ -27,6 +27,8 @@ export interface BlogPost {
   dateLabel: string;
   /** ISO-Datum (YYYY-MM-DD), bestimmt die Sortierung. */
   publishDate: string;
+  /** ISO-Datum der letzten inhaltlichen Überarbeitung. Weggelassen = wie publishDate (wird dann nicht separat angezeigt). */
+  updatedDate?: string;
   /** "lebend" = wird regelmäßig aktualisiert/geprüft, "statisch" = einmalig verfasst. */
   lifecycle: "lebend" | "statisch";
   /** Zusatzhinweis bei lifecycle "lebend", z.B. "Prüfung alle 3 Monate". */

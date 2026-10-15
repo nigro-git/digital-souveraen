@@ -1,0 +1,70 @@
+---
+import { blogPosts } from "../../lib/blog-data";
+import { articleImage } from "../../lib/articleImages";
+import { author, authorUrl, authorPersonSchema } from "../../lib/author";
+
+interface Props {
+  /** Artikel-Slug; Standard: letztes Segment der aktuellen URL. */
+  slug?: string;
+}
+
+const slug = Astro.props.slug ?? Astro.url.pathname.split("/").filter(Boolean).pop() ?? "";
+const post = blogPosts.find((p) => p.slug === slug);
+
+const fmt = (iso: string) =>
+  new Date(`${iso}T12:00:00`).toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" });
+
+const published = post?.publishDate;
+const updated = post?.updatedDate && post.updatedDate !== post.publishDate ? post.updatedDate : undefined;
+
+const pageUrl = new URL(`/blog/${slug}`, Astro.site).href;
+const ogImage = articleImage(slug, "og");
+
+const schema = post
+  ? {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: post.title,
+      description: post.kicker,
+      mainEntityOfPage: pageUrl,
+      datePublished: post.publishDate,
+      dateModified: post.updatedDate ?? post.publishDate,
+      inLanguage: "de-DE",
+      ...(ogImage ? { image: new URL(ogImage, Astro.site).href } : {}),
+      author: authorPersonSchema(Astro.site),
+      publisher: {
+        "@type": "Organization",
+        name: "Digital Souverän",
+        url: new URL("/", Astro.site).href,
+        logo: { "@type": "ImageObject", url: new URL("/logo.png", Astro.site).href },
+      },
+    }
+  : null;
+---
+
+{schema && <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />}
+
+{published && (
+  <div class="mt-8 flex items-center gap-4">
+    <a href={authorUrl} class="shrink-0">
+      <img
+        src={author.imageSmall}
+        alt={author.imageAlt}
+        width="48"
+        height="48"
+        loading="lazy"
+        decoding="async"
+        class="h-12 w-12 rounded-full object-cover"
+      />
+    </a>
+    <p class="text-sm leading-snug text-muted-foreground">
+      <span>Von <a href={authorUrl} rel="author" class="font-bold text-foreground underline-offset-4 hover:underline">{author.name}</a></span>
+      <span aria-hidden="true"> · </span>
+      <span>{author.role}</span>
+      <br />
+      <span class="font-mono text-xs">
+        Veröffentlicht am <time datetime={published}>{fmt(published)}</time>{updated && (<Fragment> · Zuletzt aktualisiert am <time datetime={updated}>{fmt(updated)}</time></Fragment>)}
+      </span>
+    </p>
+  </div>
+)}

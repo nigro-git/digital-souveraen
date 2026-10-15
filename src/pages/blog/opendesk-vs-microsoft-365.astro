@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import Section from "../../components/ui/Section.astro";
 import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
 import Hero from "../../components/blocks/Hero.astro";
+import ArticleByline from "../../components/blocks/ArticleByline.astro";
 import MediaSlot from "../../components/blocks/MediaSlot.astro";
 import TableOfContents from "../../components/blocks/TableOfContents.astro";
 import ComparisonTable from "../../components/blocks/ComparisonTable.astro";
@@ -40,9 +41,10 @@ const tocItems = [
 ---
 
 <Layout
+  ogType="article"
   seoKey="blog-opendesk-vs-microsoft-365"
   title={`${article.meta.title}`}
-  description={article.meta.answerFirst.slice(0, 155)}
+  description={article.meta.answerFirst}
   ogImage={articleImage("opendesk-vs-microsoft-365", "og")}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
@@ -56,6 +58,7 @@ const tocItems = [
     ]} />
 
     <Hero title={article.meta.title} answerFirst={article.meta.answerFirst} tags={article.meta.tags} />
+    <ArticleByline />
 
     <div class="mt-10">
       <MediaSlot src={articleImage("opendesk-vs-microsoft-365", "hero")} alt={article.meta.title} />

@@ -7,13 +7,15 @@ interface Props {
   image?: string;
   meta: string;
   href: string;
+  /** Alt-Text des Bildes; leer = dekorativ. */
+  alt?: string;
 }
-const { title, kicker, format, clusters, image, meta, href } = Astro.props;
+const { title, kicker, format, clusters, image, meta, href, alt = "" } = Astro.props;
 ---
 
 <a href={href} class="group grid gap-8 md:grid-cols-2 md:items-center" data-clusters={clusters.join("|")}>
   {image ? (
-    <img src={image} alt="" class="aspect-video w-full rounded-lg object-cover" loading="eager" />
+    <img src={image} alt={alt} class="aspect-video w-full rounded-lg object-cover" loading="eager" />
   ) : (
     <div class="flex aspect-video w-full items-center justify-center rounded-lg border-2 border-dashed border-border">
       <span class="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">Kein Bild</span>

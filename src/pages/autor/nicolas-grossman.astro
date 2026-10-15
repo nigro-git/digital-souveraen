@@ -1,0 +1,77 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import ArticleGridTeaser from "../../components/blocks/ArticleGridTeaser.astro";
+import { blogPosts } from "../../lib/blog-data";
+import { author, authorUrl, authorPersonSchema } from "../../lib/author";
+import { buildBreadcrumbSchema } from "../../lib/schemaOrg";
+
+const pageUrl = new URL(authorUrl, Astro.site).href;
+const profileSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  url: pageUrl,
+  mainEntity: authorPersonSchema(Astro.site),
+};
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: author.name, url: pageUrl },
+]);
+const posts = [...blogPosts].sort((a, b) => b.publishDate.localeCompare(a.publishDate));
+---
+
+<Layout
+  title={`${author.name} – Autor`}
+  description={`${author.name}, ${author.role.replace(/ · /g, ", ")} bei ${author.organization.name}. Autor der Beiträge auf digital-souveraen.com zu digitaler Souveränität im Unternehmen.`}
+  ogImage={author.image}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(profileSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <Section id="autor">
+    <Breadcrumb items={[
+      { label: "Digital Souverän", href: "/" },
+      { label: author.name },
+    ]} />
+
+    <div class="grid grid-cols-1 items-start gap-10 md:grid-cols-[240px_1fr] md:gap-14">
+      <img
+        src={author.image}
+        alt={author.imageAlt}
+        width="240"
+        height="240"
+        loading="eager"
+        decoding="async"
+        class="aspect-square w-48 rounded-full object-cover md:w-full"
+      />
+      <div class="max-w-2xl">
+        <p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-primary">Autor</p>
+        <h1 class="font-bold text-foreground" style="font-size: var(--text-section); line-height: 1.08; letter-spacing: -0.02em;">{author.name}</h1>
+        <p class="mt-3 font-mono text-sm text-muted-foreground">{author.role} · {author.organization.name}, {author.location}</p>
+        {author.bio.map((p) => (
+          <p class="mt-6 leading-relaxed text-foreground/80" style="font-size: var(--text-body);">{p}</p>
+        ))}
+        <p class="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-sm">
+          <a href={author.linkedin} rel="me noopener" target="_blank" class="text-foreground underline underline-offset-4 hover:no-underline">LinkedIn</a>
+          <a href={author.organization.url} rel="noopener" target="_blank" class="text-foreground underline underline-offset-4 hover:no-underline">{author.organization.name}</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-16">
+      <h2 class="mb-8 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">Beiträge von {author.name}</h2>
+      <ArticleGridTeaser
+        posts={posts.map((p) => ({
+          title: p.title,
+          kicker: p.kicker,
+          format: p.format,
+          clusters: p.clusters,
+          image: p.image,
+          meta: p.dateLabel,
+          href: `/blog/${p.slug}`,
+        }))}
+      />
+    </div>
+  </Section>
+</Layout>

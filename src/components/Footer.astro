@@ -1,5 +1,6 @@
 ---
 import { leistungen } from "../lib/leistungen-data";
+import { authorUrl } from "../lib/author";
 
 const year = new Date().getFullYear();
 ---
@@ -39,6 +40,7 @@ const year = new Date().getFullYear();
           <li><a href="/leistungen" class="text-muted-foreground text-sm hover:text-foreground transition-colors">Leistungen</a></li>
           <li><a href="/news" class="text-muted-foreground text-sm hover:text-foreground transition-colors">News</a></li>
           <li><a href="/blog" class="text-muted-foreground text-sm hover:text-foreground transition-colors">Blog</a></li>
+          <li><a href={authorUrl} class="text-muted-foreground text-sm hover:text-foreground transition-colors">Autor</a></li>
           <li><a href="/kontakt" class="text-muted-foreground text-sm hover:text-foreground transition-colors">Kontakt</a></li>
         </ul>
       </div>

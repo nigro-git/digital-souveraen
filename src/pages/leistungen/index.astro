@@ -10,6 +10,7 @@ import AudienceFit from "../../components/blocks/AudienceFit.astro";
 import CaseStudy from "../../components/blocks/CaseStudy.astro";
 import Faq from "../../components/blocks/Faq.astro";
 import CtaBar from "../../components/blocks/CtaBar.astro";
+import PillarLink from "../../components/blocks/PillarLink.astro";
 import { leistungen } from "../../lib/leistungen-data";
 import { buildBreadcrumbSchema, buildFaqPageSchema } from "../../lib/schemaOrg";
 
@@ -127,6 +128,8 @@ const faqSchema = buildFaqPageSchema(faq);
     <div class="mt-14">
       <Faq items={faq} title="Häufige Fragen" />
     </div>
+
+    <PillarLink class="mt-14" intro="Noch am Anfang? Die Grundlagen:" />
 
     <div class="mt-16">
       <CtaBar title="Souveränitäts-Analyse anfragen" subtitle="Keine generische Demo – eine Einschätzung Ihrer konkreten Ausgangslage." />

@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Section from "../components/ui/Section.astro";
 import Hero from "../components/blocks/Hero.astro";
+import FeaturedArticleTeaser from "../components/blocks/FeaturedArticleTeaser.astro";
 import HeroBand from "../components/blocks/HeroBand.astro";
 import Momentum from "../components/blocks/Momentum.astro";
 import ProductGrid from "../components/blocks/ProductGrid.astro";
@@ -16,6 +17,7 @@ import { buildFaqPageSchema } from "../lib/schemaOrg";
 
 // Vergleichsartikel bleibt fest dabei (Flaggschiff-Vergleich, auch auf /blog der Featured-Artikel),
 // dazu die 3 zuletzt veroeffentlichten anderen Artikel.
+const grundlagen = blogPosts.find((p) => p.slug === "was-ist-digitale-souveraenitaet-fuer-unternehmen");
 const featuredSlug = "opendesk-vs-microsoft-365";
 const featuredPost = blogPosts.find((p) => p.slug === featuredSlug);
 const neuesteAndere = blogPosts
@@ -71,6 +73,22 @@ const faqSchema = buildFaqPageSchema(faq);
       />
     </div>
 
+    {grundlagen && (
+      <div class="mt-16">
+        <p class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">Grundlagen</p>
+        <FeaturedArticleTeaser
+          title={grundlagen.title}
+          kicker={grundlagen.kicker}
+          format={grundlagen.format}
+          clusters={grundlagen.clusters}
+          image={grundlagen.heroImage ?? grundlagen.image}
+          alt="Blauer Hintergrund mit goldenem Schild-Symbol und Haken – Grundlagen zur digitalen Souveränität für Unternehmen"
+          meta={grundlagen.dateLabel}
+          href={`/blog/${grundlagen.slug}`}
+        />
+      </div>
+    )}
+
     <div class="mt-16">
       <ProductGrid
         title="Wie wir Sie begleiten"
@@ -116,7 +134,7 @@ const faqSchema = buildFaqPageSchema(faq);
           format: p.format,
           clusters: p.clusters,
           image: p.image,
-          meta: `${p.dateLabel} · ${p.lifecycle}`,
+          meta: p.dateLabel,
           href: `/blog/${p.slug}`,
         }))}
       />
