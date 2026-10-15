@@ -12,6 +12,15 @@ export interface NewsItem {
 
 const rawNews: NewsItem[] = [
   {
+    slug: "studie-mittelstand-technische-abhaengigkeit",
+    title: "Studie: Drei von vier größeren Mittelständlern sehen hohe technische Abhängigkeit",
+    kicker: "Laut einer Herstellerstudie bewerten 72 % der Unternehmen mit 500–999 Beschäftigten ihre technische Abhängigkeit als hoch – wechseln wäre für viele aufwendig.",
+    date: "16. Oktober 2026",
+    publishDate: "2026-10-16",
+    body: "72 % der Unternehmen mit 500 bis 999 Beschäftigten stufen ihre technische Abhängigkeit von IT-Anbietern als hoch oder sehr hoch ein. Das ist ein Ergebnis der Studie „Digitale Souveränität 2026“ des Softwareherstellers easy software, die der Anbieter am 6. Oktober 2026 in einer Pressemitteilung vorgestellt hat. Befragt wurden im Mai 2026 online 312 IT- und Fachentscheider in der DACH-Region.\n\nDass ein Wechsel schwerfällt, zeigen weitere Zahlen: Nur 34 % halten den Wechsel eines zentralen IT-Anbieters für sehr oder eher einfach. Als größte Hürden nennen 38,1 % komplexe Systemlandschaften und 37,5 % Budget und Migrationskosten. 31 % würden für mehr Souveränität höhere Kosten akzeptieren. Knapp 40 % wollen Sovereign-Cloud-Lösungen stärker nutzen, 54,3 % wünschen sich mehr Einblick in Zugriffs- und Betriebsprotokolle solcher Plattformen.\n\nDie Zahlen stammen von einem Anbieter mit eigenem Interesse an dem Thema und beruhen auf einer überschaubaren Stichprobe. Als Stimmungsbild sind sie brauchbar, als Marktzahl nicht. Praktisch bedeutet das: Wer Abhängigkeiten abbauen will, kommt mit einem schrittweisen Vorgehen weiter als mit dem Austausch der gesamten Landschaft.\n\nRedaktioneller Hinweis: Herstellerstudie, Methodik nur aus der Pressemitteilung bekannt. Die Zahlen liegen in zwei Veröffentlichungen vor, beide gehen auf dieselbe Mitteilung zurück, es gibt keine unabhängige Bestätigung. Die Studie selbst (Executive Summary) wurde nicht geprüft.",
+    source: "easy software AG, Pressemitteilung, 6. Oktober 2026; Beitrag von Marcel Etzel (CPTO), it-daily.net, 8. Oktober 2026",
+  },
+  {
     slug: "opendesk-1-19-whiteboard-sicherheitsprofil",
     title: "openDesk 1.19: Whiteboard und neues Sicherheitsprofil – Betreiber müssen manuell migrieren",
     kicker: "openDesk 1.19 bringt ein Whiteboard und passt alle Komponenten an das Profil PSS-Restricted an – Betreiber müssen von Hand migrieren.",
