@@ -9,9 +9,9 @@ interface Props {
 const { rows, labelHeader = "Bereich", frageHeader = "Frage", linkHeader = "Vertiefung" } = Astro.props;
 ---
 
+<!-- Eine Tabelle für alle Breiten: ab sm Tabellenlayout, darunter per CSS gestapelte Karten (kein doppeltes HTML) -->
 <figure class="m-0">
-  <!-- Ab sm: echte Tabelle -->
-  <div class="hidden overflow-x-auto sm:block">
+  <div class="rt overflow-x-auto">
     <table class="w-full border-collapse text-left">
       <thead>
         <tr>
@@ -24,34 +24,30 @@ const { rows, labelHeader = "Bereich", frageHeader = "Frage", linkHeader = "Vert
         {rows.map((row) => (
           <tr>
             <th scope="row" class="border-b border-border px-4 py-4 text-sm font-normal text-muted-foreground">{row.label}</th>
-            <td class="border-b border-border px-4 py-4 text-sm text-foreground">{row.frage}</td>
-            <td class="border-b border-border px-4 py-4 text-sm">
-              {row.href ? (
-                <a href={row.href} class="font-semibold text-primary hover:underline">{row.linkLabel} →</a>
-              ) : (
-                <span class="italic text-muted-foreground">in Vorbereitung</span>
-              )}
+            <td class="rt-frage border-b border-border px-4 py-4 text-sm text-foreground">{row.frage}</td>
+            <td class="rt-link border-b border-border px-4 py-4 text-sm">
+              {row.href && <a href={row.href} class="font-semibold text-primary hover:underline">{row.linkLabel} →</a>}
             </td>
           </tr>
         ))}
       </tbody>
     </table>
   </div>
-
-  <!-- Unter sm: gestapelte Karten statt horizontalem Scroll -->
-  <div class="flex flex-col gap-3 sm:hidden">
-    {rows.map((row) => (
-      <div class="rounded-lg border border-border p-4">
-        <p class="mb-2 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">{row.label}</p>
-        <p class="text-sm text-foreground">{row.frage}</p>
-        <p class="mt-2 border-t border-dashed border-border pt-2 text-sm">
-          {row.href ? (
-            <a href={row.href} class="font-semibold text-primary hover:underline">{row.linkLabel} →</a>
-          ) : (
-            <span class="italic text-muted-foreground">in Vorbereitung</span>
-          )}
-        </p>
-      </div>
-    ))}
-  </div>
 </figure>
+
+<style>
+  @media (max-width: 639px) {
+    .rt table,
+    .rt tbody,
+    .rt tr,
+    .rt th,
+    .rt td { display: block; }
+    /* Kopfzeile bleibt für Screenreader erhalten, ist aber nicht sichtbar */
+    .rt thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .rt tr { border: 1px solid var(--color-border, #e5e7eb); border-radius: 0.5rem; padding: 1rem; margin-bottom: 0.75rem; }
+    .rt th[scope="row"] { border: 0 !important; padding: 0 0 0.5rem !important; font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .rt td { border: 0 !important; padding: 0 !important; }
+    .rt td.rt-link { margin-top: 0.5rem; padding-top: 0.5rem !important; border-top: 1px dashed var(--color-border, #e5e7eb) !important; }
+    .rt td.rt-link:empty { display: none; }
+  }
+</style>

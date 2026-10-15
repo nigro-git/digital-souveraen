@@ -32,8 +32,8 @@ const t = type ? typeConfig[type] : null;
     </span>
   )}
 
-  <!-- Ab sm: echte Tabelle -->
-  <div class="hidden overflow-x-auto sm:block" style={t ? `border-left:3px solid ${t.border};` : undefined}>
+  <!-- Eine Tabelle für alle Breiten: ab sm Tabellenlayout, darunter per CSS gestapelte Karten (kein doppeltes HTML) -->
+  <div class:list={["ct overflow-x-auto", t && "ct-typed"]} style={t ? `border-left:3px solid ${t.border};` : undefined}>
     <table class="w-full border-collapse text-left">
       <thead>
         <tr>
@@ -46,32 +46,31 @@ const t = type ? typeConfig[type] : null;
         {rows.map((row) => (
           <tr>
             <th scope="row" class="border-b border-border px-4 py-4 text-sm font-normal text-muted-foreground">{row.kriterium}</th>
-            <td class="border-b border-border px-4 py-4 text-sm text-foreground">{row.ohne}</td>
-            {!twoColumn && <td class="border-b border-border px-4 py-4 text-sm font-semibold text-primary">{row.mit}</td>}
+            <td data-label={ohneLabel} class="ct-ohne border-b border-border px-4 py-4 text-sm text-foreground">{row.ohne}</td>
+            {!twoColumn && <td data-label={mitLabel} class="ct-mit border-b border-border px-4 py-4 text-sm font-semibold text-primary">{row.mit}</td>}
           </tr>
         ))}
       </tbody>
     </table>
   </div>
 
-  <!-- Unter sm: gestapelte Karten statt horizontalem Scroll -->
-  <div class="flex flex-col gap-3 sm:hidden" style={t ? `border-left:3px solid ${t.border};padding-left:14px;` : undefined}>
-    {rows.map((row) => (
-      <div class="rounded-lg border border-border p-4">
-        <p class="mb-3 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">{row.kriterium}</p>
-        <div class:list={["flex items-baseline justify-between gap-3 py-1", !twoColumn && "border-b border-dashed border-border"]}>
-          <span class="shrink-0 text-sm font-bold text-foreground">{ohneLabel}</span>
-          <span class="text-right text-sm text-foreground">{row.ohne}</span>
-        </div>
-        {!twoColumn && (
-          <div class="flex items-baseline justify-between gap-3 py-1">
-            <span class="shrink-0 text-sm font-bold text-primary">{mitLabel}</span>
-            <span class="text-right text-sm font-semibold text-primary">{row.mit}</span>
-          </div>
-        )}
-      </div>
-    ))}
-  </div>
-
   {caption && <figcaption class="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground">{caption}</figcaption>}
 </figure>
+
+<style>
+  @media (max-width: 639px) {
+    .ct-typed { padding-left: 14px; }
+    .ct table,
+    .ct tbody,
+    .ct tr,
+    .ct th,
+    .ct td { display: block; }
+    /* Kopfzeile bleibt für Screenreader erhalten, ist aber nicht sichtbar */
+    .ct thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .ct tr { border: 1px solid var(--color-border, #e5e7eb); border-radius: 0.5rem; padding: 1rem; margin-bottom: 0.75rem; }
+    .ct th[scope="row"] { border: 0 !important; padding: 0 0 0.75rem !important; font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .ct td { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; border: 0 !important; padding: 0.25rem 0 !important; text-align: right; }
+    .ct td::before { content: attr(data-label); flex-shrink: 0; text-align: left; font-weight: 700; }
+    .ct td.ct-ohne:not(:last-child) { border-bottom: 1px dashed var(--color-border, #e5e7eb) !important; }
+  }
+</style>
