@@ -1,0 +1,112 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import Hero from "../../components/blocks/Hero.astro";
+import ArticleByline from "../../components/blocks/ArticleByline.astro";
+import MediaSlot from "../../components/blocks/MediaSlot.astro";
+import TableOfContents from "../../components/blocks/TableOfContents.astro";
+import ComparisonTable from "../../components/blocks/ComparisonTable.astro";
+import Steps from "../../components/blocks/Steps.astro";
+import Situations from "../../components/blocks/Situations.astro";
+import CtaBar from "../../components/blocks/CtaBar.astro";
+import Related from "../../components/blocks/Related.astro";
+import NextReads from "../../components/blocks/NextReads.astro";
+import { readTime } from "../../lib/readTime";
+import { inline, plain } from "../../lib/inline";
+import { articleImage } from "../../lib/articleImages";
+import { buildBreadcrumbSchema, buildHowToSchema } from "../../lib/schemaOrg";
+import * as article from "../../lib/blog-articles/email-migration-m365-mailcow";
+
+const slug = "email-migration-m365-mailcow";
+const pageUrl = new URL(`/blog/${slug}`, Astro.site).href;
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "Blog", url: new URL("/blog", Astro.site).href },
+  { label: article.meta.title, url: pageUrl },
+]);
+const howToSchema = buildHowToSchema(
+  article.meta.title,
+  article.schritte.steps.map((s) => ({
+    titel: s.titel,
+    text: plain([s.text, s.pruefen ? `Prüfen: ${s.pruefen}` : "", s.stolperstein ? `Stolperstein: ${s.stolperstein}` : ""].filter(Boolean).join(" ")),
+  })),
+);
+
+const tocItems = [
+  { id: "ausgangslage", label: article.ausgangslage.heading },
+  { id: "voraussetzungen", label: article.voraussetzungen.heading },
+  { id: "schritte", label: article.schritte.heading, highlight: true },
+  { id: "probleme", label: article.probleme.heading },
+  { id: "abschluss", label: article.abschluss.heading },
+];
+const h2 = "mb-6 font-bold text-foreground";
+---
+
+<Layout
+  ogType="article"
+  seoKey={`blog-${slug}`}
+  title={`${article.meta.title}`}
+  description={plain(article.meta.answerFirst)}
+  ogImage={articleImage(slug, "og")}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+
+  <Section id="artikel">
+    <Breadcrumb items={[
+      { label: "Digital Souverän", href: "/" },
+      { label: "Blog", href: "/blog" },
+      { label: article.meta.title },
+    ]} />
+
+    <Hero title={article.meta.title} answerFirst={article.meta.answerFirst} tags={article.meta.tags} />
+    <ArticleByline />
+
+    <div class="mt-10">
+      <MediaSlot src={articleImage(slug, "hero")} alt={article.meta.title} />
+    </div>
+
+    <div class="mt-10">
+      <TableOfContents items={tocItems} readTime={readTime(article)} highlightLabel="Kernteil" />
+    </div>
+
+    <div id="ausgangslage" class="mt-14 scroll-mt-24">
+      <h2 class="mb-3 font-mono text-xs font-normal uppercase tracking-[0.15em] text-muted-foreground">{article.ausgangslage.heading}</h2>
+      <ComparisonTable rows={article.ausgangslage.rows} twoColumn type="empfehlung" kriteriumLabel="Ihre Ausgangslage" ohneLabel="Empfohlener Weg" />
+    </div>
+
+    <div id="voraussetzungen" class="mt-14 scroll-mt-24">
+      <h2 class={h2} style="font-size: var(--text-peak); letter-spacing: -0.01em;">{article.voraussetzungen.heading}</h2>
+      <ul class="max-w-3xl list-disc space-y-3 pl-5 leading-relaxed text-foreground/90 marker:text-primary" style="font-size: var(--text-body);">
+        {article.voraussetzungen.punkte.map((p) => (
+          <li><strong class="text-foreground">{p.label}:</strong> <Fragment set:html={inline(p.text)} /></li>
+        ))}
+      </ul>
+    </div>
+
+    <div id="schritte" class="mt-14 scroll-mt-24">
+      <Steps title={article.schritte.heading} steps={article.schritte.steps} />
+    </div>
+
+    <div id="probleme" class="mt-14 scroll-mt-24">
+      <Situations title={article.probleme.heading} items={article.probleme.items} />
+    </div>
+
+    <div id="abschluss" class="mt-14 scroll-mt-24">
+      <Situations title={article.abschluss.heading} items={article.abschluss.items} />
+    </div>
+
+    <div class="mt-14">
+      <NextReads slugs={["co-existenz-statt-big-bang","opendesk-vs-microsoft-365"]} />
+    </div>
+
+    <div class="mt-10">
+      <Related links={article.related.links} upHref={article.related.upHref} upLabel={article.related.upLabel} />
+    </div>
+
+    <div class="mt-16">
+      <CtaBar title={article.cta.title} subtitle={article.cta.subtitle} ctaLabel={article.cta.ctaLabel} href={article.cta.href} eyebrow="Anschluss" />
+    </div>
+  </Section>
+</Layout>

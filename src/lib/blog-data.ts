@@ -42,6 +42,16 @@ export interface BlogPost {
  */
 const rawPosts: BlogPost[] = [
   {
+    slug: "email-migration-m365-mailcow",
+    title: "E-Mail von Microsoft 365 zu Mailcow migrieren: Ablauf und Stolpersteine",
+    kicker: "Zehn Schritte mit Prüfkriterien, die größten Stolpersteine und die Frage, wann sich Selbstbetrieb lohnt.",
+    clusters: ["Umsetzung & Migration"],
+    format: "Anleitung",
+    dateLabel: "Oktober 2026",
+    publishDate: "2026-10-17",
+    lifecycle: "lebend",
+  },
+  {
     slug: "woran-erkenne-ich-digitale-souveraenitaet",
     title: "Woran erkenne ich, ob mein Unternehmen digital souverän ist?",
     kicker: "Sechs Fragen mit Prüfschritt zeigen, ob Sie im Ernstfall wechseln können – belegt statt nur zugesagt.",
