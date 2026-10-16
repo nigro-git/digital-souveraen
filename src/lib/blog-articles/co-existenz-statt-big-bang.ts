@@ -77,7 +77,7 @@ export const schritte = {
     },
     {
       titel: "Schrittweise ausrollen",
-      text: "Nach erfolgreicher Pilotphase: nächste Komponente (z. B. E-Mail über Open-Xchange) oder nächste Abteilung nach demselben Muster (Schritt 3–5) hinzunehmen. Priorisierung nach Risiko: unkritische Anwendungen zuerst, wie auch bei Identity-Migrationen allgemein üblich.",
+      text: "Nach erfolgreicher Pilotphase: nächste Komponente (z. B. E-Mail über Open-Xchange) oder nächste Abteilung nach demselben Muster (Schritt 3–5) hinzunehmen. Priorisierung nach Risiko: unkritische Anwendungen zuerst, wie auch bei Identity-Migrationen allgemein üblich. Wie ein E-Mail-Umzug im Einzelnen abläuft, zeigt die Anleitung [E-Mail von Microsoft 365 zu Mailcow migrieren](/blog/email-migration-m365-mailcow) am Beispiel von Mailcow.",
       deliverable: "Rollout-Plan mit Reihenfolge und Zeitrahmen für die verbleibenden Komponenten/Abteilungen.",
     },
     {
