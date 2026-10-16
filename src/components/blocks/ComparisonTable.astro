@@ -1,4 +1,5 @@
 ---
+import { inline } from "../../lib/inline";
 interface Row { kriterium: string; ohne: string; mit: string; }
 interface Props {
   rows: Row[];
@@ -46,8 +47,8 @@ const t = type ? typeConfig[type] : null;
         {rows.map((row) => (
           <tr>
             <th scope="row" class="border-b border-border px-4 py-4 text-sm font-normal text-muted-foreground">{row.kriterium}</th>
-            <td data-label={ohneLabel} class="ct-ohne border-b border-border px-4 py-4 text-sm text-foreground">{row.ohne}</td>
-            {!twoColumn && <td data-label={mitLabel} class="ct-mit border-b border-border px-4 py-4 text-sm font-semibold text-primary">{row.mit}</td>}
+            <td data-label={ohneLabel} class="ct-ohne border-b border-border px-4 py-4 text-sm text-foreground" set:html={inline(row.ohne)} />
+            {!twoColumn && <td data-label={mitLabel} class="ct-mit border-b border-border px-4 py-4 text-sm font-semibold text-primary" set:html={inline(row.mit)} />}
           </tr>
         ))}
       </tbody>

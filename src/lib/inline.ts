@@ -1,8 +1,11 @@
 /**
- * Wandelt [Text](url) in Redaktionstexten in Links um. Der Rest wird HTML-escaped.
+ * Wandelt [Text](url) und `Code` in Redaktionstexten um. Der Rest wird HTML-escaped.
  * Nur für eigene, redaktionell gepflegte Texte gedacht (set:html).
  */
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+const withCode = (s: string) =>
+  esc(s).replace(/`([^`]+)`/g, '<code class="rounded bg-muted px-1 py-0.5 font-mono text-[0.9em]">$1</code>');
 
 export function inline(text: string): string {
   const out: string[] = [];
@@ -10,7 +13,7 @@ export function inline(text: string): string {
   let last = 0;
   let m: RegExpExecArray | null;
   while ((m = rx.exec(text))) {
-    out.push(esc(text.slice(last, m.index)));
+    out.push(withCode(text.slice(last, m.index)));
     const href = m[2];
     const external = /^https?:\/\//.test(href);
     out.push(
@@ -18,6 +21,11 @@ export function inline(text: string): string {
     );
     last = m.index + m[0].length;
   }
-  out.push(esc(text.slice(last)));
+  out.push(withCode(text.slice(last)));
   return out.join("");
+}
+
+/** Entfernt Markdown-Links und Code-Zeichen, behält den Text (für Schema.org und Meta-Beschreibungen). */
+export function plain(text: string): string {
+  return text.replace(/\[([^\]]+)\]\([^)\s]+\)/g, "$1").replace(/`([^`]+)`/g, "$1");
 }
