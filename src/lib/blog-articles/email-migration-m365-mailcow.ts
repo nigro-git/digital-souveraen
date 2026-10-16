@@ -2,9 +2,10 @@
  * Quelle: G:\Meine Ablage\+Digitale-Souveraenität+\Content-Produktion\Blog\Themen\HowTo\artikel-howto-email-migration-m365-mailcow.md
  * Typ: Anleitung/How-To (Ablauf-Variante, Befehle stehen in der Herstellerdoku) · V2 · Cluster: Umsetzung & Migration · Stand der Recherche: 17.10.2026 · Status: Entwurf zur Freigabe
  *
- * Offen laut Redaktion (vor Livegang prüfen):
- * - Aktualität der beiden Microsoft-Seiten (Datumsangaben der OAuth-Seite widersprüchlich).
- * - Primärquelle für Kalender/Kontakte (Mailcow-/SOGo-Doku) verlinken; bisher nur Anbieterquelle xaweho.de als allgemeiner Hinweis.
+ * Geprüft am 17.10.2026: Basic Auth für IMAP abgeschaltet (Microsoft Learn, Seite 16.7.2026); OAuth-Seite zuletzt aktualisiert 17.10.2025
+ * (Erstellung 2021, daher die widersprüchlichen Daten); Mailcow-Sync-Jobs nur mit Benutzername/Passwort, Hinweis zum Deaktivieren bestätigt.
+ * Kalender/Kontakte: nur Sekundärquellen (SOGo-Importanleitungen von Hochschulen/Hostern), keine Mailcow-Primärquelle.
+ * Offen laut Redaktion:
  * - Optional: Praxisstellen (ab wann Selbstbetrieb lohnt, realistischer Zeitrahmen, wie Schritt 5 gelöst wird) aus eigenen Projekten ergänzen.
  * Schema: HowTo mit HowToStep (kein FAQ/QAPage). [Text](url) wird über lib/inline.ts als Link gerendert.
  */
@@ -69,7 +70,7 @@ export const schritte = {
     },
     {
       titel: "Zugriff auf Microsoft 365 einrichten",
-      text: "Mailcow muss sich an den Microsoft-365-Postfächern anmelden können, um Mails zu kopieren. Das geht nur über OAuth 2.0 mit einer in Microsoft Entra registrierten App, mit Zustimmung des Administrators und Zugriffsrecht auf jedes Postfach ([Microsoft Learn, IMAP mit OAuth](https://learn.microsoft.com/en-us/exchange/client-developer/legacy-protocols/how-to-authenticate-an-imap-pop-smtp-application-by-using-oauth)).",
+      text: "Mailcow muss sich an den Microsoft-365-Postfächern anmelden können, um Mails zu kopieren. Für viele Postfächer geht das nur über OAuth 2.0 mit einer in Microsoft Entra registrierten App, mit Zustimmung des Administrators und Zugriffsrecht auf jedes Postfach ([Microsoft Learn, IMAP mit OAuth](https://learn.microsoft.com/en-us/exchange/client-developer/legacy-protocols/how-to-authenticate-an-imap-pop-smtp-application-by-using-oauth)).",
       pruefen: "Der Zugriff auf ein Testpostfach funktioniert, bevor Sie weitere freigeben.",
       stolperstein:
         "Die Sync-Jobs von Mailcow sind für Benutzername und Passwort ausgelegt ([Mailcow, Sync Jobs](https://docs.mailcow.email/post_installation/firststeps-sync_jobs_migration/)). Eine native OAuth-Anmeldung ist laut den Mailcow-Entwicklern noch in Entwicklung, ohne Zeitplan ([Issue #6088](https://github.com/mailcow/mailcow-dockerized/issues/6088)). Wer viele Postfächer migriert, braucht dafür Zusatzwerkzeuge. Bei sehr wenigen Postfächern ist der Umzug über einen Mail-Client wie Thunderbird eine Alternative ([Issue #4985](https://github.com/mailcow/mailcow-dockerized/issues/4985)). Planen Sie für diesen Schritt einen eigenen Test ein, bevor Sie Nutzerpostfächer anfassen.",
@@ -87,7 +88,7 @@ export const schritte = {
     },
     {
       titel: "Kalender, Kontakte und Geräte klären",
-      text: "Der Mail-Sync überträgt keine Kalender und Kontakte. Dafür gibt es einen Export- und Importweg. Mobilgeräte mit Exchange-Konto müssen neu eingerichtet werden. Regeln und Abwesenheitsnotizen werden neu angelegt. Wie das in Mailcow geht, steht in der Mailcow-Doku.",
+      text: "Der Mail-Sync überträgt keine Kalender und Kontakte. Dafür gibt es einen Export- und Importweg: Im Webmail SOGo lassen sich Kalender als ICS-Datei und Kontakte als vCard oder LDIF importieren. Mobilgeräte mit Exchange-Konto müssen neu eingerichtet werden. Regeln und Abwesenheitsnotizen werden neu angelegt.",
       pruefen: "Für jeden Nutzer steht fest, was mitkommt und wer es erledigt.",
     },
     {
