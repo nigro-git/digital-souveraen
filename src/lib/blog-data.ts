@@ -42,6 +42,16 @@ export interface BlogPost {
  */
 const rawPosts: BlogPost[] = [
   {
+    slug: "woran-erkenne-ich-digitale-souveraenitaet",
+    title: "Woran erkenne ich, ob mein Unternehmen digital souverän ist?",
+    kicker: "Sechs Fragen mit Prüfschritt zeigen, ob Sie im Ernstfall wechseln können – belegt statt nur zugesagt.",
+    clusters: ["Grundlagen & Risikobewusstsein"],
+    format: "Information",
+    dateLabel: "Oktober 2026",
+    publishDate: "2026-10-16",
+    lifecycle: "lebend",
+  },
+  {
     slug: "opendesk-vs-microsoft-365",
     title: "openDesk vs. Microsoft 365: Was der Umstieg für den Mittelstand wirklich bedeutet",
     kicker: "Für Unternehmen mit Souveränitätspriorität die bessere Wahl – aber nicht ohne Voraussetzungen. Ein Vergleich entlang des gesamten Nutzungszeitraums.",

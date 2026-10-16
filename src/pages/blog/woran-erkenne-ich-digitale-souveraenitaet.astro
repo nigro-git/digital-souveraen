@@ -1,0 +1,128 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/ui/Section.astro";
+import Breadcrumb from "../../components/blocks/Breadcrumb.astro";
+import Hero from "../../components/blocks/Hero.astro";
+import ArticleByline from "../../components/blocks/ArticleByline.astro";
+import MediaSlot from "../../components/blocks/MediaSlot.astro";
+import TableOfContents from "../../components/blocks/TableOfContents.astro";
+import Context from "../../components/blocks/Context.astro";
+import DataTable from "../../components/blocks/DataTable.astro";
+import Related from "../../components/blocks/Related.astro";
+import NextReads from "../../components/blocks/NextReads.astro";
+import CtaBar from "../../components/blocks/CtaBar.astro";
+import { readTime } from "../../lib/readTime";
+import { inline } from "../../lib/inline";
+import { articleImage } from "../../lib/articleImages";
+import { buildBreadcrumbSchema } from "../../lib/schemaOrg";
+import * as article from "../../lib/blog-articles/woran-erkenne-ich-digitale-souveraenitaet";
+
+const slug = "woran-erkenne-ich-digitale-souveraenitaet";
+const pageUrl = new URL(`/blog/${slug}`, Astro.site).href;
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { label: "Digital Souverän", url: new URL("/", Astro.site).href },
+  { label: "Blog", url: new URL("/blog", Astro.site).href },
+  { label: article.meta.title, url: pageUrl },
+]);
+
+const tocItems = [
+  { id: "modell", label: article.modell.heading },
+  { id: "evidenz", label: article.evidenz.heading },
+  { id: "pruefung", label: article.pruefung.heading, highlight: true },
+  { id: "grenzen", label: article.grenzen.heading },
+];
+const h3 = "mb-3 font-bold text-foreground";
+---
+
+<Layout
+  ogType="article"
+  seoKey={`blog-${slug}`}
+  title={`${article.meta.title}`}
+  description={article.meta.answerFirst}
+  ogImage={articleImage(slug, "og")}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <Section id="artikel">
+    <Breadcrumb items={[
+      { label: "Digital Souverän", href: "/" },
+      { label: "Blog", href: "/blog" },
+      { label: article.meta.title },
+    ]} />
+
+    <Hero title={article.meta.title} answerFirst={article.meta.answerFirst} tags={article.meta.tags} />
+    <ArticleByline />
+
+    <div class="mt-10">
+      <MediaSlot src={articleImage(slug, "hero")} alt={article.meta.title} />
+    </div>
+
+    <div class="mt-10">
+      <TableOfContents items={tocItems} readTime={readTime(article)} highlightLabel="Werkzeug" />
+    </div>
+
+    <div id="modell" class="mt-14 scroll-mt-24">
+      <Context tone="article" headline={article.modell.heading}>
+        <div class="space-y-4">
+          <p set:html={inline(article.modell.absaetze[0])} />
+          <p set:html={inline(article.modell.absaetze[1])} />
+          <ul class="list-disc space-y-2 pl-5 marker:text-primary">
+            {article.modell.staende.map((s) => (
+              <li><strong class="text-foreground">{s.label}:</strong> {s.text}</li>
+            ))}
+          </ul>
+          <p>{article.modell.hinweis}</p>
+        </div>
+      </Context>
+    </div>
+
+    <div id="evidenz" class="mt-14 scroll-mt-24">
+      <Context tone="article" headline={article.evidenz.heading}>
+        <div class="space-y-4">
+          {article.evidenz.absaetze.map((a) => <p set:html={inline(a)} />)}
+        </div>
+        <h3 class={`${h3} mt-10`} style="font-size: var(--text-body);">{article.evidenz.dataAct.heading}</h3>
+        <div class="space-y-4">
+          <p set:html={inline(article.evidenz.dataAct.intro)} />
+          <ul class="list-disc space-y-2 pl-5 marker:text-primary">
+            {article.evidenz.dataAct.liste.map((l) => <li>{l}</li>)}
+          </ul>
+          <p>{article.evidenz.dataAct.schluss}</p>
+        </div>
+        <h3 class={`${h3} mt-10`} style="font-size: var(--text-body);">{article.evidenz.c3a.heading}</h3>
+        <div class="space-y-4">
+          {article.evidenz.c3a.absaetze.map((a) => <p set:html={inline(a)} />)}
+        </div>
+      </Context>
+    </div>
+
+    <div id="pruefung" class="mt-14 scroll-mt-24">
+      <DataTable title={article.pruefung.heading} headers={article.pruefung.headers} rows={article.pruefung.rows} />
+      <div class="mt-8">
+        <Context tone="article" headline={article.pruefung.vorgehen.heading}>
+          <p>{article.pruefung.vorgehen.text}</p>
+        </Context>
+      </div>
+    </div>
+
+    <div id="grenzen" class="mt-14 scroll-mt-24">
+      <Context tone="article" headline={article.grenzen.heading}>
+        <div class="space-y-4">
+          {article.grenzen.absaetze.map((a) => <p set:html={inline(a)} />)}
+        </div>
+      </Context>
+    </div>
+
+    <div class="mt-14">
+      <NextReads slugs={["was-ist-digitale-souveraenitaet-fuer-unternehmen","was-kostet-digitale-souveraenitaet"]} />
+    </div>
+
+    <div class="mt-10">
+      <Related links={article.related.links} upHref={article.related.upHref} upLabel={article.related.upLabel} />
+    </div>
+
+    <div class="mt-16">
+      <CtaBar title={article.cta.title} ctaLabel={article.cta.ctaLabel} />
+    </div>
+  </Section>
+</Layout>
