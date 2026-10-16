@@ -24,10 +24,10 @@ const segs = (cell: string, col: number): { text: string; href: string | undefin
 };
 ---
 
+<!-- Eine Tabelle für alle Breiten: ab lg Tabellenlayout, darunter per CSS gestapelte Karten (kein doppeltes HTML) -->
 <figure class="m-0">
   {title && <h2 class="mb-6 font-bold text-foreground" style="font-size: var(--text-peak); letter-spacing: -0.01em;">{title}</h2>}
-  <!-- Ab lg: echte Tabelle -->
-  <div class="hidden overflow-x-auto lg:block">
+  <div class="dt overflow-x-auto">
     <table class="w-full border-collapse text-left">
       <thead>
         <tr>
@@ -45,33 +45,28 @@ const segs = (cell: string, col: number): { text: string; href: string | undefin
               ));
               return c === 0
                 ? <th scope="row" class="border-b border-border px-3 py-4 align-top text-sm font-bold text-foreground">{inner}</th>
-                : <td class="border-b border-border px-3 py-4 align-top text-sm text-foreground">{inner}</td>;
+                : <td data-label={headers[c]} class="border-b border-border px-3 py-4 align-top text-sm text-foreground">{inner}</td>;
             })}
           </tr>
         ))}
       </tbody>
     </table>
   </div>
-
-  <!-- Unter lg: gestapelte Karten -->
-  <div class="flex flex-col gap-3 lg:hidden">
-    {rows.map((row) => (
-      <div class="rounded-lg border border-border p-4">
-        <p class="mb-3 font-bold text-foreground">
-          {segs(row[0], 0).map((p, k) => <Fragment>{k > 0 && ", "}{p.href ? <a href={p.href} class="text-primary hover:underline">{p.text}</a> : p.text}</Fragment>)}
-        </p>
-        <dl class="space-y-2">
-          {row.slice(1).map((cell, i) => (
-            <div>
-              <dt class="font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">{headers[i + 1]}</dt>
-              <dd class="text-sm text-foreground">
-                {segs(cell, i + 1).map((p, k) => <Fragment>{k > 0 && ", "}{p.href ? <a href={p.href} class="font-semibold text-primary hover:underline">{p.text}</a> : p.text}</Fragment>)}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-    ))}
-  </div>
   {caption && <figcaption class="mt-3 max-w-3xl text-sm text-muted-foreground">{caption}</figcaption>}
 </figure>
+
+<style>
+  @media (max-width: 1023px) {
+    .dt table,
+    .dt tbody,
+    .dt tr,
+    .dt th,
+    .dt td { display: block; }
+    /* Kopfzeile bleibt für Screenreader erhalten, ist aber nicht sichtbar */
+    .dt thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .dt tr { border: 1px solid var(--color-border, #e5e7eb); border-radius: 0.5rem; padding: 1rem; margin-bottom: 0.75rem; }
+    .dt th[scope="row"] { border: 0 !important; padding: 0 0 0.75rem !important; }
+    .dt td { border: 0 !important; padding: 0 0 0.5rem !important; }
+    .dt td::before { content: attr(data-label); display: block; font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted-foreground, #6b7280); }
+  }
+</style>
