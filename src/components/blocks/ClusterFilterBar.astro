@@ -37,6 +37,7 @@ const { clusters, label = "Nach Cluster filtern", counts } = Astro.props;
         const visible = active.length === 0 || active.some((a) => cardClusters.includes(a!));
         card.hidden = !visible;
       });
+      document.dispatchEvent(new CustomEvent("blog:filter"));
     }
 
     chips.forEach((chip) => {

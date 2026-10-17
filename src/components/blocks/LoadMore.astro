@@ -1,10 +1,47 @@
 ---
-interface Props { label?: string; }
-const { label = "Weitere Artikel laden" } = Astro.props;
+interface Props {
+  label?: string;
+  /** Anzahl Karten je Schub. */
+  step?: number;
+}
+const { label = "Weitere Artikel laden", step = 6 } = Astro.props;
 ---
 
-<div class="text-center">
+<!-- Startet ausgeblendet; das Skript blendet den Knopf nur ein, wenn es noch verborgene Karten gibt (ohne JavaScript bleiben alle Karten sichtbar) -->
+<div class="text-center" data-load-more data-step={step} hidden>
   <button type="button" class="rounded border border-foreground px-6 py-2 font-mono text-xs font-bold uppercase tracking-[0.06em] text-foreground transition-opacity hover:opacity-70">
     {label}
   </button>
 </div>
+
+<script>
+  // Zeigt zuerst "step" Karten des Rasters, jeder Klick weitere. Bei aktivem Themenfilter gilt der Filter (alle Treffer sichtbar).
+  document.querySelectorAll<HTMLElement>("[data-load-more]").forEach((box) => {
+    const step = Number(box.dataset.step) || 6;
+    const grid = document.querySelector<HTMLElement>("[data-paged-grid]");
+    const btn = box.querySelector("button");
+    if (!grid || !btn) return;
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>("[data-clusters]"));
+    let shown = step;
+
+    const filterActive = () => document.querySelectorAll('.cluster-filter .filter-chip[aria-pressed="true"]').length > 0;
+
+    function apply() {
+      if (filterActive()) {
+        box.hidden = true;
+        return;
+      }
+      cards.forEach((card, i) => { card.hidden = i >= shown; });
+      box.hidden = shown >= cards.length;
+    }
+
+    btn.addEventListener("click", () => {
+      const first = shown;
+      shown += step;
+      apply();
+      cards[first]?.focus();
+    });
+    document.addEventListener("blog:filter", apply);
+    apply();
+  });
+</script>

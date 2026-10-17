@@ -8,11 +8,11 @@ interface Post {
   meta: string;
   href: string;
 }
-interface Props { posts: Post[]; }
-const { posts } = Astro.props;
+interface Props { posts: Post[]; /** true = Karten werden von LoadMore schubweise eingeblendet. */ paged?: boolean; }
+const { posts, paged = false } = Astro.props;
 ---
 
-<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-paged-grid={paged ? "" : undefined}>
   {posts.map((post) => (
     <a href={post.href} class="group border border-border" data-clusters={post.clusters.join("|")}>
       {post.image ? (
