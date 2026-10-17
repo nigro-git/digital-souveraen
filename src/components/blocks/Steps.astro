@@ -1,6 +1,5 @@
 ---
-import { inline } from "../../lib/inline";
-interface Step { titel: string; text: string | string[]; deliverable?: string; warnung?: string; /** Typischer Fehler bei diesem Schritt (How-To). */ stolperstein?: string; /** Prüfkriterium: woran Sie erkennen, dass der Schritt geklappt hat (How-To). */ pruefen?: string; }
+interface Step { titel: string; text: string | string[]; deliverable?: string; warnung?: string; }
 interface Props {
   title: string;
   steps: Step[];
@@ -21,18 +20,10 @@ const { title, steps, numberPrefix } = Astro.props;
         <div class="min-w-0">
           <p class="mb-2 font-bold text-foreground" style="font-size: var(--text-body);">{step.titel}</p>
           <div class="space-y-3 leading-relaxed text-foreground/90" style="font-size: var(--text-body);">
-            {(Array.isArray(step.text) ? step.text : [step.text]).map((t) => <p set:html={inline(t)} />)}
+            {(Array.isArray(step.text) ? step.text : [step.text]).map((t) => <p>{t}</p>)}
           </div>
           {step.warnung && (
             <p class="mt-3 border-l-2 border-[#c8860a] bg-[#c8860a]/5 py-2 pl-4 pr-3 text-sm leading-relaxed text-foreground"><strong>Achtung:</strong> {step.warnung}</p>
-          )}
-          {step.stolperstein && (
-            <p class="mt-3 border-l-2 border-[#c8860a] bg-[#c8860a]/5 py-2 pl-4 pr-3 text-sm leading-relaxed text-foreground"><strong>Stolperstein:</strong> <Fragment set:html={inline(step.stolperstein)} /></p>
-          )}
-          {step.pruefen && (
-            <p class="mt-3 text-sm leading-relaxed text-foreground">
-              <span class="mr-2 font-mono text-xs uppercase tracking-[0.1em] text-primary">✓ Prüfen</span>{step.pruefen}
-            </p>
           )}
           {step.deliverable && (
             <p class="mt-3 text-sm leading-relaxed text-foreground">

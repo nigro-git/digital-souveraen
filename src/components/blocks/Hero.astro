@@ -1,5 +1,4 @@
 ---
-import { inline } from "../../lib/inline";
 interface Tags { cluster: string; format: string; entities?: string[]; }
 interface Props {
   eyebrow?: string;
@@ -42,6 +41,6 @@ const titleLines = title.split("\n");
     </div>
   )}
   <p class:list={["mt-6 border-l-2 pl-5 leading-relaxed", chips ? "w-0 min-w-full" : "max-w-2xl", dark ? "border-sky-300 text-white/85" : "border-primary text-foreground/75"]} style="font-size: var(--text-body);">
-    <Fragment set:html={inline(answerFirst)} />
+    {answerFirst}
   </p>
 </div>
